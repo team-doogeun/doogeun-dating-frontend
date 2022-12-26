@@ -1,0 +1,21 @@
+.navContainer {
+  background-color: pink;
+  list-style: none;
+  width: 100%;
+  height: 80px;
+  display: inline-block;
+}
+
+/* 글자 색상이 적용이 안된다 */
+.leftItems {
+  margin: 0 20px;
+  line-height: 80px;
+  display: inline-block;
+  font-size: 20px;
+  color: white;
+}
+
+.rightItems {
+  margin-left: auto;
+  display: flex;
+}
