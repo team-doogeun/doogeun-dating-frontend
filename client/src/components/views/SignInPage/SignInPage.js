@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useState, useEffet } from 'react';
 import { formState } from 'react-hook-form';
+import axios from 'axios';
 
 function SignInPage() {
   const [token, setToken] = useState('');
@@ -22,41 +23,27 @@ function SignInPage() {
     e.preventDefault();
   };
 
-  const login = useCallback((uid, token, expirationDate) => {
-    setToken(token);
-    setUserId(uid);
-    // 3번째 매개변수가 비어있을시, 초깃값 1시간 설정
-
-    const tokenExpiration = expirationDate || new Date(new Date().getTime() + 60 * 1000 * 60);
-    setTokenExpirationDate(tokenExpiration);
-    localStorage.setItem(
-      'user',
-      JSON.stringify({
-        userId: uid,
-        token,
-        expiration: tokenExpiration.toISOString(),
+  // 서버URL에 id, pw 정보 담아서 보내기(post)
+  const requestSignIn = async (id, pw) => {
+    return await axios
+      .post(
+        // axios post 알아야됨
+        `/login/`,
+        { id: id, password: pw },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        // token이 필요한 api 요청 시 header Authorization에 token 담아서 보내기
+        axios.defaults.headers.common[
+          'Authorization'
+        ] = `Bearer ${response.data.access_token}`;
+        return response.data;
       })
-    );
-  }, []);
-
-  // expiration이 1시간이 지났다면, jwt의 유효시간도 만료되었기에
-  // application에서 제거되야됨
-  const logout = useCallback(() => {
-    setToken(null);
-    setUserId(null);
-    setTokenExpirationDate(null);
-    // localstorage는 나중에 수정
-    localStorage.removeItem('user');
-  }, []);
-
-  let logoutTimer = useEffet(() => {
-    if (token && tokenExpirationDate) {
-      const remainingTime = tokenExpirationDate.getTime() - new Date().getTime();
-      logoutTimer = setTimeout(logout, remainingTime);
-    } else {
-      clearTimeout(logoutTimer);
-    }
-  }, [token, logout, tokenExpirationDate]);
+      .catch((e) => {
+        console.log(e.response.data);
+        return '아이디 혹은 비밀번호를 확인하세요.';
+      });
+  };
 
   return (
     <div>
@@ -74,28 +61,5 @@ function SignInPage() {
     </div>
   );
 }
-
-//login시 토큰을 받아오는 로직
-const authSubmitHandler = async (e) => {
-  try {
-    const responseData = await sendRequest(
-      'http://localhost:3000/SignIn',
-      'POST',
-      JSON.stringify({
-        id: formState.inputs.email.value,
-        password: formState.inputs.password.value,
-      }),
-      {
-        'Content-Type': 'application/json',
-      }
-    );
-
-    // responseData는 userId, email, token을 반환
-    // login 함수는 3개의 인수를 받음
-    // 3번째 인자(token)을 입력하지 않으면 함수 내부에서 expiration date를 생성하도록 작성함
-    login(responseData.userId, responseData.token);
-    naviagte('/');
-  } catch (err) {}
-};
 
 export default SignInPage;
