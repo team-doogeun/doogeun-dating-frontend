@@ -7,7 +7,6 @@ function SignInPage() {
   const [token, setToken] = useState('');
   const [inputID, setInputID] = useState('');
   const [inputPW, setInputPW] = useState('');
-  const [tokenExpirationDate, setTokenExpirationDate] = useState('');
 
   const [msg, setMsg] = useState('');
 
@@ -28,6 +27,7 @@ function SignInPage() {
     return await axios
       .post(
         // axios post 알아야됨
+        // login 앞에 {serverURL}이 들어감
         `/login/`,
         { id: id, password: pw },
         { withCredentials: true }
