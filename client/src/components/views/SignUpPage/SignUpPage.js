@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+// 회원가입 페이지
 function SignUpPage() {
   const dispatch = useDispatch();
 

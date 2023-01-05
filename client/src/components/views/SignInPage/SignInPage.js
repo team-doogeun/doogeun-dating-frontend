@@ -2,11 +2,18 @@ import React, { useCallback } from 'react';
 import { useState, useEffet } from 'react';
 import { formState } from 'react-hook-form';
 import axios from 'axios';
+import './SignIn.css';
 
+// 로그인 페이지
 function SignInPage() {
   const [token, setToken] = useState('');
+
   const [inputID, setInputID] = useState('');
   const [inputPW, setInputPW] = useState('');
+
+  // 로그인 후
+  const [isLogin, setIsLogin] = useState(false);
+  const [user, setUser] = useState({});
 
   const [msg, setMsg] = useState('');
 
@@ -18,46 +25,61 @@ function SignInPage() {
     setInputPW(e.target.value);
   };
 
-  const SignInFunc = (e) => {
-    e.preventDefault();
+  const accessToken = () => {
+    axios({
+      url: 'http://localhost:8123/accesstoken',
+      method: 'GET',
+      withCredentials: true,
+    });
   };
 
-  // 서버URL에 id, pw 정보 담아서 보내기(post)
-  const requestSignIn = async (id, pw) => {
-    return await axios
-      .post(
-        // axios post 알아야됨
-        // login 앞에 {serverURL}이 들어감
-        `/login/`,
-        { id: id, password: pw },
-        { withCredentials: true }
-      )
+  // 서버URL에 id, pw 정보 담아서 보내기(post : 생성 및 업데이트)
+  const requestSignIn = (e) => {
+    e.preventDefault();
+
+    axios({
+      // 서버 url에 요청
+      url: 'http://localhost:8123/SignIn',
+      method: 'POST',
+      withCredentials: true,
+      data: {
+        inputID: inputID,
+        inputPW: inputPW,
+      },
+    })
       .then((response) => {
-        // token이 필요한 api 요청 시 header Authorization에 token 담아서 보내기
-        axios.defaults.headers.common[
-          'Authorization'
-        ] = `Bearer ${response.data.access_token}`;
-        return response.data;
+        if (response.status === 200) {
+          // 3000 : Home
+          window.open('http://localhost:3000', '_self');
+        }
       })
       .catch((e) => {
-        console.log(e.response.data);
-        return '아이디 혹은 비밀번호를 확인하세요.';
+        alert('아이디 또는 비밀번호가 옳지 않습니다');
+        // 3000/SignIn : SignIn
+        window.open('http://localhost:3000/SignIn', '_self');
       });
   };
 
   return (
     <div>
-      <h1>SignInPage</h1>
-      <form onSubmit={SignInFunc}>
-        <label>아이디 : </label>
-        <input onChange={handleIDChange} type="text" id="inputID"></input>
-        <br />
-        <label>비밀번호 : </label>
-        <input onChange={handlePWChange} type="password" id="inputPW"></input>
-        <br />
-        <button type="submit">로그인</button>
-        <br />
-      </form>
+      <div className="SignIn">
+        <form>
+          <div className="InputGroup">
+            <label>아이디 : </label>
+            <input style={{ margin: 10 }} onChange={handleIDChange} type="text" placeholder="id" id="inputID"></input>
+          </div>
+          <br />
+          <div className="InputGroup">
+            <label>비밀번호 : </label>
+            <input style={{ margin: 10 }} onChange={handlePWChange} type="password" placeholder="pw" id="inputPW"></input>
+          </div>
+          <br />
+          <div className="InputGroup">
+            <button onClick={requestSignIn}>로그인</button>
+          </div>
+          <br />
+        </form>
+      </div>
     </div>
   );
 }

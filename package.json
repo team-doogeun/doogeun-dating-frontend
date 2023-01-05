@@ -1,5 +1,31 @@
 {
+  "name": "meeting",
+  "version": "1.0.0",
+  "main": "./server/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KungSeung/Meeting-Board.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KungSeung/Meeting-Board/issues"
+  },
+  "homepage": "https://github.com/KungSeung/Meeting-Board#readme",
+  "description": "",
+  "scripts": {
+    "start": "node server/index",
+    "backend": "nodemon server/index",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"npm run start\" \"npm run start --prefix client\""
+  },
   "dependencies": {
-    "styled-components": "^5.3.6"
+    "concurrently": "^7.6.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "nodemon": "^2.0.20"
   }
 }
