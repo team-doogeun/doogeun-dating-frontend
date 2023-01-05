@@ -2,29 +2,46 @@ import React from 'react';
 import './NavBar.css';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
+import 'bootstrap/dist/css/bootstrap.css';
 import HomePage from '../HomePage/HomePage';
 import SignInPage from '../SignInPage/SignInPage';
 import SignUpPage from '../SignUpPage/SignUpPage';
 
 function NavBar() {
   return (
-    <nav>
-      <ul className="navContainer">
-        <div className="leftItems">
-          <Link to="/">Home</Link>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+          Dugeun
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">
+                홈
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/SignIn">
+                일단 로그인
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/SignUp">
+                일단 회원가입
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                게시판
+              </a>
+            </li>
+          </ul>
         </div>
-        <div className="leftItems">
-          <Link to="/SignIn">SignIn</Link>
-        </div>
-        <div className="leftItems">
-          <Link to="/SignUp">SignUp</Link>
-        </div>
-        <div>
-          <button className="rightItems">로그인</button>
-          <button className="rightItems">회원가입</button>
-        </div>
-      </ul>
-
+      </div>
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/SignIn" element={<SignInPage />}></Route>
