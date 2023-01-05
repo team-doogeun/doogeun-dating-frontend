@@ -1,0 +1,10 @@
+.SignIn {
+  align-items: center;
+  padding: 15;
+}
+
+.InputGroup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

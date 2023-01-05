@@ -10,17 +10,19 @@ function NavBar() {
   return (
     <nav>
       <ul className="navContainer">
-        <li className="leftItems">
+        <div className="leftItems">
           <Link to="/">Home</Link>
-        </li>
-        <li className="leftItems">
+        </div>
+        <div className="leftItems">
           <Link to="/SignIn">SignIn</Link>
-        </li>
-        <li className="leftItems">
+        </div>
+        <div className="leftItems">
           <Link to="/SignUp">SignUp</Link>
-        </li>
-        <button className="rightItems">로그인</button>
-        <button className="rightItems">회원가입</button>
+        </div>
+        <div>
+          <button className="rightItems">로그인</button>
+          <button className="rightItems">회원가입</button>
+        </div>
       </ul>
 
       <Routes>
