@@ -8,9 +8,9 @@ const PostView = ({ history, location, match }) => {
 
   const { no } = match.params;
 
-  useEffect(() => {
-    setData(getPostByNo(no));
-  }, []);
+  // useEffect(() => {
+  //   setData(getPostByNo(no));
+  // }, []);
 
   return (
     <>
