@@ -1,7 +1,6 @@
 import React from 'react';
 import './NavBar.css';
 import { NavLink, BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-
 import 'bootstrap/dist/css/bootstrap.css';
 
 import HomePage from '../HomePage/HomePage';
@@ -14,7 +13,7 @@ import PostView from '../../Board/PostView';
 
 function NavBar() {
   return (
-    <nav style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+    <div className="navbar">
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/BlindDate" element={<BlindDatePage />}></Route>
@@ -24,24 +23,34 @@ function NavBar() {
         <Route path="/SignIn" element={<SignInPage />}></Route>
         <Route path="/SignUp" element={<SignUpPage />}></Route>
       </Routes>
-      <div style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-        <div>
-          <NavLink to="/">두근</NavLink>
+      <ul className="navbar-element">
+        <div className="menu">
+          <li>
+            <a href="/">두근</a>
+          </li>
         </div>
-        <div>
-          <NavLink to="/BlindDate">소개팅</NavLink>
+        <div className="menu">
+          <li>
+            <a href="/BlindDate">소개팅</a>
+          </li>
         </div>
-        <div>
-          <NavLink to="/Meeting">미팅</NavLink>
+        <div className="menu">
+          <li>
+            <a href="/Meeting">미팅</a>
+          </li>
         </div>
-        <div>
-          <NavLink to="/Board">게시판</NavLink>
+        <div className="menu">
+          <li>
+            <a href="/Board">게시판</a>
+          </li>
         </div>
-        <div>
-          <NavLink to="/MyInfo">마이페이지</NavLink>
+        <div className="menu">
+          <li>
+            <a href="/MyInfo">마이페이지</a>
+          </li>
         </div>
-      </div>
-    </nav>
+      </ul>
+    </div>
   );
 }
 

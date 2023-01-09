@@ -1,21 +1,45 @@
-.navContainer {
-  background-color: pink;
-  list-style: none;
+.navbar {
+  background-color: white;
+  height: 60px;
+  align-items: center;
+  top: 0;
+  z-index: 1;
   width: 100%;
-  height: 80px;
-  display: inline-block;
+  border-bottom: 1px solid pink;
+  padding: 10px 0px;
 }
 
-/* 글자 색상이 적용이 안된다 */
-.leftItems {
-  margin: 0 20px;
-  line-height: 80px;
-  display: inline-block;
-  font-size: 20px;
-  color: white;
+a {
+  text-decoration: none;
+  color: black;
 }
 
-.rightItems {
-  margin-left: auto;
+li {
+  padding: 0 15px;
+}
+
+.menu {
+  position: relative;
+}
+
+.menu li:hover {
+  display: block;
+}
+
+.navbar-element {
   display: flex;
+  align-items: center;
+  list-style-type: none;
+  padding: 0;
+}
+nav > div {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+nav > span {
+  align-items: left;
+  padding: 200;
+  margin: 20;
 }
