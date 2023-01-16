@@ -1,10 +1,40 @@
 .SignIn {
-  align-items: center;
-  padding: 15;
+  top: 0;
+  height: 200px;
 }
 
-.InputGroup {
+/* flex, flex-direction:column */
+form {
+  background-color: #ffffff;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 30px;
+  height: 100%;
+  text-align: center;
+}
+
+input {
+  background-color: #eee;
+  border: none;
+  padding: 12px 15px;
+  width: 300px;
+  border-radius: 0.3rem;
+}
+
+input[type='password'] {
+  margin: 10px 0;
+}
+
+.LoginButton {
+  border-radius: 20px;
+  border: 1px solid palevioletred;
+  background-color: palevioletred;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  width: 150px;
 }

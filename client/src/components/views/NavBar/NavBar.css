@@ -1,45 +1,54 @@
 .navbar {
   background-color: white;
   height: 60px;
-  align-items: center;
+  width: 100%;
   top: 0;
   z-index: 1;
-  width: 100%;
   border-bottom: 1px solid pink;
-  padding: 10px 0px;
-}
-
-a {
-  text-decoration: none;
-  color: black;
-}
-
-li {
-  padding: 0 15px;
-}
-
-.menu {
-  position: relative;
-}
-
-.menu li:hover {
-  display: block;
+  position: fixed;
 }
 
 .navbar-element {
   display: flex;
-  align-items: center;
-  list-style-type: none;
-  padding: 0;
-}
-nav > div {
   width: 100%;
-  display: flex;
-  flex-direction: row;
+  height: 100%;
+  left: 20px;
 }
 
-nav > span {
-  align-items: left;
-  padding: 200;
-  margin: 20;
+.menu__left {
+  display: flex;
+  list-style: none;
+  margin-left: 10px;
+  padding: 10px;
+  font-size: 15px;
+}
+
+.menu__left li:hover {
+  color: pink;
+}
+
+.list {
+  align-items: center;
+  justify-content: center;
+  margin-left: 30px;
+  font-weight: bold;
+}
+
+.buttons__right {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-left: auto;
+  margin-right: 20px;
+  height: 100%;
+}
+
+.buttons {
+  align-items: center;
+  justify-content: center;
+  margin-right: 30px;
+  border-radius: 12px;
+  font-weight: bold;
+  background-color: lightpink;
+  color: white;
+  border: none;
 }

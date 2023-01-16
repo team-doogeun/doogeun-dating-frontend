@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
-import { useState, useEffet } from 'react';
+import { useState, useEffect } from 'react';
 import { formState } from 'react-hook-form';
 import axios from 'axios';
 import './SignIn.css';
 
 // 로그인 페이지
-function SignInPage() {
+function SignIn() {
   const [token, setToken] = useState('');
 
   const [inputID, setInputID] = useState('');
@@ -27,8 +27,8 @@ function SignInPage() {
 
   const accessToken = () => {
     axios({
+      method: 'get',
       url: 'http://localhost:8123/accesstoken',
-      method: 'GET',
       withCredentials: true,
     });
   };
@@ -55,33 +55,22 @@ function SignInPage() {
       })
       .catch((e) => {
         alert('아이디 또는 비밀번호가 옳지 않습니다');
-        // 3000/SignIn : SignIn
-        window.open('http://localhost:3000/SignIn', '_self');
+        // SignIn이 모달창이니 Home페이지가 뜨게 설정
+        window.open('http://localhost:3000', '_self');
       });
   };
 
   return (
-    <div>
-      <div className="SignIn">
-        <form>
-          <div className="InputGroup">
-            <label>아이디 : </label>
-            <input style={{ margin: 10 }} onChange={handleIDChange} type="text" placeholder="id" id="inputID"></input>
-          </div>
-          <br />
-          <div className="InputGroup">
-            <label>비밀번호 : </label>
-            <input style={{ margin: 10 }} onChange={handlePWChange} type="password" placeholder="pw" id="inputPW"></input>
-          </div>
-          <br />
-          <div className="InputGroup">
-            <button onClick={requestSignIn}>로그인</button>
-          </div>
-          <br />
-        </form>
-      </div>
+    <div className="SignIn">
+      <form>
+        <div className="InputGroup">
+          <input onChange={handleIDChange} type="text" placeholder="아이디" id="inputID"></input>
+          <input onChange={handlePWChange} type="password" placeholder="비밀번호" id="inputPW"></input>
+          <button className='LoginButton' onClick={requestSignIn}>로그인</button>
+        </div>
+      </form>
     </div>
   );
 }
 
-export default SignInPage;
+export default SignIn;
