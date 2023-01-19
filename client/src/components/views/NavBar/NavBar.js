@@ -19,8 +19,9 @@ function NavBar() {
     <Route path="/Meeting" element={<MeetingPage />}></Route>
     <Route path="/Board" element={<PostView />}></Route>
     <Route path="/MyInfo" element={<MyPage />}></Route>
-    <Route path="/SignUp" element={<SignUpPage />}></Route>
+    <Route path="/signup" element={<SignUpPage />}></Route>
   </Routes>;
+
   return (
     <div className="navbar">
       <div className="navbar-element">
@@ -33,8 +34,14 @@ function NavBar() {
         </div>
         <div className="buttons__right">
           <LoginModalComponent />
-          <button className="buttons">로그인</button>
-          <button className="buttons">회원가입</button>
+          <button
+            className="buttons"
+            onClick={(e) => {
+              window.location.href = '/signup';
+            }}
+          >
+            회원가입
+          </button>
         </div>
       </div>
     </div>
@@ -65,10 +72,10 @@ const LoginModalComponent = (props) => {
 
   return (
     <React.Fragment>
-      <button onClick={openModal}>로그인</button>
-      <ModalComponent open={modalOpen} close={closeModal} header="로그인">
-        ㅎㅇㅎㅇ
-      </ModalComponent>
+      <button className="buttons" onClick={openModal}>
+        로그인
+      </button>
+      <ModalComponent open={modalOpen} close={closeModal} header="로그인"></ModalComponent>
     </React.Fragment>
   );
 };

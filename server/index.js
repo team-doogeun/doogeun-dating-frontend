@@ -19,7 +19,7 @@ app.use(
   })
 );
 
-app.post('/SignIn', SignIn);
+app.post('/signin', SignIn);
 app.get('/accesstoken', accessToken);
 app.get('/refreshtoken', refreshToken);
 app.get('/SignIn/success', SignInSuccess);

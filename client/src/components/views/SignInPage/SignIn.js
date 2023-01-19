@@ -3,9 +3,11 @@ import { useState, useEffect } from 'react';
 import { formState } from 'react-hook-form';
 import axios from 'axios';
 import './SignIn.css';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../../../_actions/user_action';
 
-// 로그인 페이지
-function SignIn() {
+// 로그인 모달 폼에 뜨는 곳
+function SignIn(props) {
   const [token, setToken] = useState('');
 
   const [inputID, setInputID] = useState('');
@@ -17,12 +19,32 @@ function SignIn() {
 
   const [msg, setMsg] = useState('');
 
-  const handleIDChange = (e) => {
-    setInputID(e.target.value);
+  // const disptach = useDispatch();
+
+  const onIDHandler = (e) => {
+    setInputID(e.currentTarget.value);
   };
 
-  const handlePWChange = (e) => {
-    setInputPW(e.target.value);
+  const onPWHandler = (e) => {
+    setInputPW(e.currentTarget.value);
+  };
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+
+    // API 명세서 참고
+    let body = {
+      userid: inputID,
+      password: inputPW,
+    };
+
+    // disptach(loginUser(body)).then((response) => {
+    //   if (response.payload.loginSuccess) {
+    //     props.history.push('/');
+    //   } else {
+    //     alert('error');
+    //   }
+    // });
   };
 
   const accessToken = () => {
@@ -39,7 +61,7 @@ function SignIn() {
 
     axios({
       // 서버 url에 요청
-      url: 'http://localhost:8123/SignIn',
+      url: 'http://localhost:8123/signin',
       method: 'POST',
       withCredentials: true,
       data: {
@@ -62,11 +84,14 @@ function SignIn() {
 
   return (
     <div className="SignIn">
-      <form>
+      <form className="SignInForm">
         <div className="InputGroup">
-          <input onChange={handleIDChange} type="text" placeholder="아이디" id="inputID"></input>
-          <input onChange={handlePWChange} type="password" placeholder="비밀번호" id="inputPW"></input>
-          <button className='LoginButton' onClick={requestSignIn}>로그인</button>
+          <input className="InputID" onChange={onIDHandler} value={inputID} type="text" placeholder="아이디" id="inputID"></input>
+          <input className="InputPW" onChange={onPWHandler} value={inputPW} type="password" placeholder="비밀번호" id="inputPW"></input>
+          <button className="SignInButton" type="submit" onClick={requestSignIn}>
+            로그인
+          </button>
+          <button className="SignUpButton">회원가입</button>
         </div>
       </form>
     </div>
