@@ -1,0 +1,88 @@
+/* flex-direction:column이 기본설정 */
+.SignUpForm {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  width: 100%;
+  height: 100vh;
+}
+
+/* Input Text(입력란) */
+.Inputs {
+  width: 300px;
+  height: 100vh;
+  margin-top: 10px;
+}
+
+.Inputs > input {
+  margin-top: 20px;
+}
+
+/* message */
+.message {
+  display: flex;
+  margin-top: 3px;
+}
+
+.success {
+  color: green;
+}
+
+.error {
+  color: red;
+}
+
+/* RadioButton */
+.RadioButtonGroup {
+  margin-top: 20px;
+}
+
+.RadioButtonGroup > label {
+  margin-right: 10px;
+}
+
+/* gender */
+#man {
+  width: 30px;
+  height: 15px;
+}
+
+#woman {
+  width: 30px;
+  height: 15px;
+}
+
+/* dropdown */
+.ageDropDown {
+  margin-top: 15px;
+}
+
+.ageDropDown > text {
+  margin-right: 10px;
+}
+
+/* kakaoID */
+.kakaoIDMsg {
+  display: flex;
+  margin-top: 3px;
+  color: violet;
+  white-space: pre-wrap;
+}
+
+/* Next Button */
+.nextButton {
+  text-align: center;
+}
+
+.footerButton {
+  display: inline-block;
+  width: 120px;
+  height: 50px;
+  margin-top: 20px;
+  color: #ffffff;
+  border-radius: 0.33rem;
+  background-color: palevioletred;
+  border: none;
+  font-weight: bold;
+  letter-spacing: 2px;
+}

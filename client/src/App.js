@@ -11,7 +11,7 @@ import SignUpPage from './components/views/SignUpPage/SignUpPage';
 function App() {
   return (
     <div>
-      <NavBar />
+      {/* <NavBar /> */}
       <SignUpPage />
     </div>
   );
