@@ -1,28 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import './SignUpPage.css';
 import MyProfile from './MyProfile';
 import DetailProfile from './DetailProfile';
 import IdealTypeProfile from './IdealTypeProfile';
-import { set } from 'react-hook-form';
 
 function SignUpPage() {
-  // MP(MyProfile), DP, IP
+  // MP(MyProfile), DP(DetailProfile), IP(IdealTypeProfile)
   // 화면이 mp일 경우 : 오른쪽 가는 버튼만 활성화
   // 화면이 ip일 경우 : 왼쪽 가는 버튼만 활성화
 
-  const [pageNum, setPageNum] = useState(1);
-  const [MPopen, setMPopen] = useState(true);
-  const [DPopen, setDPopen] = useState(false);
-  const [IPopen, setIPopen] = useState(false);
-
-  const moveRight = () => {
-    pageNum += 1;
-    setPageNum(pageNum);
-  };
-
-  const moveLeft = () => {
-    pageNum -= 1;
-    setPageNum(pageNum);
-  };
+  const [pageNow, setPageNow] = useState('MP');
 
   return (
     <div className="slider">
@@ -30,45 +17,33 @@ function SignUpPage() {
         <button
           className="arrow"
           onClick={() => {
-            if (document.getElementById('DetailProfile')) {
-              // dp에서 누르면, mp 켜지게
-              setMPopen(true);
-              setDPopen(false);
-              setIPopen(false);
-            }
-
-            if (document.getElementById('IdealTypeProfile')) {
-              setMPopen(false);
-              setDPopen(true);
-              setIPopen(false);
-            }
+            // dp click -> mp
+            if (document.getElementById('DetailProfile')) setPageNow('MP');
+            // ip click -> dp
+            if (document.getElementById('IdealTypeProfile')) setPageNow('DP');
           }}
         >
           {'<'}
         </button>
       </div>
-      <div>
-        {MPopen === true && <MyProfile />}
-        {DPopen === true && <DetailProfile />}
-        {IPopen === true && <IdealTypeProfile />}
+      <div className="main">
+        {
+          {
+            MP: <MyProfile />,
+            DP: <DetailProfile />,
+            IP: <IdealTypeProfile />,
+          }[pageNow]
+        }
       </div>
       <div className="slider__arrow-right">
         <button
           className="arrow"
           onClick={() => {
-            if (document.getElementById('MyProfile')) {
-              // mp에서 누르면, dp 켜지게
-              setMPopen(false);
-              setDPopen(true);
-              setIPopen(false);
-            }
+            // mp click -> dp
+            if (document.getElementById('MyProfile')) setPageNow('DP');
 
-            if (document.getElementById('DetailProfile')) {
-              // dp에서 누르면, ip 켜지게
-              setMPopen(false);
-              setDPopen(false);
-              setIPopen(true);
-            }
+            // dp click -> ip
+            if (document.getElementById('DetailProfile')) setPageNow('IP');
           }}
         >
           {'>'}

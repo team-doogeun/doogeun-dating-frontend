@@ -7,12 +7,14 @@ import PostList from './components/Board/PostList';
 
 // 작업하는 페이지 가져오기
 import SignUpPage from './components/views/SignUpPage/SignUpPage';
+import Footer from './components/views/Footer/Footer';
 
 function App() {
   return (
     <div>
       {/* <NavBar /> */}
       <SignUpPage />
+      <Footer />
     </div>
   );
 }
