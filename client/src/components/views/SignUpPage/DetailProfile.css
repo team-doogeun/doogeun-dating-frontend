@@ -1,3 +1,33 @@
+/* DetailProfile */
+.DetailProfileForm {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  width: 100%;
+  height: 100vh;
+}
+
+/* Input Text(입력란) */
+.DetailProfileInputs {
+  width: 300px;
+  height: 100vh;
+  margin-top: 10px;
+}
+
+.bodyType,
+.address,
+.department,
+.character1,
+.character2,
+.mbti,
+.drink,
+.smoke,
+.firstPriority,
+.secondPriority,
+.thirdPriority {
+  margin-top: 20px;
+}
+
 /* message */
 .message {
   display: flex;
@@ -10,4 +40,8 @@
 
 .error {
   color: red;
+}
+
+.gd {
+  width: 150px;
 }

@@ -36,7 +36,7 @@ function MyProfile(props) {
 
   // 나이(dropdown)
   // 드롭다운 기능 : 다른 곳 클릭했을 시 자동으로 사라짐
-  const [age, setAge] = useState('');
+  const [age, setAge] = useState('나이');
   const ageRange = ['20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33'];
   const ageOptions = ageRange.map((value) => {
     return <option value={value}>{value}</option>;
@@ -118,10 +118,6 @@ function MyProfile(props) {
     setGender(e.target.value);
   };
 
-  const onAgeHandler = (e) => {
-    setAge(e.target.value);
-  };
-
   const onEmailHandler = (e) => {
     const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     const emailCurrent = e.target.value;
@@ -181,7 +177,7 @@ function MyProfile(props) {
   return (
     <div className="MyProfilePage" id="MyProfile">
       <form className="MyProfileForm" onSubmit={onSubmitHandler}>
-        <div className="Inputs">
+        <div className="MyProfileInputs">
           <input onChange={onIDHandler} value={id} type="text" placeholder="아이디"></input>
           {id.length > 0 && <div className={`message ${isID ? 'success' : 'error'}`}>{idMsg}</div>}
 
@@ -208,7 +204,6 @@ function MyProfile(props) {
           <div className="ageDropDown" ref={dropDownRef}>
             <select
               value={age}
-              placeholder="나이"
               className="selectAge"
               onClick={(e) => {
                 setIsOpen(!isOpen);
@@ -217,7 +212,10 @@ function MyProfile(props) {
                 setAge(e.target.value);
               }}
             >
-              {ageOptions}
+              <option disabled selected value="나이">
+                {'나이'}
+              </option>
+              ;{ageOptions}
             </select>
           </div>
 
@@ -266,4 +264,4 @@ const useDetectClose = (ref, initialState) => {
   return [isOpen, setIsOpen];
 };
 
-export { MyProfile as default, useDetectClose };
+export { MyProfile as default };
