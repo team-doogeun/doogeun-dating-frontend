@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../../_actions/user_action';
 import './MyProfile.css';
@@ -35,11 +35,14 @@ function MyProfile(props) {
   const [gender, setGender] = useState('');
 
   // 나이(dropdown)
-  const [age, setAge] = useState('20');
+  // 드롭다운 기능 : 다른 곳 클릭했을 시 자동으로 사라짐
+  const [age, setAge] = useState('');
   const ageRange = ['20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33'];
-  const ageOptions = ageRange.map((x) => {
-    return <option value={x}>{x}</option>;
+  const ageOptions = ageRange.map((value) => {
+    return <option value={value}>{value}</option>;
   });
+  const dropDownRef = useRef();
+  const [isOpen, setIsOpen] = useDetectClose(dropDownRef, false);
 
   // email(@konkuk.ac.kr 필수입력)
   const [email, setEmail] = useState('');
@@ -55,12 +58,7 @@ function MyProfile(props) {
   const [kakaoID, setKakaoID] = useState('');
   const [kakaoIDMsg, setKakaoMSg] = useState('');
 
-  // 마이프로필
-  const [detailProfrile, setDetailProfile] = useState({});
-
-  // 이상형프로필
-  const [idealTypeProfile, setIdealTypeProfile] = useState({});
-
+  // 입력함수
   const onIDHandler = (e) => {
     setID(e.currentTarget.value);
 
@@ -163,10 +161,6 @@ function MyProfile(props) {
     setKakaoMSg('매칭시 교환되는 아이디입니다.\n신중하게 입력해주세요.');
   };
 
-  // 본인 프로필
-
-  // 이상형 프로필
-
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
@@ -185,8 +179,8 @@ function MyProfile(props) {
   };
 
   return (
-    <div className="SignUp" id="MyProfile">
-      <form className="SignUpForm" onSubmit={onSubmitHandler}>
+    <div className="MyProfilePage" id="MyProfile">
+      <form className="MyProfileForm" onSubmit={onSubmitHandler}>
         <div className="Inputs">
           <input onChange={onIDHandler} value={id} type="text" placeholder="아이디"></input>
           {id.length > 0 && <div className={`message ${isID ? 'success' : 'error'}`}>{idMsg}</div>}
@@ -201,19 +195,30 @@ function MyProfile(props) {
           {name.length > 0 && <div className={`message ${isName ? 'success' : 'error'}`}>{nameMsg}</div>}
 
           <div className="RadioButtonGroup">
-            <label>
+            <label className="genderCheck1">
               <input type="radio" id="man" name="gender" value="남자" checked={gender === '남자'} onChange={onGenderHandler}></input>
               남자
             </label>
-            <label>
+            <label className="genderCheck2">
               <input type="radio" id="woman" name="gender" value="여자" checked={gender === '여자'} onChange={onGenderHandler}></input>
               여자
             </label>
           </div>
 
-          <div className="ageDropDown">
-            <text>나이는?</text>
-            <select onChange={onAgeHandler}>{ageOptions}</select>
+          <div className="ageDropDown" ref={dropDownRef}>
+            <select
+              value={age}
+              placeholder="나이"
+              className="selectAge"
+              onClick={(e) => {
+                setIsOpen(!isOpen);
+              }}
+              onChange={(e) => {
+                setAge(e.target.value);
+              }}
+            >
+              {ageOptions}
+            </select>
           </div>
 
           <input onChange={onEmailHandler} value={email} type="text" placeholder="@konkuk.ac.kr"></input>
@@ -236,4 +241,29 @@ function MyProfile(props) {
   );
 }
 
-export default MyProfile;
+const useDetectClose = (ref, initialState) => {
+  // initialState : true, false
+  const [isOpen, setIsOpen] = useState(initialState);
+
+  // 사용자가 클릭한 요소(ref.current)
+  // 안의 요소(ref.current.contains(e.target)인지 확인 후 닫아주는 구조
+  // -> dropdown에 적용해보자면 dropdown(ref.current) 누르고
+  // 포함된 요소 ex) 22 (ref.current.contains)를 누르면 닫아줌
+  useEffect(() => {
+    const pageClickEvent = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        setIsOpen(!isOpen);
+      }
+    };
+
+    if (isOpen) window.addEventListener('click', pageClickEvent);
+
+    return () => {
+      window.removeEventListener('click', pageClickEvent);
+    };
+  }, [isOpen, ref]);
+
+  return [isOpen, setIsOpen];
+};
+
+export { MyProfile as default, useDetectClose };

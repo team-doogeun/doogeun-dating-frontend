@@ -1,0 +1,13 @@
+/* message */
+.message {
+  display: flex;
+  margin-top: 3px;
+}
+
+.success {
+  color: green;
+}
+
+.error {
+  color: red;
+}

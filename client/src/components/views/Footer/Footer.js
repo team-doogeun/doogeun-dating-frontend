@@ -17,19 +17,25 @@ function Footer() {
         </FooterContent>
       </FooterContainer>
       <FooterDescContainer>
-        <FooterDescRihts>DuGeun Progect Deserved RIGHTS.</FooterDescRihts>
+        <FooterDescRihts>DuGeun Project Deserved RIGHTS.</FooterDescRihts>
       </FooterDescContainer>
     </FooterBox>
   );
 }
+
+// Footer 구조
 const FooterBox = styled.div`
-  background-color: white;
+  background-color: #f8f8f8;
+  color: #8f8f8f !important;
+  font-family: 'NanumSquareR', sans-serif;
+  scroll-behavior: smooth;
   width: 100%;
   border-top: 1px solid rgb(25, 25, 25);
   position: relative;
   z-index: 100;
   padding: 20px 20px 0;
 `;
+
 const FooterContainer = styled.div`
   display: block;
   box-sizing: border-box;
@@ -39,23 +45,26 @@ const FooterContainer = styled.div`
     justify-content: space-between;
     flex-direction: row-reverse;
     padding: 10px 200px;
-    padding-bottom: 20px;
   }
 `;
 
+// 기본적인 내용
 const FooterContent = styled.p`
   color: gray;
   font-size: 14px;
   line-height: 40px;
+
   @media (max-width: 768px) {
     margin-top: 20px;
   }
 `;
 
+// 사이에 빈공간
 const FooterSpace = styled.div`
   width: 100px;
 `;
 
+// 슬로건
 const FooterSlogan = styled.div`
   color: gray;
   font-size: 20px;
@@ -70,10 +79,14 @@ const FooterSlogan = styled.div`
   }
 `;
 
+// 권리 설명 문구
 const FooterDescContainer = styled.div`
-  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0 20px 0;
   @media (max-width: 768px) {
-    margin: 10px;
+    padding: 0 0 10px 0;
   }
 `;
 
