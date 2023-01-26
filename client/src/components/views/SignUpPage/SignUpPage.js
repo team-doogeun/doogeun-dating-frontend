@@ -12,20 +12,7 @@ function SignUpPage() {
   const [pageNow, setPageNow] = useState('MP');
 
   return (
-    <div className="slider">
-      <div className="slider__arrow-left">
-        <button
-          className="arrow"
-          onClick={() => {
-            // dp click -> mp
-            if (document.getElementById('DetailProfile')) setPageNow('MP');
-            // ip click -> dp
-            if (document.getElementById('IdealTypeProfile')) setPageNow('DP');
-          }}
-        >
-          {'<'}
-        </button>
-      </div>
+    <div className="SignUpPage">
       <div className="main">
         {
           {
@@ -34,20 +21,34 @@ function SignUpPage() {
             IP: <IdealTypeProfile />,
           }[pageNow]
         }
-      </div>
-      <div className="slider__arrow-right">
-        <button
-          className="arrow"
-          onClick={() => {
-            // mp click -> dp
-            if (document.getElementById('MyProfile')) setPageNow('DP');
-
-            // dp click -> ip
-            if (document.getElementById('DetailProfile')) setPageNow('IP');
-          }}
-        >
-          {'>'}
-        </button>
+        <div className="pageButton">
+          <div className="prevButton">
+            <button
+              className="footerButton"
+              onClick={() => {
+                // dp click -> mp
+                if (document.getElementById('DetailProfile')) setPageNow('MP');
+                // ip click -> dp
+                if (document.getElementById('IdealTypeProfile')) setPageNow('DP');
+              }}
+            >
+              이전
+            </button>
+          </div>
+          <div className="nextButton">
+            <button
+              className="footerButton"
+              onClick={() => {
+                // mp click -> dp
+                if (document.getElementById('MyProfile')) setPageNow('DP');
+                // dp click -> ip
+                if (document.getElementById('DetailProfile')) setPageNow('IP');
+              }}
+            >
+              다음
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

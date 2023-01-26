@@ -1,11 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import Select from 'react-select';
 import { loginUser } from '../../../_actions/user_action';
 import './MyProfile.css';
+import { ageRangeData } from './AttributeData';
 
 // 회원가입 페이지
 function MyProfile(props) {
   // const dispatch = useDispatch();
+
+  // page 설정
+  const [pageNow, setPageNow] = useState('MP');
 
   // 회원가입 입력요소(기본)
   // id, pw, pw확인, name, gender, age, email(학교)
@@ -37,12 +42,12 @@ function MyProfile(props) {
   // 나이(dropdown)
   // 드롭다운 기능 : 다른 곳 클릭했을 시 자동으로 사라짐
   const [age, setAge] = useState('나이');
-  const ageRange = ['20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33'];
-  const ageOptions = ageRange.map((value) => {
-    return <option value={value}>{value}</option>;
-  });
-  const dropDownRef = useRef();
-  const [isOpen, setIsOpen] = useDetectClose(dropDownRef, false);
+
+  // const ageOptions = ageRange.map((value) => {
+  //   return <option value={value}>{value}</option>;
+  // });
+  // const dropDownRef = useRef();
+  // const [isOpen, setIsOpen] = useDetectClose(dropDownRef, false);
 
   // email(@konkuk.ac.kr 필수입력)
   const [email, setEmail] = useState('');
@@ -57,6 +62,7 @@ function MyProfile(props) {
   // kakaoID
   const [kakaoID, setKakaoID] = useState('');
   const [kakaoIDMsg, setKakaoMSg] = useState('');
+  const [isKakaoID, setIsKakaoID] = useState(false);
 
   // 입력함수
   const onIDHandler = (e) => {
@@ -113,7 +119,7 @@ function MyProfile(props) {
   };
 
   const onGenderHandler = (e) => {
-    // currentTargetValue -> 부모 tag까지 불러옴
+    // currentTargetValue -> 부모 tag까지 불러옴 -> 길어서 부모까지 불러옴
     // targetValue -> 자식 tag만 불러옴
     setGender(e.target.value);
   };
@@ -201,23 +207,7 @@ function MyProfile(props) {
             </label>
           </div>
 
-          <div className="ageDropDown" ref={dropDownRef}>
-            <select
-              value={age}
-              className="selectAge"
-              onClick={(e) => {
-                setIsOpen(!isOpen);
-              }}
-              onChange={(e) => {
-                setAge(e.target.value);
-              }}
-            >
-              <option disabled selected value="나이">
-                {'나이'}
-              </option>
-              ;{ageOptions}
-            </select>
-          </div>
+          <Select className="ageDropDown" options={ageRangeData} placeholder={'나이'} />
 
           <input onChange={onEmailHandler} value={email} type="text" placeholder="@konkuk.ac.kr"></input>
           {email.length > 0 && <div className={`message ${isEmail ? 'success' : 'error'}`}>{emailMsg}</div>}
@@ -227,41 +217,10 @@ function MyProfile(props) {
 
           <input onChange={onKakaoIDHandler} value={kakaoID} type="text" placeholder="카카오ID"></input>
           {kakaoID.length > 0 && <div className="kakaoIDMsg">{kakaoIDMsg}</div>}
-
-          <div className="nextButton">
-            <button className="footerButton" disabled={!(isID && isPW && isConfirmPW && isName)}>
-              다음
-            </button>
-          </div>
         </div>
       </form>
     </div>
   );
 }
 
-const useDetectClose = (ref, initialState) => {
-  // initialState : true, false
-  const [isOpen, setIsOpen] = useState(initialState);
-
-  // 사용자가 클릭한 요소(ref.current)
-  // 안의 요소(ref.current.contains(e.target)인지 확인 후 닫아주는 구조
-  // -> dropdown에 적용해보자면 dropdown(ref.current) 누르고
-  // 포함된 요소 ex) 22 (ref.current.contains)를 누르면 닫아줌
-  useEffect(() => {
-    const pageClickEvent = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) {
-        setIsOpen(!isOpen);
-      }
-    };
-
-    if (isOpen) window.addEventListener('click', pageClickEvent);
-
-    return () => {
-      window.removeEventListener('click', pageClickEvent);
-    };
-  }, [isOpen, ref]);
-
-  return [isOpen, setIsOpen];
-};
-
-export { MyProfile as default };
+export default MyProfile;

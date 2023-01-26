@@ -28,12 +28,14 @@ const FooterBox = styled.div`
   background-color: #f8f8f8;
   color: #8f8f8f !important;
   font-family: 'NanumSquareR', sans-serif;
+  max-height: 400px;
+  position: relative;
+  transform: translateY(-100%);
   scroll-behavior: smooth;
   width: 100%;
   border-top: 1px solid rgb(25, 25, 25);
-  position: relative;
-  z-index: 100;
-  padding: 20px 20px 0;
+
+  padding: 0 20px 0;
 `;
 
 const FooterContainer = styled.div`
@@ -44,7 +46,7 @@ const FooterContainer = styled.div`
     display: flex;
     justify-content: space-between;
     flex-direction: row-reverse;
-    padding: 10px 200px;
+    padding: 10px 150px;
   }
 `;
 
@@ -73,6 +75,7 @@ const FooterSlogan = styled.div`
   text-decoration: none;
   display: flex;
   align-items: center;
+  padding-top: 20px;
 
   @media (max-width: 768px) {
     margin-bottom: 16px;
@@ -81,19 +84,21 @@ const FooterSlogan = styled.div`
 
 // 권리 설명 문구
 const FooterDescContainer = styled.div`
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 0 20px 0;
-  @media (max-width: 768px) {
-    padding: 0 0 10px 0;
-  }
 `;
 
 const FooterDescRihts = styled.h2`
-  color: gray;
   font-size: 20px;
+  width: 100%;
   text-align: center;
+  color: #8f8f8f;
+  padding: 0 0 10px 0;
+  @media (max-width: 768px) {
+    padding: 0 0 5px 0;
+  }
 `;
 
 export default Footer;

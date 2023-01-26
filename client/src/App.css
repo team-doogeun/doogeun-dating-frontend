@@ -1,3 +1,17 @@
+.superContainer {
+  min-width: 700px;
+  height: 2000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#wrapper {
+  height: auto;
+  min-height: 100%;
+  padding-bottom: 220px;
+}
+
 /* 자주 쓰는 tag css 작성 */
 input {
   background-color: #eee;

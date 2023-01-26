@@ -11,9 +11,11 @@ import Footer from './components/views/Footer/Footer';
 
 function App() {
   return (
-    <div>
-      {/* <NavBar /> */}
-      <SignUpPage />
+    <div className="superContainer">
+      <NavBar />
+      <div id="wrapper">
+        <SignUpPage />
+      </div>
       <Footer />
     </div>
   );

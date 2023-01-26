@@ -1,4 +1,24 @@
+// legacy code..
+
 // import React from 'react'
+
+/*{ <div className="ageDropDown" ref={dropDownRef}>
+            <select
+              value={age}
+              className="selectAge"
+              onClick={(e) => {
+                setIsOpen(!isOpen);
+              }}
+              onChange={(e) => {
+                setAge(e.target.value);
+              }}
+            >
+              <option disabled selected value="나이">
+                {'나이'}
+              </option>
+              ;{ageOptions}
+            </select>
+       </div> } */
 
 // function DropDown(props) {
 
@@ -55,6 +75,5 @@
 
 //   return [isOpen, setIsOpen];
 // };
-
 
 // export {DropDown as default, useDetectClose}

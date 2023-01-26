@@ -9,22 +9,20 @@ function DetailProfile() {
   const [heightMsg, setHeightMsg] = useState('');
   const [isHeight, setIsHeight] = useState(false);
 
-  // 몸매 : 타입 -> 마름 슬림 탄탄 보통 통통 근육질
-  const [bodyType, setBodyType] = useState('');
-  const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-  ];
+  // 체형
+  const [bodyType, setBodyType] = useState({});
+
+  // 주소
+  const [address, setAddress] = useState('');
 
   // 학과
   const [department, setDepartment] = useState('');
 
-  // 성격 -> 6가지 중 2가지 입력(선택)받기
-  const [character, setCharacter] = useState([]);
+  // 성격
+  const [character, setCharacter] = useState([...characterData]);
 
   // mbti
-  const [mbti, setMbti] = useState('');
+  const [mbti, setMBTI] = useState('');
 
   // hobby
   const [hobby, setHobby] = useState([]);
@@ -53,6 +51,58 @@ function DetailProfile() {
     }
   };
 
+  const onBodyTypeHandler = (e) => {
+    setBodyType(e.target.value);
+    console.log(e.target.value);
+  };
+
+  const onAddressHandler = (e) => {
+    setAddress(e.target.value);
+  };
+
+  const onDepartMentHandler = (e) => {
+    setDepartment(e.target.value);
+  };
+
+  const onCharacterHandler = (e) => {
+    for (let i = 0; i < character.length; i++) {
+      if (character[i].value === e.currentTarget.value) {
+        character.splice(i, 1);
+        characterData = [...character];
+        break;
+      }
+    }
+  };
+
+  const onMBTIHandler = (e) => {
+    setMBTI(e.target.value);
+  };
+
+  const onDrinkHandler = (e) => {
+    setDrink(e.target.value);
+  };
+
+  const onSmokeHandler = (e) => {
+    setSmoke(e.target.value);
+  };
+
+  // 우선순위가 겹치면!
+  // 다음 버튼 눌렀을 때 우선순위가 겹칩니다.
+  // 알람 띄우고 페이지 안 넘어가게 하기
+  const onFirstPriorityHandler = (e) => {
+    setFirstPriority(e.target.value);
+  };
+  const onSecondPriorityHandler = (e) => {
+    setSecondPriority(e.target.value);
+  };
+  const onThirdPriorityHandler = (e) => {
+    setThirdPriority(e.target.value);
+  };
+
+  const selectStyle = {
+    menu: (provided) => ({ ...provided, zIndex: 9999 }),
+  };
+
   return (
     <div className="DetailProfilePage" id="DetailProfile">
       <form className="DetailProfileForm">
@@ -60,21 +110,33 @@ function DetailProfile() {
           <input onChange={onHeightHandler} value={height} type="text" placeholder="키 ex) 165"></input>
           {height.length > 0 && <div className={`message ${isHeight ? 'success' : 'error'}`}>{heightMsg}</div>}
 
-          <Select className="bodyType" placeholder="나이" options={bodyTypeData} />
-          <Select className="address" placeholder="주소 : 구" options={addressData} />
-          <Select className="department" placeholder="대학" options={departmentData} />
-          <Select className="character1" placeholder="성격1" options={characterData} />
-          <Select className="character2" placeholder="성격2" options={characterData} />
-          <Select className="mbti" placeholder="mbti" options={mbtiData} />
+          {/* value 값 받아오는거 나중에 구현 */}
+          {/* getOptionValue={(e) => {
+              setBodyType(e.value);
+              console.log(bodyType);
+            }} */}
+          <Select className="bodyType" placeholder="체형" options={bodyTypeData} isSearchable={false} isClearable={true} />
+          <Select className="address" placeholder="주소 : ex) 강남구" options={addressData} isSearchable={false} />
+          <Select className="department" placeholder="대학" options={departmentData} isSearchable={false} />
+          <Select className="character1" placeholder="성격1" options={characterData} isSearchable={false} />
+          <Select className="character2" placeholder="성격2" options={characterData} isSearchable={false} />
+          <Select
+            className="mbti"
+            placeholder="mbti"
+            options={mbtiData}
+            noOptionsMessage={() => {
+              return '없는데용:)';
+            }}
+          />
           {/* hobby1 hobby2 : 디자인 고민 */}
 
-          <Select className="drink" placeholder="음주" options={drinkData} />
-          <Select className="smoke" placeholder="흡연" options={smokeData} />
+          <Select className="drink" placeholder="음주" options={drinkData} isSearchable={false} />
+          <Select className="smoke" placeholder="흡연" options={smokeData} isSearchable={false} />
 
           {/* 우선순위 */}
-          <Select className="firstPriority" placeholder="우선순위 1" options={priorityData} />
-          <Select className="secondPriority" placeholder="우선순위 2" options={priorityData} />
-          <Select className="thirdPriority" placeholder="우선순위 3" options={priorityData} />
+          <Select className="firstPriority" placeholder="우선순위 1" options={priorityData} isSearchable={false} styles={selectStyle} maxMenuHeight={220} />
+          <Select className="secondPriority" placeholder="우선순위 2" options={priorityData} isSearchable={false} styles={selectStyle} maxMenuHeight={220} />
+          <Select className="thirdPriority" placeholder="우선순위 3" options={priorityData} isSearchable={false} styles={selectStyle} maxMenuHeight={220} />
         </div>
       </form>
     </div>
