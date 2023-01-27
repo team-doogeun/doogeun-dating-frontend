@@ -1,0 +1,26 @@
+.hobbyDataForm {
+  width: 100%;
+  height: auto;
+}
+
+.btn {
+  width: 100px;
+  color: gray;
+  font-size: 15px;
+  background-color: #f8f8f8;
+  margin: 5px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btnclicked {
+  width: 100px;
+  font-size: 15px;
+  margin: 5px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: aqua;
+  background-color: red;
+}

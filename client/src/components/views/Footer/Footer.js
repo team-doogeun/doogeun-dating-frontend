@@ -40,13 +40,14 @@ const FooterBox = styled.div`
 
 const FooterContainer = styled.div`
   display: block;
+  width: 100%;
   box-sizing: border-box;
 
   @media (min-width: 768px) {
     display: flex;
     justify-content: space-between;
     flex-direction: row-reverse;
-    padding: 10px 150px;
+    padding: 10px 100px;
   }
 `;
 
@@ -54,10 +55,12 @@ const FooterContainer = styled.div`
 const FooterContent = styled.p`
   color: gray;
   font-size: 14px;
-  line-height: 40px;
+  padding-top: 10px;
+
+  line-height: 30px;
 
   @media (max-width: 768px) {
-    margin-top: 20px;
+    margin-top: 10px;
   }
 `;
 
@@ -74,11 +77,11 @@ const FooterSlogan = styled.div`
   width: 400px;
   text-decoration: none;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
-  padding-top: 20px;
 
   @media (max-width: 768px) {
-    margin-bottom: 16px;
+    padding-top: 15px;
   }
 `;
 

@@ -33,7 +33,7 @@ function NavBar() {
           <ListComponent classname="list" linkname="/MyInfo" pagename="마이페이지" />
         </div>
         <div className="buttons__right">
-          <LoginModalComponent />
+          <ContentModalComponent mainContent="Login" />
           <button
             className="buttons"
             onClick={(e) => {
@@ -58,7 +58,7 @@ const ListComponent = (props) => {
   );
 };
 
-const LoginModalComponent = (props) => {
+const ContentModalComponent = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -73,11 +73,11 @@ const LoginModalComponent = (props) => {
   return (
     <React.Fragment>
       <button className="buttons" onClick={openModal}>
-        로그인
+        {props.contentName}
       </button>
-      <ModalComponent open={modalOpen} close={closeModal} header="로그인"></ModalComponent>
+      <ModalComponent open={modalOpen} close={closeModal} header={props.contentName} mainContent={props.mainContent}></ModalComponent>
     </React.Fragment>
   );
 };
 
-export default NavBar;
+export { NavBar as default, ContentModalComponent };

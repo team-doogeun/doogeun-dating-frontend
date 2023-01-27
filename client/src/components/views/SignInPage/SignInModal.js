@@ -1,9 +1,10 @@
 import React from 'react';
 import './SignInModal.css';
 import SignIn from './SignIn';
+import HobbyButton from '../SmallComponent/HobbyButton';
 
 const ModalComponent = (props) => {
-  const { open, close, header } = props;
+  const { open, close, header, mainContent } = props;
 
   return (
     <div className={open ? 'openModal modal' : 'modal'}>
@@ -17,7 +18,12 @@ const ModalComponent = (props) => {
             </button>
           </header>
           <main>
-            <SignIn />
+            {
+              {
+                Login: <SignIn />,
+                Hobby: <HobbyButton />,
+              }[mainContent]
+            }
           </main>
           <footer>
             <button className="close" onClick={close}>
