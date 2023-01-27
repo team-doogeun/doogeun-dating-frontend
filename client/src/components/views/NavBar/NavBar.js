@@ -63,11 +63,13 @@ const ContentModalComponent = (props) => {
 
   const openModal = () => {
     setModalOpen(true);
+    document.body.style.overflow = 'hidden';
     console.log(modalOpen);
   };
 
   const closeModal = () => {
     setModalOpen(false);
+    document.body.style.overflow = 'unset';
   };
 
   return (

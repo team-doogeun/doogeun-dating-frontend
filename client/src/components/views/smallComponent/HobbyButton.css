@@ -1,10 +1,18 @@
 .hobbyDataForm {
   width: 100%;
   height: auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.buttonContainer {
+  margin: 0 auto;
+  white-space: normal;
+  position: relative;
 }
 
 .btn {
-  width: 100px;
+  width: 120px;
   color: gray;
   font-size: 15px;
   background-color: #f8f8f8;

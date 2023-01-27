@@ -17,9 +17,11 @@ function HobbyButton() {
     <div className="hobbyDataForm">
       {data.map((item, idx) => {
         return (
-          <button value={idx} className={'btn' + (`${idx}` === btnActive ? 'clicked' : '')} onClick={toggleActive}>
-            {item.value}
-          </button>
+          <div className="buttonContainer">
+            <button value={idx} className={'btn' + (`${idx}` === btnActive ? 'clicked' : '')} onClick={toggleActive}>
+              {item.value}
+            </button>
+          </div>
         );
       })}
     </div>
