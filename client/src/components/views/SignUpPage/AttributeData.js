@@ -1,3 +1,16 @@
+const heightData = [
+  { value: '150이하', label: '150이하' },
+  { value: '151~155', label: '151~155' },
+  { value: '156~160', label: '156~160' },
+  { value: '161~165', label: '161~165' },
+  { value: '166~170', label: '166~170' },
+  { value: '171~175', label: '171~175' },
+  { value: '176~180', label: '176~180' },
+  { value: '181~185', label: '181~185' },
+  { value: '186~190', label: '186~190' },
+  { value: '190이상', label: '190이상' },
+];
+
 const ageRangeData = [
   { value: '20', label: '20' },
   { value: '21', label: '21' },
@@ -182,4 +195,4 @@ const priorityData = [
   { value: 'MBTI', label: 'MBTI' },
 ];
 
-export { ageRangeData, bodyTypeData, departmentData, addressData, characterData, mbtiData, hobbyData, drinkData, smokeData, priorityData };
+export { heightData, ageRangeData, bodyTypeData, departmentData, addressData, characterData, mbtiData, hobbyData, drinkData, smokeData, priorityData };

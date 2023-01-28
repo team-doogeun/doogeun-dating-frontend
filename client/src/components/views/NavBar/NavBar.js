@@ -63,12 +63,13 @@ const ContentModalComponent = (props) => {
 
   const openModal = () => {
     setModalOpen(true);
+    // 모달창 열면 스크롤 안보이게
     document.body.style.overflow = 'hidden';
-    console.log(modalOpen);
   };
 
   const closeModal = () => {
     setModalOpen(false);
+    // 모달창 닫으면 다시 셋
     document.body.style.overflow = 'unset';
   };
 
