@@ -16,9 +16,10 @@ function App() {
     <div className="superContainer">
       {/* <NavBar />
       <div id="wrapper">
-        <SignUpPage />
+        
       </div>
       <Footer /> */}
+      {/* <SignUpPage /> */}
       <HobbyModal />
     </div>
   );

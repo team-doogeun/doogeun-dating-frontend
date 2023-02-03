@@ -1,28 +1,10 @@
-.hobbyDataForm {
-  display: grid;
-  grid-template-rows: '1fr';
-  grid-template-columns: '1fr 1fr 1fr 1fr';
-  box-sizing: border-box;
-}
-
-div {
-  display: grid;
-  grid-template-rows: '1fr';
-  grid-template-columns: '1fr 1fr 1fr 1fr';
-  box-sizing: border-box;
-}
-
-span {
-  float: left;
-}
-
 .buttonContainer {
-  width: 130px;
+  width: 120px;
+  margin: 5px;
 }
 
 .btn {
   width: 100%;
-  display: grid;
   color: gray;
   font-size: 15px;
   background-color: #f8f8f8;

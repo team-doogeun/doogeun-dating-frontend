@@ -111,7 +111,7 @@ const mbtiData = [
 ];
 
 const hobbyData = [
-  { value: '걷기', label: '걷기' },
+  { value: '걷기', label: '걷기', checked: false },
   { value: '헬스', label: '헬스' },
   { value: '여행', label: '여행' },
   { value: '등산', label: '등산' },

@@ -17,7 +17,7 @@ const ModalComponent = (props) => {
               &times;
             </button>
           </header>
-          <main>
+          <main className={mainContent === 'Login' ? 'login' : 'hobby'}>
             {
               {
                 Login: <SignIn />,
