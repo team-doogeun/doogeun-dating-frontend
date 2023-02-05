@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import { useState, useEffect } from 'react';
-import { formState } from 'react-hook-form';
 import axios from 'axios';
 import './SignIn.css';
 import { useDispatch } from 'react-redux';
@@ -60,7 +59,7 @@ function SignIn(props) {
     e.preventDefault();
 
     axios({
-      // 서버 url에 요청
+      // **서버 url에 요청 -> 서버에 설정한 url로 변경해줘야함**
       url: 'http://localhost:8123/signin',
       method: 'POST',
       withCredentials: true,
