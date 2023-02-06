@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import './NavBar.css';
-import { NavLink, BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.css';
+import {
+  NavLink,
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Link,
+} from 'react-router-dom';
 
 import HomePage from '../HomePage/HomePage';
 import BlindDatePage from '../BlindDatePage/BilndDatePage';
@@ -27,10 +32,18 @@ function NavBar() {
       <div className="navbar-element">
         <div className="menu__left">
           <ListComponent classname="list" linkname="/" pagename="두근" />
-          <ListComponent classname="list" linkname="/BlindDate" pagename="소개팅" />
+          <ListComponent
+            classname="list"
+            linkname="/BlindDate"
+            pagename="소개팅"
+          />
           <ListComponent classname="list" linkname="/Meeting" pagename="미팅" />
           <ListComponent classname="list" linkname="/Board" pagename="게시판" />
-          <ListComponent classname="list" linkname="/MyInfo" pagename="마이페이지" />
+          <ListComponent
+            classname="list"
+            linkname="/MyInfo"
+            pagename="마이페이지"
+          />
         </div>
         <div className="buttons__right">
           <ContentModalComponent mainContent="Login" />
@@ -78,7 +91,12 @@ const ContentModalComponent = (props) => {
       <button className="buttons" onClick={openModal}>
         {props.contentName}
       </button>
-      <ModalComponent open={modalOpen} close={closeModal} header={props.contentName} mainContent={props.mainContent}></ModalComponent>
+      <ModalComponent
+        open={modalOpen}
+        close={closeModal}
+        header={props.contentName}
+        mainContent={props.mainContent}
+      ></ModalComponent>
     </React.Fragment>
   );
 };
