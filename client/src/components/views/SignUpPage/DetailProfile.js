@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
 import './DetailProfile.css';
-import { bodyTypeData, departmentData, addressData, characterData, mbtiData, hobbyData, drinkData, smokeData, priorityData } from './AttributeData';
+import {
+  bodyTypeData,
+  departmentData,
+  addressData,
+  characterData,
+  mbtiData,
+  hobbyData,
+  drinkData,
+  smokeData,
+  priorityData,
+} from './AttributeData';
 import Select from 'react-select';
 
-function DetailProfile() {
+function DetailProfile(MyProfileData, IdealTypeProfileData) {
   // 키
   const [height, setHeight] = useState('');
   const [heightMsg, setHeightMsg] = useState('');
@@ -19,7 +29,7 @@ function DetailProfile() {
   const [department, setDepartment] = useState('');
 
   // 성격
-  const [character, setCharacter] = useState([...characterData]);
+  const [character, setCharacter] = useState([]);
 
   // mbti
   const [mbti, setMBTI] = useState('');
@@ -103,23 +113,80 @@ function DetailProfile() {
     menu: (provided) => ({ ...provided, zIndex: 9999 }),
   };
 
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+
+    let DetailProfileData = {
+      height: height,
+      bodyType: bodyType,
+      address: address,
+      department: department,
+      character1: character[0],
+      character2: character[1],
+      mbti: mbti,
+      hobby1: hobby[0],
+      hobby2: hobby[1],
+      drink: drink,
+      smoke: smoke,
+      firstPriority: firstPriority,
+      secondPriority: secondPriority,
+      thirdPriority: thirdPriority,
+    };
+  };
+
+  // react-hook-form 알아보고 적용하기
   return (
     <div className="DetailProfilePage" id="DetailProfile">
-      <form className="DetailProfileForm">
+      <form className="DetailProfileForm" onSubmit={onSubmitHandler}>
         <div className="DetailProfileInputs">
-          <input onChange={onHeightHandler} value={height} type="text" placeholder="키 ex) 165"></input>
-          {height.length > 0 && <div className={`message ${isHeight ? 'success' : 'error'}`}>{heightMsg}</div>}
+          <input
+            onChange={onHeightHandler}
+            value={height}
+            type="text"
+            placeholder="키 ex) 165"
+          ></input>
+          {height.length > 0 && (
+            <div className={`message ${isHeight ? 'success' : 'error'}`}>
+              {heightMsg}
+            </div>
+          )}
 
           {/* value 값 받아오는거 나중에 구현 */}
           {/* getOptionValue={(e) => {
               setBodyType(e.value);
               console.log(bodyType);
             }} */}
-          <Select className="bodyType" placeholder="체형" options={bodyTypeData} isSearchable={false} isClearable={true} />
-          <Select className="address" placeholder="주소 : ex) 강남구" options={addressData} isSearchable={false} />
-          <Select className="department" placeholder="대학" options={departmentData} isSearchable={false} />
-          <Select className="character1" placeholder="성격1" options={characterData} isSearchable={false} />
-          <Select className="character2" placeholder="성격2" options={characterData} isSearchable={false} />
+          <Select
+            className="bodyType"
+            placeholder="체형"
+            options={bodyTypeData}
+            isSearchable={false}
+            isClearable={true}
+          />
+          <Select
+            className="address"
+            placeholder="주소 : ex) 강남구"
+            options={addressData}
+            isSearchable={false}
+          />
+          <Select
+            className="department"
+            placeholder="대학"
+            options={departmentData}
+            isSearchable={false}
+          />
+          <Select
+            className="character1"
+            placeholder="성격1"
+            options={characterData}
+            isSearchable={false}
+          />
+          <Select
+            className="character2"
+            placeholder="성격2"
+            options={characterData}
+            isSearchable={false}
+          />
           <Select
             className="mbti"
             placeholder="mbti"
@@ -130,13 +197,44 @@ function DetailProfile() {
           />
           {/* hobby1 hobby2 : 디자인 고민 */}
 
-          <Select className="drink" placeholder="음주" options={drinkData} isSearchable={false} />
-          <Select className="smoke" placeholder="흡연" options={smokeData} isSearchable={false} />
+          <Select
+            className="drink"
+            placeholder="음주"
+            options={drinkData}
+            isSearchable={false}
+          />
+          <Select
+            className="smoke"
+            placeholder="흡연"
+            options={smokeData}
+            isSearchable={false}
+          />
 
           {/* 우선순위 */}
-          <Select className="firstPriority" placeholder="우선순위 1" options={priorityData} isSearchable={false} styles={selectStyle} maxMenuHeight={220} />
-          <Select className="secondPriority" placeholder="우선순위 2" options={priorityData} isSearchable={false} styles={selectStyle} maxMenuHeight={220} />
-          <Select className="thirdPriority" placeholder="우선순위 3" options={priorityData} isSearchable={false} styles={selectStyle} maxMenuHeight={220} />
+          <Select
+            className="firstPriority"
+            placeholder="우선순위 1"
+            options={priorityData}
+            isSearchable={false}
+            styles={selectStyle}
+            maxMenuHeight={220}
+          />
+          <Select
+            className="secondPriority"
+            placeholder="우선순위 2"
+            options={priorityData}
+            isSearchable={false}
+            styles={selectStyle}
+            maxMenuHeight={220}
+          />
+          <Select
+            className="thirdPriority"
+            placeholder="우선순위 3"
+            options={priorityData}
+            isSearchable={false}
+            styles={selectStyle}
+            maxMenuHeight={220}
+          />
         </div>
       </form>
     </div>

@@ -4,10 +4,7 @@ import { LOGIN_USER } from './types';
 
 // dataToSubmit 부분에는 보내고자 하는 data가 들어간다
 // SignIn.js 에서 선언된 body부분이다.
-export const  loginUser = async (dataToSubmit)=> {
-  
-  const dispatch = useDispatch();
-  
+export const loginUser = async (dataToSubmit) => {
   const request = await axios
     .post('/', dataToSubmit)
     .then((response) => {
@@ -15,7 +12,7 @@ export const  loginUser = async (dataToSubmit)=> {
       // 대신 얘는 로그인한 닉네임으로 홈페이지 접속
       if (response.data === 200) {
         window.open('http://localhost:3000', '__self');
-        dispatch({type:})
+        // dispatch({ type: LOGIN_USER, payload: response.data });
       }
     })
     .catch((e) => {
@@ -27,4 +24,4 @@ export const  loginUser = async (dataToSubmit)=> {
     type: LOGIN_USER,
     payload: request,
   };
-}
+};

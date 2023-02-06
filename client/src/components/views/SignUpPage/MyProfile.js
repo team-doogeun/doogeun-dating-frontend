@@ -43,12 +43,6 @@ function MyProfile(props) {
   // 드롭다운 기능 : 다른 곳 클릭했을 시 자동으로 사라짐
   const [age, setAge] = useState('나이');
 
-  // const ageOptions = ageRange.map((value) => {
-  //   return <option value={value}>{value}</option>;
-  // });
-  // const dropDownRef = useRef();
-  // const [isOpen, setIsOpen] = useDetectClose(dropDownRef, false);
-
   // email(@konkuk.ac.kr 필수입력)
   const [email, setEmail] = useState('');
   const [emailMsg, setEmailMsg] = useState('');
@@ -63,6 +57,13 @@ function MyProfile(props) {
   const [kakaoID, setKakaoID] = useState('');
   const [kakaoIDMsg, setKakaoMSg] = useState('');
   const [isKakaoID, setIsKakaoID] = useState(false);
+
+  // useEffect(() => {
+  //   let pageValid =
+  //     isID && isPW && isConfirmPW && isEmail && isName && isStudentID;
+  //   if (pageValid) {
+  //   }
+  // }, [pageValid]);
 
   // 입력함수
   const onIDHandler = (e) => {
@@ -125,7 +126,8 @@ function MyProfile(props) {
   };
 
   const onEmailHandler = (e) => {
-    const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    const emailRegex =
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     const emailCurrent = e.target.value;
     setEmail(emailCurrent);
 
@@ -163,59 +165,136 @@ function MyProfile(props) {
     setKakaoMSg('매칭시 교환되는 아이디입니다.\n신중하게 입력해주세요.');
   };
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
+  let MyProfileData = {
+    id: id,
+    password: pw,
+    confirmpassword: confirmPW,
+    name: name,
+    gender: gender,
+    age: age,
+    email: email,
+    studentId: studentID,
+    externalID: kakaoID,
+  };
 
-    // API 명세서 참고
-    let body = {
-      id: id,
-      password: pw,
-      confirmpassword: confirmPW,
-      name: name,
-      gender: gender,
-      age: age,
-      email: email,
-      studentId: studentID,
-      externalID: kakaoID,
-    };
+  const onSubmitHandler = (e) => {
+    // register action 부분을 여기에 미리 작성
   };
 
   return (
     <div className="MyProfilePage" id="MyProfile">
       <form className="MyProfileForm" onSubmit={onSubmitHandler}>
         <div className="MyProfileInputs">
-          <input onChange={onIDHandler} value={id} type="text" placeholder="아이디"></input>
-          {id.length > 0 && <div className={`message ${isID ? 'success' : 'error'}`}>{idMsg}</div>}
+          <input
+            onChange={onIDHandler}
+            value={id}
+            type="text"
+            placeholder="아이디"
+          ></input>
+          {id.length > 0 && (
+            <div className={`message ${isID ? 'success' : 'error'}`}>
+              {idMsg}
+            </div>
+          )}
 
-          <input onChange={onPWHandler} value={pw} type="password" placeholder="비밀번호"></input>
-          {pw.length > 0 && <div className={`message ${isPW ? 'success' : 'error'}`}>{pwMsg}</div>}
+          <input
+            onChange={onPWHandler}
+            value={pw}
+            type="password"
+            placeholder="비밀번호"
+          ></input>
+          {pw.length > 0 && (
+            <div className={`message ${isPW ? 'success' : 'error'}`}>
+              {pwMsg}
+            </div>
+          )}
 
-          <input onChange={onConfirmPWHandler} value={confirmPW} type="password" placeholder="비밀번호 확인" id="confirmPW"></input>
-          {confirmPW.length > 0 && <div className={`message ${isConfirmPW ? 'success' : 'error'}`}>{confirmPWMsg}</div>}
+          <input
+            onChange={onConfirmPWHandler}
+            value={confirmPW}
+            type="password"
+            placeholder="비밀번호 확인"
+            id="confirmPW"
+          ></input>
+          {confirmPW.length > 0 && (
+            <div className={`message ${isConfirmPW ? 'success' : 'error'}`}>
+              {confirmPWMsg}
+            </div>
+          )}
 
-          <input onChange={onNameHandler} value={name} type="text" placeholder="이름"></input>
-          {name.length > 0 && <div className={`message ${isName ? 'success' : 'error'}`}>{nameMsg}</div>}
+          <input
+            onChange={onNameHandler}
+            value={name}
+            type="text"
+            placeholder="이름"
+          ></input>
+          {name.length > 0 && (
+            <div className={`message ${isName ? 'success' : 'error'}`}>
+              {nameMsg}
+            </div>
+          )}
 
           <div className="RadioButtonGroup">
             <label className="genderCheck1">
-              <input type="radio" id="man" name="gender" value="남자" checked={gender === '남자'} onChange={onGenderHandler}></input>
+              <input
+                type="radio"
+                id="man"
+                name="gender"
+                value="남자"
+                checked={gender === '남자'}
+                onChange={onGenderHandler}
+              ></input>
               남자
             </label>
             <label className="genderCheck2">
-              <input type="radio" id="woman" name="gender" value="여자" checked={gender === '여자'} onChange={onGenderHandler}></input>
+              <input
+                type="radio"
+                id="woman"
+                name="gender"
+                value="여자"
+                checked={gender === '여자'}
+                onChange={onGenderHandler}
+              ></input>
               여자
             </label>
           </div>
 
-          <Select className="ageDropDown" options={ageRangeData} placeholder={'나이'} />
+          <Select
+            className="ageDropDown"
+            options={ageRangeData}
+            placeholder={'나이'}
+          />
 
-          <input onChange={onEmailHandler} value={email} type="text" placeholder="@konkuk.ac.kr"></input>
-          {email.length > 0 && <div className={`message ${isEmail ? 'success' : 'error'}`}>{emailMsg}</div>}
+          <input
+            onChange={onEmailHandler}
+            value={email}
+            type="text"
+            placeholder="@konkuk.ac.kr"
+          ></input>
+          {email.length > 0 && (
+            <div className={`message ${isEmail ? 'success' : 'error'}`}>
+              {emailMsg}
+            </div>
+          )}
 
-          <input onChange={onStudentIDHandler} value={studentID} type="text" placeholder="학번"></input>
-          {studentID.length > 0 && <div className={`message ${isStudentID ? 'success' : 'error'}`}>{studentIDMsg}</div>}
+          <input
+            onChange={onStudentIDHandler}
+            value={studentID}
+            type="text"
+            placeholder="학번"
+          ></input>
+          {studentID.length > 0 && (
+            <div className={`message ${isStudentID ? 'success' : 'error'}`}>
+              {studentIDMsg}
+            </div>
+          )}
 
-          <input onChange={onKakaoIDHandler} value={kakaoID} type="text" placeholder="카카오ID"></input>
+          <input
+            onChange={onKakaoIDHandler}
+            value={kakaoID}
+            type="text"
+            placeholder="카카오ID"
+          ></input>
           {kakaoID.length > 0 && <div className="kakaoIDMsg">{kakaoIDMsg}</div>}
         </div>
       </form>
@@ -223,4 +302,4 @@ function MyProfile(props) {
   );
 }
 
-export default MyProfile;
+export { MyProfile as default };

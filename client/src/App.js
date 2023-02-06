@@ -19,8 +19,8 @@ function App() {
         
       </div>
       <Footer /> */}
-      {/* <SignUpPage /> */}
-      <HobbyModal />
+      <SignUpPage />
+      {/* <HobbyModal /> */}
     </div>
   );
 }

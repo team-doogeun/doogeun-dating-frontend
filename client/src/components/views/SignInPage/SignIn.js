@@ -18,32 +18,12 @@ function SignIn(props) {
 
   const [msg, setMsg] = useState('');
 
-  // const disptach = useDispatch();
-
   const onIDHandler = (e) => {
     setInputID(e.currentTarget.value);
   };
 
   const onPWHandler = (e) => {
     setInputPW(e.currentTarget.value);
-  };
-
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-
-    // API 명세서 참고
-    let body = {
-      userid: inputID,
-      password: inputPW,
-    };
-
-    // disptach(loginUser(body)).then((response) => {
-    //   if (response.payload.loginSuccess) {
-    //     props.history.push('/');
-    //   } else {
-    //     alert('error');
-    //   }
-    // });
   };
 
   const accessToken = () => {
@@ -55,39 +35,38 @@ function SignIn(props) {
   };
 
   // 서버URL에 id, pw 정보 담아서 보내기(post : 생성 및 업데이트)
-  const requestSignIn = (e) => {
-    e.preventDefault();
-
-    axios({
-      // **서버 url에 요청 -> 서버에 설정한 url로 변경해줘야함**
-      url: 'http://localhost:8123/signin',
-      method: 'POST',
-      withCredentials: true,
-      data: {
-        inputID: inputID,
-        inputPW: inputPW,
-      },
-    })
-      .then((response) => {
-        if (response.status === 200) {
-          // 3000 : Home
-          window.open('http://localhost:3000', '_self');
-        }
-      })
-      .catch((e) => {
-        alert('아이디 또는 비밀번호가 옳지 않습니다');
-        // SignIn이 모달창이니 Home페이지가 뜨게 설정
-        window.open('http://localhost:3000', '_self');
-      });
+  // user_action 에서 loginUser에 data를 담는다
+  // withCredentials: true -> 나중에 설정
+  let data = {
+    userId: inputID,
+    password: inputPW,
   };
 
   return (
     <div className="SignIn">
       <form className="SignInForm">
         <div className="InputGroup">
-          <input className="InputID" onChange={onIDHandler} value={inputID} type="text" placeholder="아이디" id="inputID"></input>
-          <input className="InputPW" onChange={onPWHandler} value={inputPW} type="password" placeholder="비밀번호" id="inputPW"></input>
-          <button className="SignInButton" type="submit" onClick={requestSignIn}>
+          <input
+            className="InputID"
+            onChange={onIDHandler}
+            value={inputID}
+            type="text"
+            placeholder="아이디"
+            id="inputID"
+          ></input>
+          <input
+            className="InputPW"
+            onChange={onPWHandler}
+            value={inputPW}
+            type="password"
+            placeholder="비밀번호"
+            id="inputPW"
+          ></input>
+          <button
+            className="SignInButton"
+            type="submit"
+            onClick={loginUser(data)}
+          >
             로그인
           </button>
           <button className="SignUpButton">회원가입</button>
