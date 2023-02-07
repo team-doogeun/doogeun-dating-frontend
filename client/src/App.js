@@ -20,7 +20,7 @@ function App() {
       </div>
       <Footer /> */}
       <SignUpPage />
-      {/* <HobbyModal /> */}
+      <HobbyModal />
     </div>
   );
 }

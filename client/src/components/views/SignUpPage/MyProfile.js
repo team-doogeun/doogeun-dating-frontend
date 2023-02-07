@@ -4,6 +4,7 @@ import Select from 'react-select';
 import { loginUser } from '../../../_actions/user_action';
 import './MyProfile.css';
 import { ageRangeData } from './AttributeData';
+import DetailProfile from './DetailProfile';
 
 // 회원가입 페이지
 function MyProfile(props) {
@@ -65,10 +66,12 @@ function MyProfile(props) {
   //   }
   // }, [pageValid]);
 
+  // 지웠을 때 문제가 생긴다
+
   // 입력함수
   const onIDHandler = (e) => {
     setID(e.currentTarget.value);
-
+    localStorage.setItem('id', id);
     if (e.currentTarget.value.length < 5) {
       setIDMsg('5글자 이상 입력해주세요.');
       setIsID(false);
@@ -88,6 +91,7 @@ function MyProfile(props) {
       console.log(pwRegex.test(pwCurrent));
       setPWMsg('안전한 비밀번호에요.');
       setIsPW(true);
+      localStorage.setItem('pw', pw);
     } else {
       setPWMsg('숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!');
       setIsPW(false);
@@ -101,6 +105,7 @@ function MyProfile(props) {
     if (pw == pwConfirmCurrent) {
       setConfirmPWMsg('똑같은 비밀번호입니다.');
       setIsConfirmPW(true);
+      localStorage.setItem('confirmPW', confirmPW);
     } else {
       setConfirmPWMsg('비밀번호가 다릅니다!');
       setIsConfirmPW(false);
@@ -116,6 +121,7 @@ function MyProfile(props) {
     } else {
       setNameMsg('올바른 형식입니다.');
       setIsName(true);
+      localStorage.setItem('name', name);
     }
   };
 
@@ -137,6 +143,7 @@ function MyProfile(props) {
     } else {
       setEmailMsg('올바른 이메일 형식이에요:)');
       setIsEmail(true);
+      localStorage.setItem('email', email);
     }
   };
 
@@ -152,6 +159,7 @@ function MyProfile(props) {
     } else {
       setStudentIDMsg(`${shortID}학번이시네요 반갑습니다!`);
       setIsStudentID(true);
+      localStorage.setItem('studentID', studentID);
     }
 
     if (isNaN(isNum)) {
@@ -163,6 +171,7 @@ function MyProfile(props) {
   const onKakaoIDHandler = (e) => {
     setKakaoID(e.currentTarget.value);
     setKakaoMSg('매칭시 교환되는 아이디입니다.\n신중하게 입력해주세요.');
+    localStorage.setItem('kakaoID', kakaoID);
   };
 
   let MyProfileData = {
@@ -177,6 +186,12 @@ function MyProfile(props) {
     externalID: kakaoID,
   };
 
+  const localStorageGetItem = (key, value) => {
+    const val =
+      localStorage.getItem(key) !== '' ? localStorage.getItem(key) : value;
+    return val;
+  };
+
   const onSubmitHandler = (e) => {
     // register action 부분을 여기에 미리 작성
   };
@@ -187,9 +202,9 @@ function MyProfile(props) {
         <div className="MyProfileInputs">
           <input
             onChange={onIDHandler}
-            value={id}
-            type="text"
             placeholder="아이디"
+            value={localStorageGetItem('id', id)}
+            type="text"
           ></input>
           {id.length > 0 && (
             <div className={`message ${isID ? 'success' : 'error'}`}>
@@ -199,9 +214,9 @@ function MyProfile(props) {
 
           <input
             onChange={onPWHandler}
-            value={pw}
-            type="password"
             placeholder="비밀번호"
+            value={localStorageGetItem('pw', pw)}
+            type="password"
           ></input>
           {pw.length > 0 && (
             <div className={`message ${isPW ? 'success' : 'error'}`}>
@@ -211,9 +226,9 @@ function MyProfile(props) {
 
           <input
             onChange={onConfirmPWHandler}
-            value={confirmPW}
-            type="password"
             placeholder="비밀번호 확인"
+            value={localStorageGetItem('confirmPW', confirmPW)}
+            type="password"
             id="confirmPW"
           ></input>
           {confirmPW.length > 0 && (
@@ -224,9 +239,9 @@ function MyProfile(props) {
 
           <input
             onChange={onNameHandler}
-            value={name}
-            type="text"
             placeholder="이름"
+            value={localStorageGetItem('name', name)}
+            type="text"
           ></input>
           {name.length > 0 && (
             <div className={`message ${isName ? 'success' : 'error'}`}>
@@ -267,9 +282,9 @@ function MyProfile(props) {
 
           <input
             onChange={onEmailHandler}
-            value={email}
             type="text"
             placeholder="@konkuk.ac.kr"
+            value={localStorageGetItem('email', email)}
           ></input>
           {email.length > 0 && (
             <div className={`message ${isEmail ? 'success' : 'error'}`}>
@@ -279,9 +294,9 @@ function MyProfile(props) {
 
           <input
             onChange={onStudentIDHandler}
-            value={studentID}
-            type="text"
             placeholder="학번"
+            value={localStorageGetItem('studentID', studentID)}
+            type="text"
           ></input>
           {studentID.length > 0 && (
             <div className={`message ${isStudentID ? 'success' : 'error'}`}>
@@ -291,11 +306,22 @@ function MyProfile(props) {
 
           <input
             onChange={onKakaoIDHandler}
-            value={kakaoID}
-            type="text"
             placeholder="카카오ID"
+            value={localStorageGetItem('kakaoID', kakaoID)}
+            type="text"
           ></input>
           {kakaoID.length > 0 && <div className="kakaoIDMsg">{kakaoIDMsg}</div>}
+
+          <div className="nextButton">
+            <button
+              className="footerButton"
+              onClick={() => {
+                <DetailProfile />;
+              }}
+            >
+              다음
+            </button>
+          </div>
         </div>
       </form>
     </div>

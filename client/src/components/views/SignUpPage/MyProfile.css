@@ -100,3 +100,20 @@
   color: violet;
   white-space: pre-wrap;
 }
+
+/* footer Button */
+.nextButton,
+.prevButton {
+  text-align: center;
+}
+
+.footerButton {
+  width: 132px;
+  height: 50px;
+  color: #ffffff;
+  border-radius: 0.33rem;
+  background-color: palevioletred;
+  border: none;
+  font-weight: bold;
+  letter-spacing: 4px;
+}
