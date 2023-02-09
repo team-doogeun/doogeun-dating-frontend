@@ -325,17 +325,11 @@ function MyProfile(props) {
             <button
               className="footerButton"
               onClick={() => {
-                navigation('/detail');
+                navigation('/detailprofile');
               }}
             >
               다음
             </button>
-          </div>
-
-          <div>
-            <Link to="/detail">
-              <button>dd</button>
-            </Link>
           </div>
         </div>
       </div>

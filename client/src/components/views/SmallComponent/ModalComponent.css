@@ -16,7 +16,7 @@
 .modal > section {
   min-width: 300px;
   max-width: 600px;
-  height: 500px;
+  height: 350px;
   overflow: auto;
   margin: 0 auto;
   border-radius: 0.3rem;

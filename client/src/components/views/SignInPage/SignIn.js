@@ -1,8 +1,7 @@
-import React, { useCallback } from 'react';
-import { useState, useEffect } from 'react';
+import React from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import './SignIn.css';
-import { useDispatch } from 'react-redux';
 import { loginUser } from '../../../_actions/user_action';
 
 // 로그인 모달 폼에 뜨는 곳

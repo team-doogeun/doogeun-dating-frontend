@@ -1,21 +1,7 @@
 import React, { useState } from 'react';
 import './NavBar.css';
-import {
-  NavLink,
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Link,
-} from 'react-router-dom';
-
-import HomePage from '../HomePage/HomePage';
-import BlindDatePage from '../BlindDatePage/BilndDatePage';
-import MeetingPage from '../MeetingPage/MeetingPage';
-import PostView from '../../Board/PostView';
-import MyPage from '../MyPage/MyPage';
-
-import ModalComponent from '../SignInPage/SignInModal'; // SignIn
-import SignUpPage from '../SignUpPage/SignUpPage';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
+import ModalComponent from '../SmallComponent/ModalComponent';
 
 function NavBar() {
   return (
@@ -41,7 +27,7 @@ function NavBar() {
           />
         </div>
         <div className="buttons__right">
-          <ContentModalComponent mainContent="Login" />
+          <ModalComponent mainContent="Login" contentName="로그인" />
           <button
             className="buttons"
             onClick={(e) => {
@@ -66,34 +52,4 @@ const ListComponent = (props) => {
   );
 };
 
-const ContentModalComponent = (props) => {
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const openModal = () => {
-    setModalOpen(true);
-    // 모달창 열면 스크롤 안보이게
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-    // 모달창 닫으면 다시 셋
-    document.body.style.overflow = 'unset';
-  };
-
-  return (
-    <React.Fragment>
-      <button className="buttons" onClick={openModal}>
-        {props.contentName}
-      </button>
-      <ModalComponent
-        open={modalOpen}
-        close={closeModal}
-        header={props.contentName}
-        mainContent={props.mainContent}
-      ></ModalComponent>
-    </React.Fragment>
-  );
-};
-
-export { NavBar as default, ContentModalComponent };
+export default NavBar;

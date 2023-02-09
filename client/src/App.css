@@ -1,15 +1,10 @@
 .superContainer {
   min-width: 700px;
   height: 1500px;
-  display: inline-block;
-
+  margin: auto;
+  position: relative;
   align-items: center;
-}
-
-#wrapper {
-  height: auto;
-  min-height: 100%;
-  padding-bottom: 220px;
+  padding-top: 100px;
 }
 
 /* 자주 쓰는 tag css 작성 */

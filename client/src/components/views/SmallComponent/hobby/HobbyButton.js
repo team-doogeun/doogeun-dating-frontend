@@ -1,9 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './HobbyButton.css';
-import { hobbyData } from '../SignUpPage/AttributeData';
-import ModalComponent from '../SignInPage/SignInModal';
-import { ContentModalComponent } from '../NavBar/NavBar';
-import styled from 'styled-components';
+import { hobbyData } from '../../SignUpPage/AttributeData';
 
 function HobbyButton() {
   const hobby = [...hobbyData];

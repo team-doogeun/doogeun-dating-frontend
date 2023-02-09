@@ -8,6 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import rootReducer from './_reducers';
 import { createStore } from 'redux';
+import NavBar from './components/views/NavBar/NavBar';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const store = createStore(rootReducer);
@@ -15,6 +16,7 @@ const store = createStore(rootReducer);
 root.render(
   <BrowserRouter>
     <Provider store={store}>
+      <NavBar />
       <App />
     </Provider>
   </BrowserRouter>
