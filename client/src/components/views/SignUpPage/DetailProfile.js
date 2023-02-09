@@ -137,7 +137,7 @@ function DetailProfile(MyProfileData, IdealTypeProfileData) {
   // react-hook-form 알아보고 적용하기
   return (
     <div className="DetailProfilePage" id="DetailProfile">
-      <form className="DetailProfileForm" onSubmit={onSubmitHandler}>
+      <div className="DetailProfileForm" onSubmit={onSubmitHandler}>
         <div className="DetailProfileInputs">
           <input
             onChange={onHeightHandler}
@@ -236,7 +236,7 @@ function DetailProfile(MyProfileData, IdealTypeProfileData) {
             maxMenuHeight={220}
           />
         </div>
-      </form>
+      </div>
     </div>
   );
 }

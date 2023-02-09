@@ -18,20 +18,15 @@ import ModalComponent from '../SignInPage/SignInModal'; // SignIn
 import SignUpPage from '../SignUpPage/SignUpPage';
 
 function NavBar() {
-  <Routes>
-    <Route path="/" element={<HomePage />}></Route>
-    <Route path="/BlindDate" element={<BlindDatePage />}></Route>
-    <Route path="/Meeting" element={<MeetingPage />}></Route>
-    <Route path="/Board" element={<PostView />}></Route>
-    <Route path="/MyInfo" element={<MyPage />}></Route>
-    <Route path="/signup" element={<SignUpPage />}></Route>
-  </Routes>;
-
   return (
     <div className="navbar">
       <div className="navbar-element">
         <div className="menu__left">
-          <ListComponent classname="list" linkname="/" pagename="두근" />
+          <ListComponent
+            classname="list"
+            linkname="/myprofile"
+            pagename="두근"
+          />
           <ListComponent
             classname="list"
             linkname="/BlindDate"

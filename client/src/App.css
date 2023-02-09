@@ -1,8 +1,8 @@
 .superContainer {
   min-width: 700px;
   height: 1500px;
-  display: flex;
-  flex-direction: column;
+  display: inline-block;
+
   align-items: center;
 }
 

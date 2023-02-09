@@ -5,17 +5,21 @@ import { loginUser } from '../../../_actions/user_action';
 import './MyProfile.css';
 import { ageRangeData } from './AttributeData';
 import DetailProfile from './DetailProfile';
+import { useNavigate, Route, Routes, Link } from 'react-router-dom';
+import IdealTypeProfile from './IdealTypeProfile';
 
 // 회원가입 페이지
 function MyProfile(props) {
-  // const dispatch = useDispatch();
-
-  // page 설정
-  const [pageNow, setPageNow] = useState('MP');
+  <Routes>
+    <Route path="/" element={<MyProfile />}></Route>
+    <Route path="/detail" element={<DetailProfile />}></Route>
+    <Route path="/ideal" element={<IdealTypeProfile />}></Route>
+  </Routes>;
 
   // 회원가입 입력요소(기본)
   // id, pw, pw확인, name, gender, age, email(학교)
   // studentId(학번), externalId(카카오 아이디)
+  let navigation = useNavigate();
 
   // ID
   const [id, setID] = useState('');
@@ -196,14 +200,19 @@ function MyProfile(props) {
     // register action 부분을 여기에 미리 작성
   };
 
+  const [content, setContent] = useState('');
+  const selectComponent = {
+    DP: <DetailProfile />,
+  };
+
   return (
     <div className="MyProfilePage" id="MyProfile">
-      <form className="MyProfileForm" onSubmit={onSubmitHandler}>
+      <div className="MyProfileForm">
         <div className="MyProfileInputs">
           <input
             onChange={onIDHandler}
             placeholder="아이디"
-            value={localStorageGetItem('id', id)}
+            value={id}
             type="text"
           ></input>
           {id.length > 0 && (
@@ -215,7 +224,7 @@ function MyProfile(props) {
           <input
             onChange={onPWHandler}
             placeholder="비밀번호"
-            value={localStorageGetItem('pw', pw)}
+            value={pw}
             type="password"
           ></input>
           {pw.length > 0 && (
@@ -227,7 +236,7 @@ function MyProfile(props) {
           <input
             onChange={onConfirmPWHandler}
             placeholder="비밀번호 확인"
-            value={localStorageGetItem('confirmPW', confirmPW)}
+            value={confirmPW}
             type="password"
             id="confirmPW"
           ></input>
@@ -240,7 +249,7 @@ function MyProfile(props) {
           <input
             onChange={onNameHandler}
             placeholder="이름"
-            value={localStorageGetItem('name', name)}
+            value={name}
             type="text"
           ></input>
           {name.length > 0 && (
@@ -284,7 +293,7 @@ function MyProfile(props) {
             onChange={onEmailHandler}
             type="text"
             placeholder="@konkuk.ac.kr"
-            value={localStorageGetItem('email', email)}
+            value={email}
           ></input>
           {email.length > 0 && (
             <div className={`message ${isEmail ? 'success' : 'error'}`}>
@@ -295,7 +304,7 @@ function MyProfile(props) {
           <input
             onChange={onStudentIDHandler}
             placeholder="학번"
-            value={localStorageGetItem('studentID', studentID)}
+            value={studentID}
             type="text"
           ></input>
           {studentID.length > 0 && (
@@ -307,7 +316,7 @@ function MyProfile(props) {
           <input
             onChange={onKakaoIDHandler}
             placeholder="카카오ID"
-            value={localStorageGetItem('kakaoID', kakaoID)}
+            value={kakaoID}
             type="text"
           ></input>
           {kakaoID.length > 0 && <div className="kakaoIDMsg">{kakaoIDMsg}</div>}
@@ -316,14 +325,20 @@ function MyProfile(props) {
             <button
               className="footerButton"
               onClick={() => {
-                <DetailProfile />;
+                navigation('/detail');
               }}
             >
               다음
             </button>
           </div>
+
+          <div>
+            <Link to="/detail">
+              <button>dd</button>
+            </Link>
+          </div>
         </div>
-      </form>
+      </div>
     </div>
   );
 }
