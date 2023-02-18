@@ -1,5 +1,5 @@
 /* DetailProfile */
-.DetailProfileForm {
+.IdealProfileForm {
   display: flex;
   justify-content: center;
   margin: 0 auto;
@@ -9,7 +9,7 @@
 }
 
 /* Input Text(입력란) */
-.DetailProfileInputs {
+.IdealProfileInputs {
   width: 300px;
   height: inherit;
   margin-top: 10px;

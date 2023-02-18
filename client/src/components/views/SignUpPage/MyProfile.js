@@ -1,66 +1,60 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import Select from 'react-select';
-import { loginUser } from '../../../_actions/user_action';
-import './MyProfile.css';
-import { ageRangeData } from './AttributeData';
-import DetailProfile from './DetailProfile';
-import { useNavigate, Route, Routes, Link } from 'react-router-dom';
-import IdealTypeProfile from './IdealTypeProfile';
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import Select from "react-select";
+import { loginUser } from "../../../_actions/user_action";
+import "./MyProfile.css";
+import { ageRangeData } from "./AttributeData";
+import DetailProfile from "./DetailProfile";
+import { useNavigate, Route, Routes, Link } from "react-router-dom";
+import IdealProfile from "./IdealProfile";
 
 // 회원가입 페이지
 function MyProfile(props) {
-  <Routes>
-    <Route path="/" element={<MyProfile />}></Route>
-    <Route path="/detail" element={<DetailProfile />}></Route>
-    <Route path="/ideal" element={<IdealTypeProfile />}></Route>
-  </Routes>;
-
   // 회원가입 입력요소(기본)
   // id, pw, pw확인, name, gender, age, email(학교)
   // studentId(학번), externalId(카카오 아이디)
   let navigation = useNavigate();
 
   // ID
-  const [id, setID] = useState('');
-  const [idMsg, setIDMsg] = useState('');
+  const [id, setID] = useState("");
+  const [idMsg, setIDMsg] = useState("");
   const [isID, setIsID] = useState(false);
 
   // PW
-  const [pw, setPW] = useState('');
-  const [pwMsg, setPWMsg] = useState('');
+  const [pw, setPW] = useState("");
+  const [pwMsg, setPWMsg] = useState("");
   const [isPW, setIsPW] = useState(false);
 
   // pwConfirm
-  const [confirmPW, setConfirmPW] = useState('');
-  const [confirmPWMsg, setConfirmPWMsg] = useState('');
+  const [confirmPW, setConfirmPW] = useState("");
+  const [confirmPWMsg, setConfirmPWMsg] = useState("");
   const [isConfirmPW, setIsConfirmPW] = useState(false);
 
   // 이름 설정
-  const [name, setName] = useState('');
-  const [nameMsg, setNameMsg] = useState('');
+  const [name, setName] = useState("");
+  const [nameMsg, setNameMsg] = useState("");
   const [isName, setIsName] = useState(false);
 
   // 성별
-  const [gender, setGender] = useState('');
+  const [gender, setGender] = useState("");
 
   // 나이(dropdown)
   // 드롭다운 기능 : 다른 곳 클릭했을 시 자동으로 사라짐
-  const [age, setAge] = useState('나이');
+  const [age, setAge] = useState("나이");
 
   // email(@konkuk.ac.kr 필수입력)
-  const [email, setEmail] = useState('');
-  const [emailMsg, setEmailMsg] = useState('');
+  const [email, setEmail] = useState("");
+  const [emailMsg, setEmailMsg] = useState("");
   const [isEmail, setIsEmail] = useState(false);
 
   // studentID
-  const [studentID, setStudentID] = useState('');
-  const [studentIDMsg, setStudentIDMsg] = useState('');
+  const [studentID, setStudentID] = useState("");
+  const [studentIDMsg, setStudentIDMsg] = useState("");
   const [isStudentID, setIsStudentID] = useState(false);
 
   // kakaoID
-  const [kakaoID, setKakaoID] = useState('');
-  const [kakaoIDMsg, setKakaoMSg] = useState('');
+  const [kakaoID, setKakaoID] = useState("");
+  const [kakaoIDMsg, setKakaoMSg] = useState("");
   const [isKakaoID, setIsKakaoID] = useState(false);
 
   // useEffect(() => {
@@ -75,12 +69,12 @@ function MyProfile(props) {
   // 입력함수
   const onIDHandler = (e) => {
     setID(e.currentTarget.value);
-    localStorage.setItem('id', id);
+    localStorage.setItem("id", id);
     if (e.currentTarget.value.length < 5) {
-      setIDMsg('5글자 이상 입력해주세요.');
+      setIDMsg("5글자 이상 입력해주세요.");
       setIsID(false);
     } else {
-      setIDMsg('올바른 형식입니다.');
+      setIDMsg("올바른 형식입니다.");
       setIsID(true);
     }
   };
@@ -93,11 +87,11 @@ function MyProfile(props) {
 
     if (pwRegex.test(pwCurrent)) {
       console.log(pwRegex.test(pwCurrent));
-      setPWMsg('안전한 비밀번호에요.');
+      setPWMsg("안전한 비밀번호에요.");
       setIsPW(true);
-      localStorage.setItem('pw', pw);
+      localStorage.setItem("pw", pw);
     } else {
-      setPWMsg('숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!');
+      setPWMsg("숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!");
       setIsPW(false);
     }
   };
@@ -107,11 +101,11 @@ function MyProfile(props) {
     setConfirmPW(pwConfirmCurrent);
 
     if (pw == pwConfirmCurrent) {
-      setConfirmPWMsg('똑같은 비밀번호입니다.');
+      setConfirmPWMsg("똑같은 비밀번호입니다.");
       setIsConfirmPW(true);
-      localStorage.setItem('confirmPW', confirmPW);
+      localStorage.setItem("confirmPW", confirmPW);
     } else {
-      setConfirmPWMsg('비밀번호가 다릅니다!');
+      setConfirmPWMsg("비밀번호가 다릅니다!");
       setIsConfirmPW(false);
     }
   };
@@ -120,12 +114,12 @@ function MyProfile(props) {
     setName(e.currentTarget.value);
 
     if (e.currentTarget.value.length < 2 || e.currentTarget.value.length > 10) {
-      setNameMsg('2글자 이상 10글자 미만으로 입력해주세요.');
+      setNameMsg("2글자 이상 10글자 미만으로 입력해주세요.");
       setIsName(false);
     } else {
-      setNameMsg('올바른 형식입니다.');
+      setNameMsg("올바른 형식입니다.");
       setIsName(true);
-      localStorage.setItem('name', name);
+      localStorage.setItem("name", name);
     }
   };
 
@@ -142,12 +136,12 @@ function MyProfile(props) {
     setEmail(emailCurrent);
 
     if (!emailRegex.test(emailCurrent)) {
-      setEmailMsg('이메일 형식이 틀렸어요! 다시 확인해주세요.');
+      setEmailMsg("이메일 형식이 틀렸어요! 다시 확인해주세요.");
       setIsEmail(false);
     } else {
-      setEmailMsg('올바른 이메일 형식이에요:)');
+      setEmailMsg("올바른 이메일 형식이에요:)");
       setIsEmail(true);
-      localStorage.setItem('email', email);
+      localStorage.setItem("email", email);
     }
   };
 
@@ -158,24 +152,24 @@ function MyProfile(props) {
     const isNum = currentStudentID.substr(currentStudentID.length - 1, 1);
 
     if (currentStudentID.length !== 9) {
-      setStudentIDMsg('학번은 9자리입니다!');
+      setStudentIDMsg("학번은 9자리입니다!");
       setIsStudentID(false);
     } else {
       setStudentIDMsg(`${shortID}학번이시네요 반갑습니다!`);
       setIsStudentID(true);
-      localStorage.setItem('studentID', studentID);
+      localStorage.setItem("studentID", studentID);
     }
 
     if (isNaN(isNum)) {
-      setStudentIDMsg('숫자만 입력해주세요.');
+      setStudentIDMsg("숫자만 입력해주세요.");
       setIsStudentID(false);
     }
   };
 
   const onKakaoIDHandler = (e) => {
     setKakaoID(e.currentTarget.value);
-    setKakaoMSg('매칭시 교환되는 아이디입니다.\n신중하게 입력해주세요.');
-    localStorage.setItem('kakaoID', kakaoID);
+    setKakaoMSg("매칭시 교환되는 아이디입니다.\n신중하게 입력해주세요.");
+    localStorage.setItem("kakaoID", kakaoID);
   };
 
   let MyProfileData = {
@@ -192,7 +186,7 @@ function MyProfile(props) {
 
   const localStorageGetItem = (key, value) => {
     const val =
-      localStorage.getItem(key) !== '' ? localStorage.getItem(key) : value;
+      localStorage.getItem(key) !== "" ? localStorage.getItem(key) : value;
     return val;
   };
 
@@ -200,7 +194,7 @@ function MyProfile(props) {
     // register action 부분을 여기에 미리 작성
   };
 
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState("");
   const selectComponent = {
     DP: <DetailProfile />,
   };
@@ -216,7 +210,7 @@ function MyProfile(props) {
             type="text"
           ></input>
           {id.length > 0 && (
-            <div className={`message ${isID ? 'success' : 'error'}`}>
+            <div className={`message ${isID ? "success" : "error"}`}>
               {idMsg}
             </div>
           )}
@@ -228,7 +222,7 @@ function MyProfile(props) {
             type="password"
           ></input>
           {pw.length > 0 && (
-            <div className={`message ${isPW ? 'success' : 'error'}`}>
+            <div className={`message ${isPW ? "success" : "error"}`}>
               {pwMsg}
             </div>
           )}
@@ -241,7 +235,7 @@ function MyProfile(props) {
             id="confirmPW"
           ></input>
           {confirmPW.length > 0 && (
-            <div className={`message ${isConfirmPW ? 'success' : 'error'}`}>
+            <div className={`message ${isConfirmPW ? "success" : "error"}`}>
               {confirmPWMsg}
             </div>
           )}
@@ -253,7 +247,7 @@ function MyProfile(props) {
             type="text"
           ></input>
           {name.length > 0 && (
-            <div className={`message ${isName ? 'success' : 'error'}`}>
+            <div className={`message ${isName ? "success" : "error"}`}>
               {nameMsg}
             </div>
           )}
@@ -265,7 +259,7 @@ function MyProfile(props) {
                 id="man"
                 name="gender"
                 value="남자"
-                checked={gender === '남자'}
+                checked={gender === "남자"}
                 onChange={onGenderHandler}
               ></input>
               남자
@@ -276,7 +270,7 @@ function MyProfile(props) {
                 id="woman"
                 name="gender"
                 value="여자"
-                checked={gender === '여자'}
+                checked={gender === "여자"}
                 onChange={onGenderHandler}
               ></input>
               여자
@@ -286,7 +280,7 @@ function MyProfile(props) {
           <Select
             className="ageDropDown"
             options={ageRangeData}
-            placeholder={'나이'}
+            placeholder={"나이"}
           />
 
           <input
@@ -296,7 +290,7 @@ function MyProfile(props) {
             value={email}
           ></input>
           {email.length > 0 && (
-            <div className={`message ${isEmail ? 'success' : 'error'}`}>
+            <div className={`message ${isEmail ? "success" : "error"}`}>
               {emailMsg}
             </div>
           )}
@@ -308,7 +302,7 @@ function MyProfile(props) {
             type="text"
           ></input>
           {studentID.length > 0 && (
-            <div className={`message ${isStudentID ? 'success' : 'error'}`}>
+            <div className={`message ${isStudentID ? "success" : "error"}`}>
               {studentIDMsg}
             </div>
           )}
@@ -325,7 +319,7 @@ function MyProfile(props) {
             <button
               className="footerButton"
               onClick={() => {
-                navigation('/detailprofile');
+                navigation("/detailprofile");
               }}
             >
               다음

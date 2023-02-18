@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./DetailProfile.css";
+import "./IdealProfile.css";
 import {
   bodyTypeData,
   departmentData,
@@ -14,7 +14,7 @@ import {
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
 
-function DetailProfile() {
+function IdealProfile() {
   // 키
   const [height, setHeight] = useState("");
   const [heightMsg, setHeightMsg] = useState("");
@@ -49,7 +49,7 @@ function DetailProfile() {
   const [secondPriority, setSecondPriority] = useState("");
   const [thirdPriority, setThirdPriority] = useState("");
 
-  let navigation = useNavigate();
+  const navigation = useNavigate();
 
   // 입력함수
   const onHeightHandler = (e) => {
@@ -119,7 +119,7 @@ function DetailProfile() {
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
-    let DetailProfileData = {
+    let IdealProfileData = {
       height: height,
       bodyType: bodyType,
       address: address,
@@ -139,9 +139,9 @@ function DetailProfile() {
 
   // react-hook-form 알아보고 적용하기
   return (
-    <div className="DetailProfilePage" id="DetailProfile">
-      <div className="DetailProfileForm" onSubmit={onSubmitHandler}>
-        <div className="DetailProfileInputs">
+    <div className="IdealProfilePage" id="IdealProfile">
+      <div className="IdealProfileForm" onSubmit={onSubmitHandler}>
+        <div className="IdealProfileInputs">
           <input
             onChange={onHeightHandler}
             value={height}
@@ -238,15 +238,14 @@ function DetailProfile() {
             styles={selectStyle}
             maxMenuHeight={220}
           />
-
           <div className="nextButton">
             <button
               className="footerButton"
               onClick={() => {
-                navigation("/idealprofile");
+                navigation("/detailprofile");
               }}
             >
-              다음
+              제출
             </button>
           </div>
         </div>
@@ -259,4 +258,4 @@ const DropDownComponent = (props) => {
   <div className={props.classname}></div>;
 };
 
-export default DetailProfile;
+export default IdealProfile;
