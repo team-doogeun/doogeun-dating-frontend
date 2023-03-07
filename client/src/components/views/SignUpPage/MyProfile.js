@@ -3,10 +3,11 @@ import { useDispatch } from "react-redux";
 import Select from "react-select";
 import { loginUser } from "../../../_actions/user_action";
 import "./MyProfile.css";
-import { ageRangeData } from "./AttributeData";
+import { ageData } from "./AttributeData";
 import DetailProfile from "./DetailProfile";
-import { useNavigate, Route, Routes, Link } from "react-router-dom";
-import IdealProfile from "./IdealProfile";
+import { useNavigate } from "react-router-dom";
+import NextPopupModal from "../SmallComponent/NextPopupModal";
+import ModalComponent from "../SmallComponent/ModalComponent";
 
 // 회원가입 페이지
 function MyProfile(props) {
@@ -279,7 +280,7 @@ function MyProfile(props) {
 
           <Select
             className="ageDropDown"
-            options={ageRangeData}
+            options={ageData}
             placeholder={"나이"}
           />
 
@@ -315,16 +316,11 @@ function MyProfile(props) {
           ></input>
           {kakaoID.length > 0 && <div className="kakaoIDMsg">{kakaoIDMsg}</div>}
 
-          <div className="nextButton">
-            <button
-              className="footerButton"
-              onClick={() => {
-                navigation("/detailprofile");
-              }}
-            >
-              다음
-            </button>
-          </div>
+          <ModalComponent
+            mainContent="NextPage"
+            contentName="다음"
+            nextPageName="/DetailProfilePage"
+          />
         </div>
       </div>
     </div>

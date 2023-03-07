@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./IdealProfile.css";
 import {
+  ageRangeData,
   bodyTypeData,
   departmentData,
   addressData,
@@ -9,7 +10,6 @@ import {
   hobbyData,
   drinkData,
   smokeData,
-  priorityData,
 } from "./AttributeData";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
@@ -142,7 +142,16 @@ function IdealProfile() {
     <div className="IdealProfilePage" id="IdealProfile">
       <div className="IdealProfileForm" onSubmit={onSubmitHandler}>
         <div className="IdealProfileInputs">
+          <Select
+            className="age"
+            placeholder="나이"
+            options={ageRangeData}
+            isSearchable={false}
+            isClearable={true}
+          />
+
           <input
+            className="height"
             onChange={onHeightHandler}
             value={height}
             type="text"
@@ -213,31 +222,6 @@ function IdealProfile() {
             isSearchable={false}
           />
 
-          {/* 우선순위 */}
-          <Select
-            className="firstPriority"
-            placeholder="우선순위 1"
-            options={priorityData}
-            isSearchable={false}
-            styles={selectStyle}
-            maxMenuHeight={220}
-          />
-          <Select
-            className="secondPriority"
-            placeholder="우선순위 2"
-            options={priorityData}
-            isSearchable={false}
-            styles={selectStyle}
-            maxMenuHeight={220}
-          />
-          <Select
-            className="thirdPriority"
-            placeholder="우선순위 3"
-            options={priorityData}
-            isSearchable={false}
-            styles={selectStyle}
-            maxMenuHeight={220}
-          />
           <div className="nextButton">
             <button
               className="footerButton"
@@ -253,9 +237,5 @@ function IdealProfile() {
     </div>
   );
 }
-
-const DropDownComponent = (props) => {
-  <div className={props.classname}></div>;
-};
 
 export default IdealProfile;

@@ -140,7 +140,7 @@ function DetailProfile() {
   // react-hook-form 알아보고 적용하기
   return (
     <div className="DetailProfilePage" id="DetailProfile">
-      <div className="DetailProfileForm" onSubmit={onSubmitHandler}>
+      <div className="DetailProfileForm">
         <div className="DetailProfileInputs">
           <input
             onChange={onHeightHandler}

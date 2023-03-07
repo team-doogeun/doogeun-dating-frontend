@@ -88,3 +88,20 @@
   grid-template-rows: 1fr;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
+
+.nextButton {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.footerButton {
+  width: 132px;
+  height: 50px;
+  color: #ffffff;
+  border-radius: 0.33rem;
+  background-color: palevioletred;
+  border: none;
+  font-weight: bold;
+  letter-spacing: 4px;
+  cursor: pointer;
+}
