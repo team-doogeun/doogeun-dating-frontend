@@ -15,6 +15,7 @@ const NextPopupModal = (props) => {
         <button
           className="leftButton"
           onClick={() => {
+            // ** 네비 경로를 가변적으로 사용가능 해야됨 **
             navigation("/detailProfile");
             console.log(pageName);
           }}

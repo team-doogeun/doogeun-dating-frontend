@@ -53,28 +53,36 @@ function IdealProfile() {
 
   // 입력함수
   const onHeightHandler = (e) => {
-    setHeight(e.currentTarget.value);
+    const nowHeight = e.currentTarget.value;
+    setHeight(nowHeight);
 
     if (100 < e.currentTarget.value || e.currentTarget.value > 250) {
       setHeightMsg("키는 100cm 이상 250cm 이하로 입력바랍니다.");
       setIsHeight(false);
+      localStorage.setItem("MyHeight", "");
     } else {
       setHeightMsg("올바른 형식입니다.");
       setIsHeight(true);
+      localStorage.setItem("MyHeight", nowHeight);
     }
   };
 
   const onBodyTypeHandler = (e) => {
-    setBodyType(e.target.value);
-    console.log(e.target.value);
+    const nowBodyType = e.currentTarget.value;
+    setBodyType(nowBodyType);
+    localStorage.setItem("MyHeight", nowBodyType);
   };
 
   const onAddressHandler = (e) => {
-    setAddress(e.target.value);
+    const nowAddress = e.currentTarget.value;
+    setAddress(nowAddress);
+    localStorage.setItem("MyAddress", nowAddress);
   };
 
-  const onDepartMentHandler = (e) => {
-    setDepartment(e.target.value);
+  const onDepartmentHandler = (e) => {
+    const nowDepartment = e.currentTarget.value;
+    setDepartment(nowDepartment);
+    localStorage.setItem("MyAddress", nowDepartment);
   };
 
   const onCharacterHandler = (e) => {
@@ -88,15 +96,22 @@ function IdealProfile() {
   };
 
   const onMBTIHandler = (e) => {
-    setMBTI(e.target.value);
+    const nowMBTI = e.currentTarget.value;
+    setMBTI(nowMBTI);
+    localStorage.setItem("MyMBTI", nowMBTI);
   };
 
   const onDrinkHandler = (e) => {
-    setDrink(e.target.value);
+    const nowDrink = e.currentTarget.value;
+    console.log(nowDrink);
+    setDrink(nowDrink);
+    localStorage.setItem("MyDrink", nowDrink);
   };
 
   const onSmokeHandler = (e) => {
-    setSmoke(e.target.value);
+    const nowSmoke = e.currentTarget.value;
+    setSmoke(nowSmoke);
+    localStorage.setItem("MySmoke", nowSmoke);
   };
 
   // 우선순위가 겹치면!
@@ -214,6 +229,7 @@ function IdealProfile() {
             placeholder="음주"
             options={drinkData}
             isSearchable={false}
+            onChange={onDrinkHandler}
           />
           <Select
             className="smoke"

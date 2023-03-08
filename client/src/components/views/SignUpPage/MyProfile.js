@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import Select from "react-select";
 import { loginUser } from "../../../_actions/user_action";
@@ -69,108 +69,119 @@ function MyProfile(props) {
 
   // 입력함수
   const onIDHandler = (e) => {
-    setID(e.currentTarget.value);
-    localStorage.setItem("id", id);
-    if (e.currentTarget.value.length < 5) {
+    const nowID = e.currentTarget.value;
+    setID(nowID);
+
+    if (nowID.length < 5) {
       setIDMsg("5글자 이상 입력해주세요.");
       setIsID(false);
+      localStorage.setItem("id", "");
     } else {
       setIDMsg("올바른 형식입니다.");
       setIsID(true);
+      localStorage.setItem("id", nowID);
     }
   };
 
   const onPWHandler = (e) => {
     // Regex : 입력규칙 -> 숫자+영문자+특수문자 조합으로 8자리 이상
     const pwRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-    const pwCurrent = e.currentTarget.value;
-    setPW(pwCurrent);
+    const nowPW = e.currentTarget.value;
+    setPW(nowPW);
 
-    if (pwRegex.test(pwCurrent)) {
-      console.log(pwRegex.test(pwCurrent));
+    if (pwRegex.test(nowPW)) {
+      console.log(pwRegex.test(nowPW));
       setPWMsg("안전한 비밀번호에요.");
       setIsPW(true);
-      localStorage.setItem("pw", pw);
+      localStorage.setItem("pw", nowPW);
     } else {
       setPWMsg("숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!");
       setIsPW(false);
+      localStorage.setItem("pw", "");
     }
   };
 
   const onConfirmPWHandler = (e) => {
-    const pwConfirmCurrent = e.currentTarget.value;
-    setConfirmPW(pwConfirmCurrent);
+    const nowPWConfirm = e.currentTarget.value;
+    setConfirmPW(nowPWConfirm);
 
-    if (pw == pwConfirmCurrent) {
+    if (pw === nowPWConfirm) {
       setConfirmPWMsg("똑같은 비밀번호입니다.");
       setIsConfirmPW(true);
-      localStorage.setItem("confirmPW", confirmPW);
+      localStorage.setItem("confirmPW", nowPWConfirm);
     } else {
       setConfirmPWMsg("비밀번호가 다릅니다!");
       setIsConfirmPW(false);
+      localStorage.setItem("confirmPW", "");
     }
   };
 
   const onNameHandler = (e) => {
-    setName(e.currentTarget.value);
+    const nowName = e.currentTarget.value;
+    setName(nowName);
 
-    if (e.currentTarget.value.length < 2 || e.currentTarget.value.length > 10) {
+    if (nowName.length < 2 || nowName.length > 10) {
       setNameMsg("2글자 이상 10글자 미만으로 입력해주세요.");
       setIsName(false);
+      localStorage.setItem("name", "");
     } else {
       setNameMsg("올바른 형식입니다.");
       setIsName(true);
-      localStorage.setItem("name", name);
+      localStorage.setItem("name", nowName);
     }
   };
 
   const onGenderHandler = (e) => {
     // currentTargetValue -> 부모 tag까지 불러옴 -> 길어서 부모까지 불러옴
     // targetValue -> 자식 tag만 불러옴
-    setGender(e.target.value);
+    setGender(e.currentTarget.value);
   };
 
   const onEmailHandler = (e) => {
     const emailRegex =
       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    const emailCurrent = e.target.value;
-    setEmail(emailCurrent);
+    const nowEmail = e.currentTarget.value;
+    setEmail(nowEmail);
 
-    if (!emailRegex.test(emailCurrent)) {
+    if (!emailRegex.test(nowEmail)) {
       setEmailMsg("이메일 형식이 틀렸어요! 다시 확인해주세요.");
       setIsEmail(false);
+      localStorage.setItem("email", "");
     } else {
       setEmailMsg("올바른 이메일 형식이에요:)");
       setIsEmail(true);
-      localStorage.setItem("email", email);
+      localStorage.setItem("email", nowEmail);
     }
   };
 
   const onStudentIDHandler = (e) => {
-    const currentStudentID = e.target.value;
-    setStudentID(currentStudentID);
-    const shortID = currentStudentID.substr(2, 2);
-    const isNum = currentStudentID.substr(currentStudentID.length - 1, 1);
+    const nowStudentID = e.currentTarget.value;
+    setStudentID(nowStudentID);
+    const shortID = nowStudentID.substr(2, 2);
+    const isNum = nowStudentID.substr(nowStudentID.length - 1, 1);
 
-    if (currentStudentID.length !== 9) {
+    if (nowStudentID.length !== 9) {
       setStudentIDMsg("학번은 9자리입니다!");
       setIsStudentID(false);
+      localStorage.setItem("studentID", "");
     } else {
       setStudentIDMsg(`${shortID}학번이시네요 반갑습니다!`);
       setIsStudentID(true);
-      localStorage.setItem("studentID", studentID);
+      localStorage.setItem("studentID", nowStudentID);
     }
 
     if (isNaN(isNum)) {
       setStudentIDMsg("숫자만 입력해주세요.");
       setIsStudentID(false);
+      localStorage.setItem("studentID", "");
     }
   };
 
   const onKakaoIDHandler = (e) => {
-    setKakaoID(e.currentTarget.value);
+    const nowKakaoID = e.currentTarget.value;
+    setKakaoID(nowKakaoID);
     setKakaoMSg("매칭시 교환되는 아이디입니다.\n신중하게 입력해주세요.");
-    localStorage.setItem("kakaoID", kakaoID);
+    localStorage.setItem("kakaoID", nowKakaoID);
   };
 
   let MyProfileData = {
@@ -193,11 +204,6 @@ function MyProfile(props) {
 
   const onSubmitHandler = (e) => {
     // register action 부분을 여기에 미리 작성
-  };
-
-  const [content, setContent] = useState("");
-  const selectComponent = {
-    DP: <DetailProfile />,
   };
 
   return (
