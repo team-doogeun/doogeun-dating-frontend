@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import './NavBar.css';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
-import ModalComponent from '../SmallComponent/ModalComponent';
+import React, { useState } from "react";
+import "./NavBar.css";
+import { BrowserRouter as Router, Link } from "react-router-dom";
+import ModalComponent from "../SmallComponent/ModalComponent";
 
 function NavBar() {
   return (
@@ -27,11 +27,15 @@ function NavBar() {
           />
         </div>
         <div className="buttons__right">
-          <ModalComponent mainContent="Login" contentName="로그인" />
+          <ModalComponent
+            mainContent="Login"
+            contentName="로그인"
+            header="로그인"
+          />
           <button
             className="buttons"
             onClick={(e) => {
-              window.location.href = '/signup';
+              window.location.href = "/signup";
             }}
           >
             회원가입

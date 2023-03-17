@@ -6,7 +6,7 @@ import "./MyProfile.css";
 import { ageData } from "./AttributeData";
 import DetailProfile from "./DetailProfile";
 import { useNavigate } from "react-router-dom";
-import NextPopupModal from "../SmallComponent/NextPopupModal";
+import NextPopupModal from "../SmallComponent/NextPopupModal/NextPopupModal";
 import ModalComponent from "../SmallComponent/ModalComponent";
 
 // 회원가입 페이지
@@ -325,7 +325,8 @@ function MyProfile(props) {
           <ModalComponent
             mainContent="NextPage"
             contentName="다음"
-            nextPageName="/DetailProfilePage"
+            header="알림"
+            nextPage="detailprofile"
           />
         </div>
       </div>

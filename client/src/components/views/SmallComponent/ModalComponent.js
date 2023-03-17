@@ -2,8 +2,8 @@ import React from "react";
 import { useState } from "react";
 import "./ModalComponent.css";
 import SignIn from "../SignInPage/SignIn";
-import HobbyButton from "./hobby/HobbyButton";
-import NextPopupModal from "./NextPopupModal";
+import NextPopupModal from "./NextPopupModal/NextPopupModal";
+import HobbyPopupModal from "./hobby/HobbyPopupModal";
 
 const ModalComponent = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -37,17 +37,20 @@ const ModalComponent = (props) => {
       <ModalContent
         open={modalOpen}
         close={closeModal}
-        header={props.contentName}
+        header={props.header}
         mainContent={props.mainContent}
-        pageName={props.nextPageName}
+        nextPage={props.nextPage}
       ></ModalContent>
     </React.Fragment>
   );
 };
 
 const ModalContent = (props) => {
-  const { open, close, header, mainContent, pageName } = props;
+  const { open, close, header, mainContent, nextPage } = props;
 
+  const [visible, setVisible] = useState(false);
+
+  // 이거 왜 있는거임?
   const chooseMainContent = (x) => {
     switch (x) {
       case "Login":
@@ -64,7 +67,7 @@ const ModalContent = (props) => {
   return (
     <div className={open ? "openModal modal" : "modal"}>
       {open ? (
-        <section>
+        <section className={mainContent}>
           <header>
             {header}
             <button className="close" onClick={close}>
@@ -72,18 +75,33 @@ const ModalContent = (props) => {
               &times;
             </button>
           </header>
-          <main className={chooseMainContent(mainContent)}>
+          <main>
             {
               {
                 Login: <SignIn />,
-                Hobby: <HobbyButton />,
-                NextPage: <NextPopupModal pageName={props.pageName} />,
+                Hobby: <HobbyPopupModal />,
+                NextPage: <NextPopupModal />,
               }[mainContent]
             }
           </main>
-          <footer>
-            <button className="close" onClick={close}>
-              close
+          <footer className="footerContainer">
+            {mainContent === "NextPage" ? (
+              <a href={`/${nextPage}`}>
+                <button className="yesButton">
+                  <span className="text">예</span>
+                </button>
+              </a>
+            ) : null}
+
+            <button
+              className={mainContent === "NextPage" ? "noButton" : "close"}
+              onClick={close}
+            >
+              {mainContent === "NextPage" ? (
+                <span>아니오</span>
+              ) : (
+                <span>close</span>
+              )}
             </button>
           </footer>
         </section>

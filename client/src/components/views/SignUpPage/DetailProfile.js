@@ -13,6 +13,7 @@ import {
 } from "./AttributeData";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
+import ModalComponent from "../SmallComponent/ModalComponent";
 
 function DetailProfile() {
   // 키
@@ -199,6 +200,11 @@ function DetailProfile() {
             }}
           />
           {/* hobby1 hobby2 : 디자인 고민 */}
+          <ModalComponent
+            mainContent="Hobby"
+            contentName="취미"
+            header="취미"
+          />
 
           <Select
             className="drink"
@@ -239,16 +245,12 @@ function DetailProfile() {
             maxMenuHeight={220}
           />
 
-          <div className="nextButton">
-            <button
-              className="footerButton"
-              onClick={() => {
-                navigation("/idealprofile");
-              }}
-            >
-              다음
-            </button>
-          </div>
+          <ModalComponent
+            mainContent="NextPage"
+            contentName="다음"
+            header="알림"
+            nextPage="idealprofile"
+          />
         </div>
       </div>
     </div>

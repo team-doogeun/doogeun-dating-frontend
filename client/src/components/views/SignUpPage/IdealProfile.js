@@ -13,6 +13,7 @@ import {
 } from "./AttributeData";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
+import ModalComponent from "../SmallComponent/ModalComponent";
 
 function IdealProfile() {
   // 키
@@ -222,7 +223,11 @@ function IdealProfile() {
               return "없는데용:)";
             }}
           />
-          {/* hobby1 hobby2 : 디자인 고민 */}
+          <ModalComponent
+            mainContent="Hobby"
+            contentName="취미"
+            header="취미"
+          />
 
           <Select
             className="drink"
