@@ -24,11 +24,24 @@ const ModalComponent = (props) => {
   // 임시로 props contentName 지정
   // 나중에 변경해줘야함
   // ***
+
+  const chooseContentName = (x) => {
+    switch (x) {
+      case "로그인":
+        return "btn-hover pink Login";
+      case "취미":
+        return "btn-hover pink hobbyButton";
+      case "다음":
+        return "btn-hover pink Next";
+      default:
+        return "";
+    }
+  };
   return (
     <React.Fragment>
-      <div className={props.contentName === "다음" ? "nextButton" : ""}>
+      <div className="buttonContainer">
         <button
-          className={props.contentName === "다음" ? "footerButton" : ""}
+          className={chooseContentName(props.contentName)}
           onClick={openModal}
         >
           {props.contentName}
@@ -47,22 +60,6 @@ const ModalComponent = (props) => {
 
 const ModalContent = (props) => {
   const { open, close, header, mainContent, nextPage } = props;
-
-  const [visible, setVisible] = useState(false);
-
-  // 이거 왜 있는거임?
-  const chooseMainContent = (x) => {
-    switch (x) {
-      case "Login":
-        return "login";
-      case "Hobby":
-        return "hobby";
-      case "NextPage":
-        return "nextpage";
-      default:
-        return "";
-    }
-  };
 
   return (
     <div className={open ? "openModal modal" : "modal"}>

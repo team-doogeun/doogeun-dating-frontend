@@ -33,7 +33,7 @@ function NavBar() {
             header="로그인"
           />
           <button
-            className="buttons"
+            className="signUp"
             onClick={(e) => {
               window.location.href = "/signup";
             }}

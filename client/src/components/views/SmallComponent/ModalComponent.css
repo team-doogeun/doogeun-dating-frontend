@@ -13,11 +13,12 @@
   cursor: pointer;
   border: 0;
 }
+/* section height 조절 */
 .modal > section {
   min-width: 300px;
   max-width: 600px;
   min-height: 260px;
-  max-height: 350px;
+  max-height: 500px;
   overflow: auto;
   margin: 0 auto;
   border-radius: 0.3rem;
@@ -85,23 +86,70 @@
   }
 }
 
-.nextButton {
+/* 취미 버튼 */
+.btn-hover {
+  width: 150px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  margin: 10px;
+  height: 35px;
   text-align: center;
+  border: none;
+  background-size: 300% 100%;
+
+  border-radius: 15px;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+.btn-hover:hover {
+  background-position: 100% 0;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+.btn-hover:focus {
+  outline: none;
+}
+
+.btn-hover.pink {
+  background-image: linear-gradient(
+    to right,
+    #ed6ea0,
+    #ec8c69,
+    #f7186a,
+    #fbb03b
+  );
+  box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
+}
+
+/* 버튼 */
+.buttonContainer {
+  text-align: center;
+}
+
+/* 취미 버튼 */
+.hobbyButton {
+  width: 280px;
+  height: 40px;
+  margin-top: 20px;
+  border-radius: 0.33rem;
+}
+
+.Login {
+  width: 100px;
+}
+
+/* 다음 버튼 */
+.Next {
   margin-top: 20px;
 }
 
-.footerButton {
-  width: 132px;
-  height: 50px;
-  color: #ffffff;
-  border-radius: 0.33rem;
-  background-color: palevioletred;
-  border: none;
-  font-weight: bold;
-  letter-spacing: 4px;
-  cursor: pointer;
-}
-
+/* 예 아니오 버튼 */
 .footerContainer {
   display: flex;
   flex-direction: row;
@@ -167,7 +215,7 @@
   .yesButton,
   .noButton {
     font-size: 15px;
-    height: 50px;
+    height: 30px;
   }
 
   .yesButton span,
@@ -176,6 +224,7 @@
   }
 }
 
+/* x로 닫는 버튼 */
 .close {
   padding: 6px 12px;
   color: #fff;
