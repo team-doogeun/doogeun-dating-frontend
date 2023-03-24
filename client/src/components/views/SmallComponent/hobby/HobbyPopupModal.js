@@ -1,16 +1,18 @@
-import React, { useState } from "react";
-import "./HobbyPopupModal.css";
-import { hobbyData } from "../../SignUpPage/AttributeData";
+import React, { useState } from 'react';
+import './HobbyPopupModal.css';
+import { hobbyData } from '../../SignUpPage/AttributeData';
 
 function HobbyPopupModal() {
   let buttonCheckCount = 0;
 
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState([]);
 
   // 버튼을 최대 3개까지만 누를 수 있게 해야한다
   // 3보다 작다면 함수가 작동 되도록
   // 3이면 함수가 작동 안되도록
   const handleClick = (button) => {
+    if (!selected.includes(button)) selected.push(i.value);
+
     if (0 <= buttonCheckCount && buttonCheckCount < 3) {
       if (selected.includes(button)) {
         setSelected(selected.fliter((item) => item !== button));
@@ -33,9 +35,9 @@ function HobbyPopupModal() {
             <button
               key={i.value}
               onClick={handleClick(i.value)}
-              className={
-                selected.includes(i.value) ? "buttonItem clicked" : "buttonItem"
-              }
+              className={`buttonItem ${
+                selected.includes(i.value) ? 'cliked' : ''
+              }`}
             >
               {i.value}
             </button>

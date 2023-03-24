@@ -35,6 +35,7 @@ const FooterBox = styled.div`
   width: 100%;
   border-top: 1px solid rgb(25, 25, 25);
 
+  margin-bottom: 0;
   padding: 0 20px 0;
 `;
 

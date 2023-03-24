@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import rootReducer from './_reducers';
 import { createStore } from 'redux';
 import NavBar from './components/views/NavBar/NavBar';
+import Footer from './components/views/Footer/Footer';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const store = createStore(rootReducer);
@@ -18,6 +19,7 @@ root.render(
     <Provider store={store}>
       <NavBar />
       <App />
+      <Footer />
     </Provider>
   </BrowserRouter>
 );
