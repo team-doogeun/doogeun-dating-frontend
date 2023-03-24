@@ -15,17 +15,26 @@
 }
 /* section height 조절 */
 .modal > section {
-  min-width: 300px;
+  min-width: 400px;
   max-width: 600px;
   min-height: 260px;
   max-height: 500px;
-  overflow: auto;
+  overflow: visible;
   margin: 0 auto;
   border-radius: 0.3rem;
   background-color: #fff;
   /* 팝업이 열릴때 스르륵 열리는 효과 */
   animation: modal-show 0.3s;
   justify-content: center;
+}
+
+/* 로그인 팝업창 폭 */
+.Login {
+  min-width: 600px;
+}
+
+.Hobby {
+  min-width: 600px;
 }
 
 .modal > section > header {
@@ -140,12 +149,13 @@
   border-radius: 0.33rem;
 }
 
-.Login {
+/* 로그인 버튼 */
+.loginButton {
   width: 100px;
 }
 
 /* 다음 버튼 */
-.Next {
+.nextButton {
   margin-top: 20px;
 }
 

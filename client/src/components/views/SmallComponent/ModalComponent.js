@@ -28,11 +28,11 @@ const ModalComponent = (props) => {
   const chooseContentName = (x) => {
     switch (x) {
       case "로그인":
-        return "btn-hover pink Login";
+        return "btn-hover pink loginButton";
       case "취미":
         return "btn-hover pink hobbyButton";
       case "다음":
-        return "btn-hover pink Next";
+        return "btn-hover pink nextButton";
       default:
         return "";
     }
