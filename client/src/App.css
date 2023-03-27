@@ -5,6 +5,7 @@
   position: relative;
   align-items: center;
   padding-top: 100px;
+  padding-bottom: 200px;
 }
 
 /* 자주 쓰는 tag css 작성 */
@@ -25,6 +26,6 @@ input:focus {
   outline: none;
 }
 
-input[type='radio'] {
+input[type="radio"] {
   display: none;
 }

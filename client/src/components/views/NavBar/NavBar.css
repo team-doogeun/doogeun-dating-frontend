@@ -1,38 +1,22 @@
 .navbar {
-  background-color: white;
+  background-color: pink;
+  color: white;
   height: 60px;
   width: 100%;
   top: 0;
   z-index: 1;
-  border-bottom: 1px solid pink;
   position: fixed;
 }
 
-.navbar-element {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  left: 20px;
+.navbar:hover {
+  color: black;
 }
 
-.menu__left {
-  display: flex;
-  list-style: none;
-  margin-left: 10px;
-  padding: 10px;
-  font-size: 15px;
-}
-
-.menu__left li:hover {
-  color: pink;
-}
-
-.list {
-  align-items: center;
-  justify-content: center;
-  margin-left: 50px;
-  font-size: 20px;
-  font-weight: bold;
+.touchItem {
+  color: white;
+  margin-left: 25px;
+  font-size: 21px;
+  font-weight: 570;
 }
 
 .buttons__right {
@@ -41,17 +25,6 @@
   margin-left: auto;
   margin-right: 20px;
   height: 100%;
-}
-
-.buttons {
-  align-items: center;
-  justify-content: center;
-  margin-right: 30px;
-  border-radius: 12px;
-  font-weight: bold;
-  background-color: lightpink;
-  color: white;
-  border: none;
 }
 
 /* 회원가입 버튼 디자인 */

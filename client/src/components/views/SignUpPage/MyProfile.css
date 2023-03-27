@@ -40,18 +40,13 @@
   color: red;
 }
 
-/* RadioButton */
-.RadioButtonGroup {
+/* gender - Button */
+.genderContainer {
   margin-top: 20px;
 }
-
-.RadioButtonGroup > label {
-  margin-right: 10px;
-}
-
-/* gender */
-.genderCheck1 {
-  background: url("../../../Img/radiobutton.png") no-repeat 97% 50%/15px auto;
+.marginBetween {
+  display: inline-block;
+  width: 20px;
 }
 
 #man {

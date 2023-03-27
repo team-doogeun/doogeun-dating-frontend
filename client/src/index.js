@@ -1,16 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import 'antd/dist/antd.css';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import rootReducer from './_reducers';
-import { createStore } from 'redux';
-import NavBar from './components/views/NavBar/NavBar';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import "antd/dist/antd.css";
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import rootReducer from "./_reducers";
+import { createStore } from "redux";
+import NavBar from "./components/views/NavBar/NavBar";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Footer from "./components/views/Footer/Footer";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 const store = createStore(rootReducer);
 
 root.render(
@@ -18,6 +20,7 @@ root.render(
     <Provider store={store}>
       <NavBar />
       <App />
+      <Footer />
     </Provider>
   </BrowserRouter>
 );

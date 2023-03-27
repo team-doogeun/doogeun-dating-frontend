@@ -259,7 +259,30 @@ function MyProfile(props) {
             </div>
           )}
 
-          <div className="RadioButtonGroup">
+          <div className="genderContainer">
+            <input
+              type="checkbox"
+              class="btn-check"
+              id="btn-check-outlined"
+              autocomplete="off"
+              onChange={onGenderHandler}
+            />
+            <label class="btn btn-outline-primary" for="btn-check-outlined">
+              남자
+            </label>
+            <div className="marginBetween"></div>
+            <input
+              type="checkbox"
+              class="btn-check"
+              id="danger-outlined"
+              autocomplete="off"
+            />
+            <label class="btn btn-outline-danger" for="danger-outlined">
+              여자
+            </label>
+          </div>
+
+          {/* <div className="RadioButtonGroup">
             <label className="genderCheck1">
               <input
                 type="radio"
@@ -282,7 +305,7 @@ function MyProfile(props) {
               ></input>
               여자
             </label>
-          </div>
+          </div> */}
 
           <Select
             className="ageDropDown"
