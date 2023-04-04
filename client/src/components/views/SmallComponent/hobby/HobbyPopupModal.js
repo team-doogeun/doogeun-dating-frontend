@@ -11,8 +11,13 @@ function HobbyPopupModal() {
   // 3보다 작다면 함수가 작동 되도록
   // 3이면 함수가 작동 안되도록
   const handleClick = (button) => {
-    if (!selected.includes(button)) selected.push(i.value);
+    /* 기존의 원본을 살려놓는것이 좋은 코드의 기본 */
+    let arr = [];
 
+    if (!arr.includes(button)) {
+      arr.push(button);
+      setSelected(arr);
+    }
     if (0 <= buttonCheckCount && buttonCheckCount < 3) {
       if (selected.includes(button)) {
         setSelected(selected.fliter((item) => item !== button));
@@ -34,7 +39,7 @@ function HobbyPopupModal() {
           <div key={i.value}>
             <button
               key={i.value}
-              onClick={handleClick(i.value)}
+              onClick={handleClick(`${i.value}`)}
               className={`buttonItem ${
                 selected.includes(i.value) ? 'cliked' : ''
               }`}
