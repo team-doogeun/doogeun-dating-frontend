@@ -19,7 +19,7 @@
   max-width: 600px;
   min-height: 260px;
   max-height: 500px;
-  overflow: visible;
+  overflow: auto;
   margin: 0 auto;
   border-radius: 0.3rem;
   background-color: #fff;
@@ -41,8 +41,12 @@
   position: relative;
   padding: 16px 64px 16px 16px;
   background-color: #f1f1f1;
+  color: black;
   font-weight: 700;
+  font-size: 15px;
+  border-radius: 0.3rem 0.3rem 0 0;
 }
+
 .modal > section > header button {
   position: absolute;
   top: 8px;
@@ -177,7 +181,7 @@
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  font-family: 'Codec cold', sans-serif;
+  font-family: "Codec cold", sans-serif;
   font-size: 22px;
   font-weight: 700;
   height: 30px;
@@ -241,4 +245,9 @@
   background-color: #6c757d;
   border-radius: 5px;
   font-size: 13px;
+}
+
+/* 예 버튼 underline 없앰 */
+.Msg {
+  text-decoration: none;
 }

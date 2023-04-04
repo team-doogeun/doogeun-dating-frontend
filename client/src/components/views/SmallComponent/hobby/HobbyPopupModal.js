@@ -6,18 +6,14 @@ function HobbyPopupModal() {
   let buttonCheckCount = 0;
 
   const [selected, setSelected] = useState([]);
+  const [selectedCount, setSelectedCount] = useState(0);
 
   // 버튼을 최대 3개까지만 누를 수 있게 해야한다
   // 3보다 작다면 함수가 작동 되도록
   // 3이면 함수가 작동 안되도록
   const handleClick = (button) => {
-    /* 기존의 원본을 살려놓는것이 좋은 코드의 기본 */
-    let arr = [];
+    if (!selected.includes(button)) selected.push(i.value);
 
-    if (!arr.includes(button)) {
-      arr.push(button);
-      setSelected(arr);
-    }
     if (0 <= buttonCheckCount && buttonCheckCount < 3) {
       if (selected.includes(button)) {
         setSelected(selected.fliter((item) => item !== button));
@@ -39,7 +35,7 @@ function HobbyPopupModal() {
           <div key={i.value}>
             <button
               key={i.value}
-              onClick={handleClick(`${i.value}`)}
+              onClick={handleClick(i.value)}
               className={`buttonItem ${
                 selected.includes(i.value) ? 'cliked' : ''
               }`}
@@ -52,5 +48,4 @@ function HobbyPopupModal() {
     </div>
   );
 }
-
 export default HobbyPopupModal;

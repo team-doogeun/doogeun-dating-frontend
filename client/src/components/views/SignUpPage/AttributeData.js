@@ -135,7 +135,6 @@ const hobbyData = [
   { value: "무에타이", label: "무에타이", checked: false },
   { value: "검도", label: "검도", checked: false },
   { value: "댄스", label: "댄스", checked: false },
-  { value: "등산", label: "등산", checked: false },
   { value: "산책", label: "산책", checked: false },
   { value: "수영", label: "수영", checked: false },
   { value: "수상스키", label: "수상스키", checked: false },
@@ -165,17 +164,7 @@ const hobbyData = [
   { value: "드럼", label: "드럼", checked: false },
   { value: "피아노", label: "피아노", checked: false },
   { value: "코인노래방", label: "코인노래방", checked: false },
-  { value: "오버워치", label: "오버워치", checked: false },
-  { value: "롤", label: "롤", checked: false },
-  { value: "발로란트", label: "발로란트", checked: false },
-  { value: "메이플", label: "메이플", checked: false },
-  { value: "카트라이더", label: "카트라이더", checked: false },
-  { value: "롤토체스", label: "롤토체스", checked: false },
-  { value: "서든어택", label: "서든어택", checked: false },
-  { value: "마인크래프트", label: "마인크래프트", checked: false },
-  { value: "술", label: "술", checked: false },
   { value: "풋살", label: "풋살", checked: false },
-  { value: "배틀그라운드", label: "배틀그라운드", checked: false },
 ];
 
 const drinkData = [

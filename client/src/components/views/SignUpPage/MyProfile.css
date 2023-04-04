@@ -40,19 +40,14 @@
   color: red;
 }
 
-/* RadioButton */
-.RadioButtonGroup {
+/* gender - Button */
+.genderContainer {
   margin-top: 20px;
 }
-
-.RadioButtonGroup > label {
-  margin-right: 10px;
+.marginBetween {
+  display: inline-block;
+  width: 20px;
 }
-
-/* gender */
-/* .genderCheck1 {
-  background: url("../../../Img/radiobutton.png") no-repeat 97% 50%/15px auto;
-} */
 
 #man {
   width: 30px;
@@ -83,7 +78,7 @@
   padding-left: 10px;
   border-radius: 4px;
   border: 2px solid lightcoral;
-  background: url('../../../Img/dropdown.png') no-repeat 95% 50%/15px auto;
+  background: url("../../../Img/dropdown.png") no-repeat 95% 50%/15px auto;
   font-size: 16px;
 }
 

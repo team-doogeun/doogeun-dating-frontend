@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 function Footer() {
   return (
@@ -27,15 +27,13 @@ function Footer() {
 const FooterBox = styled.div`
   background-color: #f8f8f8;
   color: #8f8f8f !important;
-  font-family: 'NanumSquareR', sans-serif;
-  max-height: 400px;
+  font-family: "NanumSquareR", sans-serif;
+  height: 200px;
   position: relative;
-  transform: translateY(-100%);
   scroll-behavior: smooth;
   width: 100%;
   border-top: 1px solid rgb(25, 25, 25);
-
-  margin-bottom: 0;
+  bottom: 0;
   padding: 0 20px 0;
 `;
 
