@@ -83,7 +83,7 @@ const ModalContent = (props) => {
           </main>
           <footer className="footerContainer">
             {mainContent === "NextPage" ? (
-              <a href={`/${nextPage}`}>
+              <a href={`/${nextPage}`} className="Msg">
                 <button className="yesButton">
                   <span className="text">예</span>
                 </button>

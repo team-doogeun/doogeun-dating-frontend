@@ -36,13 +36,14 @@
   touch-action: manipulation;
 }
 
-.buttonItem:hover {
-  background-color: #f082ac;
-}
-
 /* 왜 css 색깔이 적용 안되나 했더니 */
 /* image 설정을 안해줘서임 */
+.buttonItem:hover {
+  background-image: none;
+  background-color: #cd0e0e;
+}
+
 .clicked {
   background-image: none;
-  background-color: deepskyblue;
+  background-color: rgb(42, 28, 173);
 }

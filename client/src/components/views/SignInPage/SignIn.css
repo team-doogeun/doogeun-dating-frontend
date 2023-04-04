@@ -17,10 +17,14 @@
 
 .InputID {
   margin: 10px 0 0 0;
+  font-size: 14px;
+  color: black;
 }
 
 .InputPW {
   margin: 10px 0;
+  font-size: 14px;
+  color: black;
 }
 
 .SignInButton {

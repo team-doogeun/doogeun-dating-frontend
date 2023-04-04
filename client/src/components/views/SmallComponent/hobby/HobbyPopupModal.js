@@ -2,71 +2,86 @@ import React, { useState } from "react";
 import "./HobbyPopupModal.css";
 import { hobbyData } from "../../SignUpPage/AttributeData";
 
+// function HobbyPopupModal() {
+//   // 왜 갑자기 i.value 값 넣으면 렌더링이 안될까??
+//   // -> 모르겠음 -> 뜯어보니 includes 함수가 적용이 안됨
+//   // 왜 안됐나면 선언할 때 배열로 선언 안해서 그럼
+//   // 지금 버튼 클릭 갯수 구현해야됨
+//   return (
+//     <div className="hobbyContainer">
+//       {hobbyData.map((i) => (
+//         <div>
+//           <HobbyButton key={i.value} value={i.value} label={i.label} />
+//         </div>
+//       ))}
+//     </div>
+//   );
+// }
+
+// 전체 버튼이 하나의 selected 에 저장되는게 아니라
+// 버튼 각각의 selected 값이 존재
+// 왜냐하면 HobbyButton 컴포넌트를 selected와 분리하지 안고 여러개를 만들었기 때문..
 function HobbyPopupModal() {
+  const [selected, setSelected] = useState([]);
   const [selectedCount, setSelectedCount] = useState(0);
+
+  // 버튼을 최대 3개까지만 누를 수 있게 해야한다
+  // 3보다 작다면 함수가 작동 되도록
+  // 3이면 함수가 작동 안되도록
+  const handleClick = (value) => {
+    if (selected.includes(value)) {
+      // 이미 버튼이 눌러져있을 때 누르는 경우
+      // filter : 조건을 통과하는 애만 모은다
+      let newArr = [...selected];
+      setSelected(newArr.filter((item) => item !== value));
+    } else {
+      let newArr = [...selected];
+      setSelected([...newArr, value]);
+    }
+  };
 
   // 버튼 최대 3개까지 컨트롤
   const handleButtonClick = () => {
     if (selectedCount < 3) {
       setSelectedCount(selectedCount + 1);
-      console.log(selectedCount);
+    }
+
+    if (selectedCount >= 3) {
+      setSelectedCount(selectedCount - 1);
     }
   };
 
-  // 버튼 갯수 리셋
-  const handleButtonReset = () => {
-    setSelectedCount(0);
+  // currying 함수
+  // 함수 2개를 묶는 함수
+  const combineFunc = (funcA, funcB) => {
+    return function (value) {
+      funcA(value);
+      funcB();
+    };
   };
 
-  // 왜 갑자기 i.value 값 넣으면 렌더링이 안될까??
-  // -> 모르겠음 -> 뜯어보니 includes 함수가 적용이 안됨
-  // 왜 안됐나면 선언할 때 배열로 선언 안해서 그럼
-  // 지금 버튼 클릭 갯수 구현해야됨
+  console.log(selected);
+  console.log(selectedCount);
+
   return (
     <div className="hobbyContainer">
       {hobbyData.map((i) => (
         <div>
-          <HobbyButton
+          <button
             key={i.value}
             value={i.value}
             label={i.label}
-            onClick={handleButtonClick}
-            buttonCount={selectedCount}
-          />
+            onClick={combineFunc(() => handleClick(i.value), handleButtonClick)}
+            className={
+              selected.includes(i.value) ? "buttonItem clicked" : "buttonItem"
+            }
+            disabled={selectedCount >= 3}
+          >
+            {i.label}
+          </button>
         </div>
       ))}
     </div>
-  );
-}
-
-function HobbyButton(props) {
-  const { value, label, onClick, buttonCount } = props;
-  const [selected, setSelected] = useState([]);
-
-  // 버튼을 최대 3개까지만 누를 수 있게 해야한다
-  // 3보다 작다면 함수가 작동 되도록
-  // 3이면 함수가 작동 안되도록
-  const handleClick = () => {
-    if (selected.includes(value)) {
-      // 이미 버튼이 눌러져있을 때 누르는 경우
-      // filter : 조건을 통과하는 애만 모은다
-      setSelected(selected.filter((item) => item !== value));
-    } else {
-      setSelected([...selected, value]);
-      console.log(selected);
-    }
-
-    // props로 받음 -> 인자에 있잖아!!
-    onClick();
-  };
-
-  return (
-    <button
-      onClick={handleClick}
-      className={selected.includes(value) ? "buttonItem clicked" : "buttonItem"}
-    >
-      {label}
-    </button>
   );
 }
 export default HobbyPopupModal;
