@@ -179,11 +179,11 @@
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  font-family: "Codec cold", sans-serif;
+  font-family: 'Codec cold', sans-serif;
   font-size: 22px;
   font-weight: 700;
   height: 30px;
-  width: 60px;
+  width: 80px;
   justify-content: center;
   letter-spacing: 0.4px;
   line-height: 1;
