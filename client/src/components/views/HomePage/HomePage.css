@@ -1,0 +1,82 @@
+/* 같은 파일 내에 폰트가 존재해야된다 */
+@font-face {
+  font-family: "introFont";
+  src: url("../../../fonts/SingleDay-Regular.ttf");
+}
+
+@font-face {
+  font-family: "bodyFont1";
+  src: url("../../../fonts/강원교육모두\ Bold.ttf");
+}
+
+@font-face {
+  font-family: "bodyFont2";
+  src: url("../../../fonts/강원교육모두\ Light.ttf");
+}
+
+@font-face {
+  font-family: "bodyFont3";
+  src: url("../../../fonts/강원교육새음.ttf");
+}
+
+@font-face {
+  font-family: "bodyFont4";
+  src: url("../../../fonts/강원교육튼튼.ttf");
+}
+
+@font-face {
+  font-family: "bodyFont5";
+  src: url("../../../fonts/강원교육현옥샘.ttf");
+}
+
+.intro {
+  font-family: "introFont";
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.backImg {
+  width: 700px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(../../../Img/연인5.jpeg);
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 10px;
+}
+
+.inform {
+  margin-top: 60px;
+}
+
+.inform > div {
+  font-family: "bodyFont5";
+  margin-top: 5px;
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.explainTeam {
+  display: inline-block;
+}
+
+.explainWho {
+  font-family: "bodyFont1";
+  margin-top: 5px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.IconImg1 {
+  width: 300px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(../../../Img/프론트.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 10px;
+}
