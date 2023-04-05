@@ -121,3 +121,11 @@
   letter-spacing: 4px;
   cursor: pointer;
 }
+
+/* 성별 버튼 */
+.genBtn {
+  background-image: none;
+}
+
+.genBtnChecked {
+}

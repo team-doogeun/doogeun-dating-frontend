@@ -36,8 +36,10 @@ function MyProfile(props) {
   const [nameMsg, setNameMsg] = useState("");
   const [isName, setIsName] = useState(false);
 
-  // 성별
-  const [gender, setGender] = useState("");
+  // 성별 : 배열로 관리(필터링 필요)
+  const [gender, setGender] = useState([]);
+  const [manChecked, setManChecked] = useState(false);
+  const [womanChecked, setWomanChecked] = useState(false);
 
   // 나이(dropdown)
   // 드롭다운 기능 : 다른 곳 클릭했을 시 자동으로 사라짐
@@ -131,10 +133,32 @@ function MyProfile(props) {
     }
   };
 
-  const onGenderHandler = (e) => {
-    // currentTargetValue -> 부모 tag까지 불러옴 -> 길어서 부모까지 불러옴
-    // targetValue -> 자식 tag만 불러옴
-    setGender(e.currentTarget.value);
+  const onGenderHandler1 = (e) => {
+    const gender1 = document.getElementById("btn-check-outlined").value;
+    localStorage.setItem("gender", gender1);
+
+    // gender 배열에 남자 담기
+    if (gender.includes("남자")) {
+      setGender(gender.filter((item) => item !== "남자"));
+      setManChecked(false);
+    } else {
+      setGender([...gender, "남자"]);
+      setManChecked(true);
+    }
+  };
+
+  const onGenderHandler2 = (e) => {
+    const gender2 = document.getElementById("danger-outlined").value;
+    localStorage.setItem("gender", gender2);
+
+    // gender 배열에 여자 담기
+    if (gender.includes("여자")) {
+      setGender(gender.filter((item) => item !== "여자"));
+      setWomanChecked(false);
+    } else {
+      setGender([...gender, "여자"]);
+      setWomanChecked(true);
+    }
   };
 
   const onEmailHandler = (e) => {
@@ -265,7 +289,8 @@ function MyProfile(props) {
               class="btn-check"
               id="btn-check-outlined"
               autocomplete="off"
-              onChange={onGenderHandler}
+              value="남자"
+              onChange={onGenderHandler1}
             />
             <label class="btn btn-outline-primary" for="btn-check-outlined">
               남자
@@ -276,36 +301,14 @@ function MyProfile(props) {
               class="btn-check"
               id="danger-outlined"
               autocomplete="off"
+              value="여자"
+              onChange={onGenderHandler2}
+              disabled={gender.length === 1}
             />
             <label class="btn btn-outline-danger" for="danger-outlined">
               여자
             </label>
           </div>
-
-          {/* <div className="RadioButtonGroup">
-            <label className="genderCheck1">
-              <input
-                type="radio"
-                id="man"
-                name="gender"
-                value="남자"
-                checked={gender === "남자"}
-                onChange={onGenderHandler}
-              ></input>
-              남자
-            </label>
-            <label className="genderCheck2">
-              <input
-                type="radio"
-                id="woman"
-                name="gender"
-                value="여자"
-                checked={gender === "여자"}
-                onChange={onGenderHandler}
-              ></input>
-              여자
-            </label>
-          </div> */}
 
           <Select
             className="ageDropDown"

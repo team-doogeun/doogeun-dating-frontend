@@ -30,15 +30,30 @@ function HobbyPopupModal() {
   // 3보다 작다면 함수가 작동 되도록
   // 3이면 함수가 작동 안되도록
   const handleClick = (value) => {
-    if (selected.includes(value)) {
-      // 이미 버튼이 눌러져있을 때 누르는 경우
-      // filter : 조건을 통과하는 애만 모은다
-      let newArr = [...selected];
-      setSelected(newArr.filter((item) => item !== value));
-    } else {
-      let newArr = [...selected];
-      setSelected([...newArr, value]);
+    if (selectedCount < 3) {
+      if (selected.includes(value)) {
+        // 이미 버튼이 눌러져있을 때 누르는 경우
+        // filter : 조건을 통과하는 애만 모은다
+        let newArr = [...selected];
+        setSelected(newArr.filter((item) => item !== value));
+        setSelectedCount(selectedCount - 1);
+        localStorage.setItem("hobbyData", ...newArr);
+      } else {
+        let newArr = [...selected];
+        setSelected([...newArr, value]);
+        setSelectedCount(selectedCount + 1);
+        localStorage.setItem("hobbyData", ...newArr);
+      }
     }
+
+    // 3일 경우 어떻게 제어할것인가
+    // 값이 3인경우 무조건 3개를 선택했을 것이니
+    // 값을 줄여주는 코드만 작성
+    // if (selectedCount === 3) {
+    //   let newArr = [...selected];
+    //   setSelected(newArr.filter((item) => item !== value));
+    //   setSelectedCount(selectedCount - 1);
+    // }
   };
 
   // 버튼 최대 3개까지 컨트롤
@@ -76,7 +91,6 @@ function HobbyPopupModal() {
             className={
               selected.includes(i.value) ? 'buttonItem clicked' : 'buttonItem'
             }
-            disabled={selectedCount >= 3}
           >
             {i.label}
           </button>
