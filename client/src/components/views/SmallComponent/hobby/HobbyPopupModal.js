@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import "./HobbyPopupModal.css";
-import { hobbyData } from "../../SignUpPage/AttributeData";
+import React, { useState } from 'react';
+import './HobbyPopupModal.css';
+import { hobbyData } from '../../SignUpPage/AttributeData';
 
 // function HobbyPopupModal() {
 //   // 왜 갑자기 i.value 값 넣으면 렌더링이 안될까??
@@ -88,7 +88,7 @@ function HobbyPopupModal() {
             label={i.label}
             onClick={combineFunc(() => handleClick(i.value), handleButtonClick)}
             className={
-              selected.includes(i.value) ? "buttonItem clicked" : "buttonItem"
+              selected.includes(i.value) ? 'buttonItem clicked' : 'buttonItem'
             }
           >
             {i.label}
