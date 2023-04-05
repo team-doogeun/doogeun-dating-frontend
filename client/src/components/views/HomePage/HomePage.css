@@ -1,37 +1,24 @@
-/* 같은 파일 내에 폰트가 존재해야된다 */
+/* 같은 파일 내에 폰트나 이미지가 존재해야된다 */
+/* 하나 문제가 있음 -> git에서 새롭게 다운 받으면 폰트나 이미지 모듈이 받아지지 않음 */
+/* Module not found: error : Can't resolve */
 @font-face {
-  font-family: "introFont";
-  src: url("../../../fonts/SingleDay-Regular.ttf");
+  font-family: 'introFont';
+  src: url('../../../fonts/SingleDay-Regular.ttf');
 }
 
 @font-face {
-  font-family: "bodyFont1";
-  src: url("../../../fonts/강원교육모두\ Bold.ttf");
+  font-family: 'bodyFont5';
+  src: url('../../../fonts/강원교육현옥샘.ttf');
 }
 
 @font-face {
-  font-family: "bodyFont2";
-  src: url("../../../fonts/강원교육모두\ Light.ttf");
-}
-
-@font-face {
-  font-family: "bodyFont3";
-  src: url("../../../fonts/강원교육새음.ttf");
-}
-
-@font-face {
-  font-family: "bodyFont4";
-  src: url("../../../fonts/강원교육튼튼.ttf");
-}
-
-@font-face {
-  font-family: "bodyFont5";
-  src: url("../../../fonts/강원교육현옥샘.ttf");
+  font-family: 'explainFont';
+  src: url('../../../fonts/GmarketSansTTFBold.ttf');
 }
 
 .intro {
-  font-family: "introFont";
-  font-size: 24px;
+  font-family: 'introFont';
+  font-size: 32px;
   font-weight: 600;
 }
 
@@ -41,7 +28,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url(../../../Img/연인5.jpeg);
+  background-image: url(../../../Img/연인5.jpeg);
   background-repeat: no-repeat;
   background-position: center;
   border-radius: 10px;
@@ -52,31 +39,54 @@
 }
 
 .inform > div {
-  font-family: "bodyFont5";
+  font-family: 'bodyFont5';
   margin-top: 5px;
-  font-size: 36px;
+  font-size: 42px;
   font-weight: 600;
 }
 
 .explainTeam {
-  display: inline-block;
+  display: flex;
+  margin-top: 60px;
+  height: 400px;
 }
 
 .explainWho {
-  font-family: "bodyFont1";
-  margin-top: 5px;
-  font-size: 24px;
+  margin-top: 12px;
+}
+
+.explainWho > div {
+  font-family: 'explainFont';
+  margin-top: 8px;
+  font-size: 28px;
   font-weight: 600;
 }
 
-.IconImg1 {
-  width: 300px;
-  height: 400px;
+.front,
+.backend1,
+.backend2 {
+  margin: auto;
+}
+
+/* 이미지 */
+.iconImg1,
+.iconImg2,
+.iconImg3 {
+  width: 256px;
+  height: 256px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: url(../../../Img/프론트.png);
+  margin: auto;
   background-repeat: no-repeat;
   background-position: center;
   border-radius: 10px;
+}
+
+.iconImg1 {
+  background-image: url(../../../Img/프론트256px.png);
+}
+.iconImg2 {
+  background-image: url(../../../Img/백엔드\(1\)256px.png);
+}
+.iconImg3 {
+  background-image: url(../../../Img/백엔드\(2\)256px.png);
 }

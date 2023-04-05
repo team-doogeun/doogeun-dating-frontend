@@ -1,8 +1,8 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { components } from "react-select";
-import styled from "styled-components";
-import "./HomePage.css";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { components } from 'react-select';
+import styled from 'styled-components';
+import './HomePage.css';
 
 function HomePage() {
   return (
@@ -25,37 +25,37 @@ function HomePage() {
       </div>
       <div className="explainTeam">
         <div className="front">
-          <StyledDiv>
+          <div>
             <div className="iconImg1"></div>
             <div className="explainWho">
               <div>프론트엔드 개발자</div>
               <div>특기 : 축구</div>
               <div>취미 : 축구</div>
-              <div>목표 : 프론트엔드 개발자로 취업하기</div>
+              <div>목표 : 프론트엔드 개발자</div>
             </div>
-          </StyledDiv>
+          </div>
         </div>
         <div className="backend1">
-          <StyledDiv>
+          <div>
             <div className="iconImg2"></div>
             <div className="explainWho">
-              <div>백엔드 개발자1</div>
-              <div>특기 : 축구</div>
-              <div>취미 : 축구</div>
+              <div>백엔드 개발자</div>
+              <div>특기 : dddddddddddddd</div>
+              <div>취미 : </div>
               <div>목표 : </div>
             </div>
-          </StyledDiv>
+          </div>
         </div>
         <div className="backend2">
-          <StyledDiv>
+          <div>
             <div className="iconImg3"></div>
             <div className="explainWho">
-              <div>프론트엔드 개발자</div>
-              <div>특기 : 축구</div>
-              <div>취미 : 축구</div>
+              <div>백엔드 개발자</div>
+              <div>특기 : ddddddddddddddd</div>
+              <div>취미 : </div>
               <div>목표 : </div>
             </div>
-          </StyledDiv>
+          </div>
         </div>
       </div>
     </div>
