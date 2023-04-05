@@ -21,6 +21,7 @@ import { hobbyData } from '../../SignUpPage/AttributeData';
 // 전체 버튼이 하나의 selected 에 저장되는게 아니라
 // 버튼 각각의 selected 값이 존재
 // 왜냐하면 HobbyButton 컴포넌트를 selected와 분리하지 안고 여러개를 만들었기 때문..
+// 하나의 selected 변수안에 여러가지 버튼이 컨트롤 되도록 해야된다.
 function HobbyPopupModal() {
   const [selected, setSelected] = useState([]);
   const [selectedCount, setSelectedCount] = useState(0);
