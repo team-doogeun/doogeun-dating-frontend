@@ -23,37 +23,37 @@ function HomePage() {
           </div>
         </StyledDiv>
       </div>
-      <div className="explainTeam">
-        <div className="front">
-          <div>
-            <div className="iconImg1"></div>
-            <div className="explainWho">
-              <div>프론트엔드 개발자</div>
-              <div>특기 : 축구</div>
-              <div>취미 : 축구</div>
-              <div>목표 : 프론트엔드 개발자</div>
+      <div className="explain">
+        <div className="introDeveloper">개발자 소개</div>
+        <div className="explainTeam">
+          <div className="front">
+            <div>
+              <div className="iconImg1"></div>
+              <div className="explainWho">
+                <div>프론트엔드 개발자</div>
+                <div>취미 : 축구</div>
+                <div>MBTI : INTP</div>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="backend1">
-          <div>
-            <div className="iconImg2"></div>
-            <div className="explainWho">
-              <div>백엔드 개발자</div>
-              <div>특기 : dddd</div>
-              <div>취미 : </div>
-              <div>목표 : </div>
+          <div className="backend1">
+            <div>
+              <div className="iconImg2"></div>
+              <div className="explainWho">
+                <div>백엔드 개발자</div>
+                <div>취미 : 야구관람</div>
+                <div>MBTI : ENTP</div>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="backend2">
-          <div>
-            <div className="iconImg3"></div>
-            <div className="explainWho">
-              <div>백엔드 개발자</div>
-              <div>특기 : ddddddddddddddd</div>
-              <div>취미 : </div>
-              <div>목표 : </div>
+          <div className="backend2">
+            <div>
+              <div className="iconImg3"></div>
+              <div className="explainWho">
+                <div>백엔드 개발자</div>
+                <div>취미 : 산책</div>
+                <div>MBTI : ISFJ</div>
+              </div>
             </div>
           </div>
         </div>

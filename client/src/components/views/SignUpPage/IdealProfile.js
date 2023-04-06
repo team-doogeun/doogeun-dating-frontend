@@ -11,10 +11,10 @@ import {
   drinkData,
   smokeData,
 } from "./AttributeData";
-import Select from "react-select";
 import { useNavigate } from "react-router-dom";
+import { useRegister } from "../../Api/useRegister";
+import Select from "react-select";
 import ModalComponent from "../SmallComponent/ModalComponent";
-import { useMutation, useQuery } from "@tanstack/react-query";
 
 function IdealProfile() {
   // 키
@@ -155,24 +155,23 @@ function IdealProfile() {
   };
 
   // 제출시 서버에 보내지는 api 호출
-  const handleRegister = async () => {
+  const RegisterForm = async () => {
     const registerMutation = useRegister();
-    const { data, error } = await registerMutation.mutateAsync({
-      email,
-      password,
-    });
+    const handleRegister = async () => {
+      const { data, error } = await registerMutation.mutateAsync({});
 
-    if (error) {
-      // handle error
-    } else {
-      // handle success
-    }
+      if (error) {
+        // handle error
+      } else {
+        // handle success
+      }
+    };
   };
 
   // react-hook-form 알아보고 적용하기
   return (
     <div className="IdealProfilePage" id="IdealProfile">
-      <div className="IdealProfileForm" onSubmit={onSubmitHandler}>
+      <div className="IdealProfileForm" onSubmit={RegisterForm}>
         <div className="IdealProfileInputs">
           <Select
             className="age"

@@ -45,10 +45,25 @@
   font-weight: 600;
 }
 
+/* 팀원 소개 */
+.explain {
+  border: 2px solid black;
+  margin-top: 80px;
+}
+
+.introDeveloper {
+  display: flex;
+  margin: auto;
+  margin-top: 10px;
+  justify-content: center;
+  font-size: 24px;
+  font-family: "explainFont";
+  font-weight: 600;
+}
+
 .explainTeam {
   display: flex;
-  margin-top: 60px;
-  height: 400px;
+  height: 300px;
 }
 
 .explainWho {
