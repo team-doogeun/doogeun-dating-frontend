@@ -5,24 +5,28 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "antd/dist/antd.css";
 import { BrowserRouter } from "react-router-dom";
-import { Provider } from "react-redux";
-import rootReducer from "./_reducers";
-import { createStore } from "redux";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
 import NavBar from "./components/views/NavBar/NavBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Footer from "./components/views/Footer/Footer";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-const store = createStore(rootReducer);
+
+// create a client
+const queryClient = new QueryClient();
 
 root.render(
-  <BrowserRouter>
-    <Provider store={store}>
+  <QueryClientProvider client={queryClient}>
+    <ReactQueryDevtools initialIsOpen={false} />
+    <BrowserRouter>
       <NavBar />
       <App />
       <Footer />
-    </Provider>
-  </BrowserRouter>
+    </BrowserRouter>
+  </QueryClientProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -2,21 +2,12 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import "./SignIn.css";
-import { loginUser } from "../../../_actions/user_action";
-import { useQuery } from "@tanstack/react-query";
-import { useMutation } from "@tanstack/react-query";
+import { useLogin } from "../../Api/useLogin";
+
 // 로그인 모달 폼에 뜨는 곳
 function SignIn(props) {
-  const [token, setToken] = useState("");
-
   const [inputID, setInputID] = useState("");
   const [inputPW, setInputPW] = useState("");
-
-  // 로그인 후
-  const [isLogin, setIsLogin] = useState(false);
-  const [user, setUser] = useState({});
-
-  const [msg, setMsg] = useState("");
 
   const onIDHandler = (e) => {
     setInputID(e.currentTarget.value);
@@ -26,25 +17,26 @@ function SignIn(props) {
     setInputPW(e.currentTarget.value);
   };
 
-  const accessToken = () => {
-    axios({
-      method: "get",
-      url: "http://localhost:8123/accesstoken",
-      withCredentials: true,
-    });
-  };
+  const loginMutation = useLogin();
 
-  // 서버URL에 id, pw 정보 담아서 보내기(post : 생성 및 업데이트)
-  // user_action 에서 loginUser에 data를 담는다
-  // withCredentials: true -> 나중에 설정
-  let data = {
-    userId: inputID,
-    password: inputPW,
+  const handleLogin = async () => {
+    const { data, error } = await loginMutation.mutateAsync({
+      inputID,
+      inputPW,
+    });
+
+    if (error) {
+      // handle error
+      alert(`${error.message}`);
+    } else {
+      // handle success
+      console.log(data);
+    }
   };
 
   return (
     <div className="SignIn">
-      <form className="SignInForm">
+      <form className="SignInForm" onSubmit={handleLogin}>
         <div className="InputGroup">
           <input
             className="InputID"
@@ -65,7 +57,7 @@ function SignIn(props) {
           <button
             className="SignInButton"
             type="submit"
-            onClick={loginUser(data)}
+            // onClick={}
           >
             로그인
           </button>
