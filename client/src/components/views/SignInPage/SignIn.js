@@ -1,21 +1,22 @@
-import React from 'react';
-import { useState } from 'react';
-import axios from 'axios';
-import './SignIn.css';
-import { loginUser } from '../../../_actions/user_action';
-
+import React from "react";
+import { useState } from "react";
+import axios from "axios";
+import "./SignIn.css";
+import { loginUser } from "../../../_actions/user_action";
+import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 // 로그인 모달 폼에 뜨는 곳
 function SignIn(props) {
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState("");
 
-  const [inputID, setInputID] = useState('');
-  const [inputPW, setInputPW] = useState('');
+  const [inputID, setInputID] = useState("");
+  const [inputPW, setInputPW] = useState("");
 
   // 로그인 후
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState({});
 
-  const [msg, setMsg] = useState('');
+  const [msg, setMsg] = useState("");
 
   const onIDHandler = (e) => {
     setInputID(e.currentTarget.value);
@@ -27,8 +28,8 @@ function SignIn(props) {
 
   const accessToken = () => {
     axios({
-      method: 'get',
-      url: 'http://localhost:8123/accesstoken',
+      method: "get",
+      url: "http://localhost:8123/accesstoken",
       withCredentials: true,
     });
   };

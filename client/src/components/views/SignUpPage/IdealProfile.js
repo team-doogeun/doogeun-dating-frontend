@@ -14,6 +14,7 @@ import {
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
 import ModalComponent from "../SmallComponent/ModalComponent";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 function IdealProfile() {
   // 키
@@ -151,6 +152,21 @@ function IdealProfile() {
       secondPriority: secondPriority,
       thirdPriority: thirdPriority,
     };
+  };
+
+  // 제출시 서버에 보내지는 api 호출
+  const handleRegister = async () => {
+    const registerMutation = useRegister();
+    const { data, error } = await registerMutation.mutateAsync({
+      email,
+      password,
+    });
+
+    if (error) {
+      // handle error
+    } else {
+      // handle success
+    }
   };
 
   // react-hook-form 알아보고 적용하기

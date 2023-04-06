@@ -1,8 +1,8 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { components } from 'react-select';
-import styled from 'styled-components';
-import './HomePage.css';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { components } from "react-select";
+import styled from "styled-components";
+import "./HomePage.css";
 
 function HomePage() {
   return (
@@ -40,7 +40,7 @@ function HomePage() {
             <div className="iconImg2"></div>
             <div className="explainWho">
               <div>백엔드 개발자</div>
-              <div>특기 : dddddddddddddd</div>
+              <div>특기 : dddd</div>
               <div>취미 : </div>
               <div>목표 : </div>
             </div>
