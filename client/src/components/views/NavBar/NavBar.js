@@ -9,6 +9,7 @@ function NavBar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // 컴포넌트가 마운트될 때, 서버에서 세션 확인 API를 호출하여 로그인 상태를 가져옵니다.
+  // 그렇다면 브라우저를 다시 킬때를 말하는거겠지?
   useEffect(() => {
     // 세션 쿠키를 읽습니다.
     // 쿠키의 값을 가져오기 위해 정규식을 사용하는 코드
@@ -53,31 +54,18 @@ function NavBar() {
         setIsLoggedIn(false);
 
         // 세션 ID 쿠키를 삭제합니다.
+        // 이를 위해 "expires" 속성을 설정하여 쿠키 만료일을 1970년 1월 1일로 설정하고
+        // "path" 속성을 설정하여 모든 경로에서 해당 쿠키를 삭제하도록 지정합니다.
         document.cookie =
           "sessionId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       })
       .catch((err) => console.error(err));
   };
 
-  // 나중에 이 부분을 Navbar에 넣으면 된다
-  // <div>
-  //   {isLoggedIn ? (
-  //     <div>
-  //       <p>Welcome, user!</p>
-  //       <button onClick={handleLogout}>Logout</button>
-  //     </div>
-  //   ) : (
-  //     <div>
-  //       <p>Please log in.</p>
-  //       <button onClick={handleLogin}>Login</button>
-  //     </div>
-  //   )}
-  // </div>
-
   return (
     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top bg-body-tertiary">
       <div class="container-fluid touchItem">
-        <a class="navbar-brand touchItem" href="/">
+        <a class="navbar-brand text-white touchItem" href="/">
           DuGeun
         </a>
         <button
@@ -95,47 +83,48 @@ function NavBar() {
           <ul class="navbar-nav">
             <li class="nav-item">
               <a
-                class="nav-link touchItem"
+                class="nav-link text-white touchItem"
                 aria-current="page"
                 href="/blinddate"
-                style={{ color: "white" }}
               >
                 소개팅
               </a>
             </li>
-            <li class="nav-item">
-              <a
-                class="nav-link touchItem"
-                href="/meeting"
-                style={{ color: "white" }}
-              >
+            <li class="nav-item ">
+              <a class="nav-link text-white touchItem" href="/meeting">
                 미팅
               </a>
             </li>
             <li class="nav-item">
-              <a
-                class="nav-link touchItem"
-                href="/mypage"
-                style={{ color: "white" }}
-              >
+              <a class="nav-link text-white touchItem" href="/mypage">
                 마이페이지
               </a>
             </li>
           </ul>
-          <div className="buttons__right">
-            <ModalComponent
-              mainContent="Login"
-              contentName="로그인"
-              header="로그인"
-            />
-            <button
-              className="signUp"
-              onClick={(e) => {
-                window.location.href = "/myprofile";
-              }}
-            >
-              회원가입
-            </button>
+          {/* startArea 이 부분은 css 나중에 수정 */}
+          <div className="startArea">
+            {isLoggedIn ? (
+              <div>
+                <p>Welcome, user!</p>
+                <button onClick={handleLogout}>Logout</button>
+              </div>
+            ) : (
+              <div className="buttons__right">
+                <ModalComponent
+                  mainContent="Login"
+                  contentName="로그인"
+                  header="로그인"
+                />
+                <button
+                  className="signUp"
+                  onClick={(e) => {
+                    window.location.href = "/myprofile";
+                  }}
+                >
+                  회원가입
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

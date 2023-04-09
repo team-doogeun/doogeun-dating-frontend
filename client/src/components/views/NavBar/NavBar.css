@@ -19,7 +19,14 @@
   font-weight: 570;
 }
 
-.buttons__right {
+/* 일단 hover가 안먹힘 */
+.touchItem:hover {
+  color: black;
+}
+
+/* 일단 .startArea도 넣어놓고 나중에 수정해야됨 */
+.buttons__right,
+.startArea {
   display: flex;
   flex-direction: row-reverse;
   margin-left: auto;
