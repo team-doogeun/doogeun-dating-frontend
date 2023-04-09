@@ -12,7 +12,6 @@ import ModalComponent from "../SmallComponent/ModalComponent";
 // 회원가입 페이지
 function MyProfile(props) {
   // 회원가입 입력요소(기본)
-  // id, pw, pw확인, name, gender, age, email(학교)
   // studentId(학번), externalId(카카오 아이디)
   let navigation = useNavigate();
 
@@ -66,8 +65,6 @@ function MyProfile(props) {
   //   if (pageValid) {
   //   }
   // }, [pageValid]);
-
-  // 지웠을 때 문제가 생긴다
 
   // 입력함수
   const onIDHandler = (e) => {

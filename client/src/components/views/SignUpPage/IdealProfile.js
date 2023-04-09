@@ -17,116 +17,92 @@ import Select from "react-select";
 import ModalComponent from "../SmallComponent/ModalComponent";
 
 function IdealProfile() {
-  // 키
-  const [height, setHeight] = useState("");
-  const [heightMsg, setHeightMsg] = useState("");
-  const [isHeight, setIsHeight] = useState(false);
+  // 상태관리 변수
+  const [idealHeight, setIdealHeight] = useState("");
+  const [idealHeightMsg, setIdealHeightMsg] = useState("");
+  const [idealIsHeight, setIdealIsHeight] = useState(false);
+  const [idealBodyType, setIdealBodyType] = useState({});
+  const [idealDepartment, setIdealDepartment] = useState("");
+  const [idealCharacter, setIdealCharacter] = useState([]);
+  const [idealmbti, setIdealMBTI] = useState("");
+  const [idealHobby, setIdealHobby] = useState([]);
+  const [idealDrink, setIdealDrink] = useState("");
+  const [idealsmoke, setIdealSmoke] = useState("");
 
-  // 체형
-  const [bodyType, setBodyType] = useState({});
-
-  // 주소
-  const [address, setAddress] = useState("");
-
-  // 학과
-  const [department, setDepartment] = useState("");
-
-  // 성격
-  const [character, setCharacter] = useState([]);
-
-  // mbti
-  const [mbti, setMBTI] = useState("");
-
-  // hobby
-  const [hobby, setHobby] = useState([]);
-
-  // drink
-  const [drink, setDrink] = useState("");
-
-  // smoke
-  const [smoke, setSmoke] = useState("");
-
-  // 우선순위
-  const [firstPriority, setFirstPriority] = useState("");
-  const [secondPriority, setSecondPriority] = useState("");
-  const [thirdPriority, setThirdPriority] = useState("");
-
-  const navigation = useNavigate();
-
-  // 입력함수
+  // 입력 함수
   const onHeightHandler = (e) => {
-    const nowHeight = e.currentTarget.value;
-    setHeight(nowHeight);
+    const nowIdealHeight = e.currentTarget.value;
+    setIdealHeight(nowIdealHeight);
 
-    if (100 < e.currentTarget.value || e.currentTarget.value > 250) {
-      setHeightMsg("키는 100cm 이상 250cm 이하로 입력바랍니다.");
-      setIsHeight(false);
-      localStorage.setItem("MyHeight", "");
+    if (100 < nowIdealHeight || nowIdealHeight > 250) {
+      setIdealHeightMsg("키는 100cm 이상 250cm 이하로 입력바랍니다.");
+      setIdealIsHeight(false);
+      localStorage.setItem("idealHeight", "");
     } else {
-      setHeightMsg("올바른 형식입니다.");
-      setIsHeight(true);
-      localStorage.setItem("MyHeight", nowHeight);
+      setIdealHeightMsg("올바른 형식입니다.");
+      setIdealIsHeight(true);
+      localStorage.setItem("idealHeight", nowIdealHeight);
     }
   };
 
   const onBodyTypeHandler = (e) => {
-    const nowBodyType = e.currentTarget.value;
-    setBodyType(nowBodyType);
-    localStorage.setItem("MyHeight", nowBodyType);
+    const nowBodyType = e.target.value;
+    setIdealBodyType(nowBodyType);
+    localStorage.setItem("idealHeight", JSON.stringify(nowBodyType));
   };
 
   const onAddressHandler = (e) => {
     const nowAddress = e.currentTarget.value;
-    setAddress(nowAddress);
-    localStorage.setItem("MyAddress", nowAddress);
+    //setAddress(nowAddress);
+    localStorage.setItem("idealAddress", nowAddress);
   };
 
   const onDepartmentHandler = (e) => {
     const nowDepartment = e.currentTarget.value;
-    setDepartment(nowDepartment);
-    localStorage.setItem("MyAddress", nowDepartment);
+    //setDepartment(nowDepartment);
+    localStorage.setItem("idealDepartment", nowDepartment);
   };
 
   const onCharacterHandler = (e) => {
-    for (let i = 0; i < character.length; i++) {
-      if (character[i].value === e.currentTarget.value) {
-        character.splice(i, 1);
-        characterData = [...character];
-        break;
-      }
-    }
+    // for (let i = 0; i < character.length; i++) {
+    //   if (character[i].value === e.currentTarget.value) {
+    //     character.splice(i, 1);
+    //     characterData = [...character];
+    //     break;
+    //   }
+    // }
   };
 
   const onMBTIHandler = (e) => {
     const nowMBTI = e.currentTarget.value;
-    setMBTI(nowMBTI);
-    localStorage.setItem("MyMBTI", nowMBTI);
+    // setMBTI(nowMBTI);
+    localStorage.setItem("idealMBTI", nowMBTI);
   };
 
   const onDrinkHandler = (e) => {
     const nowDrink = e.currentTarget.value;
     console.log(nowDrink);
-    setDrink(nowDrink);
-    localStorage.setItem("MyDrink", nowDrink);
+    //setDrink(nowDrink);
+    localStorage.setItem("idealDrink", nowDrink);
   };
 
   const onSmokeHandler = (e) => {
     const nowSmoke = e.currentTarget.value;
-    setSmoke(nowSmoke);
-    localStorage.setItem("MySmoke", nowSmoke);
+    //setSmoke(nowSmoke);
+    localStorage.setItem("idealSmoke", nowSmoke);
   };
 
   // 우선순위가 겹치면!
   // 다음 버튼 눌렀을 때 우선순위가 겹칩니다.
   // 알람 띄우고 페이지 안 넘어가게 하기
   const onFirstPriorityHandler = (e) => {
-    setFirstPriority(e.target.value);
+    //setFirstPriority(e.target.value);
   };
   const onSecondPriorityHandler = (e) => {
-    setSecondPriority(e.target.value);
+    //setSecondPriority(e.target.value);
   };
   const onThirdPriorityHandler = (e) => {
-    setThirdPriority(e.target.value);
+    //setThirdPriority(e.target.value);
   };
 
   const selectStyle = {
@@ -137,35 +113,28 @@ function IdealProfile() {
     e.preventDefault();
 
     let IdealProfileData = {
-      height: height,
-      bodyType: bodyType,
-      address: address,
-      department: department,
-      character1: character[0],
-      character2: character[1],
-      mbti: mbti,
-      hobby1: hobby[0],
-      hobby2: hobby[1],
-      drink: drink,
-      smoke: smoke,
-      firstPriority: firstPriority,
-      secondPriority: secondPriority,
-      thirdPriority: thirdPriority,
+      // height: height,
+      // bodyType: bodyType,
+      // address: address,
+      // department: department,
+      // character1: character[0],
+      // character2: character[1],
+      // mbti: mbti,
+      // hobby1: hobby[0],
+      // hobby2: hobby[1],
+      // drink: drink,
+      // smoke: smoke,
+      // firstPriority: firstPriority,
+      // secondPriority: secondPriority,
+      // thirdPriority: thirdPriority,
     };
   };
 
   // 제출시 서버에 보내지는 api 호출
+  // mutateAsync는 오류를 수동으로 잡아야돼서
+  // 웬만하면 mutate를 사용하는 것이 맞다
   const RegisterForm = async () => {
     const registerMutation = useRegister();
-    const handleRegister = async () => {
-      const { data, error } = await registerMutation.mutateAsync({});
-
-      if (error) {
-        // handle error
-      } else {
-        // handle success
-      }
-    };
   };
 
   // react-hook-form 알아보고 적용하기
@@ -184,13 +153,13 @@ function IdealProfile() {
           <input
             className="height"
             onChange={onHeightHandler}
-            value={height}
+            value={idealHeight}
             type="text"
             placeholder="키 ex) 165"
           ></input>
-          {height.length > 0 && (
-            <div className={`message ${isHeight ? "success" : "error"}`}>
-              {heightMsg}
+          {idealHeight.length > 0 && (
+            <div className={`message ${idealIsHeight ? "success" : "error"}`}>
+              {idealHeightMsg}
             </div>
           )}
 
@@ -205,6 +174,7 @@ function IdealProfile() {
             options={bodyTypeData}
             isSearchable={false}
             isClearable={true}
+            onChange={onBodyTypeHandler}
           />
           <Select
             className="address"
@@ -259,12 +229,7 @@ function IdealProfile() {
           />
 
           <div className="nextButton">
-            <button
-              className="footerButton"
-              onClick={() => {
-                navigation("/detailprofile");
-              }}
-            >
+            <button className="footerButton" onClick={() => {}}>
               제출
             </button>
           </div>

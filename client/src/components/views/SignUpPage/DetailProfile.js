@@ -16,56 +16,40 @@ import { useNavigate } from "react-router-dom";
 import ModalComponent from "../SmallComponent/ModalComponent";
 
 function DetailProfile() {
-  // 키
+  // 상태관리 변수
   const [height, setHeight] = useState("");
   const [heightMsg, setHeightMsg] = useState("");
   const [isHeight, setIsHeight] = useState(false);
-
-  // 체형
   const [bodyType, setBodyType] = useState({});
-
-  // 주소
   const [address, setAddress] = useState("");
-
-  // 학과
   const [department, setDepartment] = useState("");
-
-  // 성격
   const [character, setCharacter] = useState([]);
-
-  // mbti
   const [mbti, setMBTI] = useState("");
-
-  // hobby
   const [hobby, setHobby] = useState([]);
-
-  // drink
   const [drink, setDrink] = useState("");
-
-  // smoke
   const [smoke, setSmoke] = useState("");
-
   // 우선순위
   const [firstPriority, setFirstPriority] = useState("");
   const [secondPriority, setSecondPriority] = useState("");
   const [thirdPriority, setThirdPriority] = useState("");
 
-  let navigation = useNavigate();
-
   // 입력함수
   const onHeightHandler = (e) => {
-    setHeight(e.currentTarget.value);
+    const nowHeight = e.currentTarget.value;
+    setHeight(nowHeight);
 
-    if (100 < e.currentTarget.value || e.currentTarget.value > 250) {
+    if (100 < nowHeight || nowHeight > 250) {
       setHeightMsg("키는 100cm 이상 250cm 이하로 입력바랍니다.");
       setIsHeight(false);
     } else {
       setHeightMsg("올바른 형식입니다.");
       setIsHeight(true);
+      localStorage.setItem("nowHeight", nowHeight);
     }
   };
 
   const onBodyTypeHandler = (e) => {
+    const noweight = e.currentTarget.value;
     setBodyType(e.target.value);
     console.log(e.target.value);
   };
@@ -166,6 +150,7 @@ function DetailProfile() {
             options={bodyTypeData}
             isSearchable={false}
             isClearable={true}
+            openMenuOnClick={setBodyType}
           />
           <Select
             className="address"
