@@ -44,22 +44,26 @@ function DetailProfile() {
     } else {
       setHeightMsg("올바른 형식입니다.");
       setIsHeight(true);
-      localStorage.setItem("nowHeight", nowHeight);
+      localStorage.setItem("height", nowHeight);
     }
   };
 
   const onBodyTypeHandler = (e) => {
-    const noweight = e.currentTarget.value;
-    setBodyType(e.target.value);
-    console.log(e.target.value);
+    const nowBodyType = e.value;
+    setBodyType(nowBodyType);
+    localStorage.setItem("bodyType", nowBodyType);
   };
 
   const onAddressHandler = (e) => {
-    setAddress(e.target.value);
+    const nowAddress = e.value;
+    setAddress(nowAddress);
+    localStorage.setItem("address", nowAddress);
   };
 
   const onDepartMentHandler = (e) => {
-    setDepartment(e.target.value);
+    const nowDepartment = e.value;
+    setDepartment(nowDepartment);
+    localStorage.setItem("department", nowDepartment);
   };
 
   const onCharacterHandler = (e) => {
@@ -73,28 +77,39 @@ function DetailProfile() {
   };
 
   const onMBTIHandler = (e) => {
-    setMBTI(e.target.value);
+    const nowMBTI = e.value;
+    setMBTI(nowMBTI);
+    localStorage.setItem("mbti", nowMBTI);
   };
 
   const onDrinkHandler = (e) => {
-    setDrink(e.target.value);
+    const nowDrink = e.value;
+    setDrink(nowDrink);
+    localStorage.setItem("drink", nowDrink);
   };
 
   const onSmokeHandler = (e) => {
-    setSmoke(e.target.value);
+    const nowSmoke = e.value;
+    setSmoke(nowSmoke);
+    localStorage.setItem("smoke", nowSmoke);
   };
 
   // 우선순위가 겹치면!
-  // 다음 버튼 눌렀을 때 우선순위가 겹칩니다.
-  // 알람 띄우고 페이지 안 넘어가게 하기
+  // 필터링 하는 기능 넣기
   const onFirstPriorityHandler = (e) => {
-    setFirstPriority(e.target.value);
+    const nowFirstPriority = e.value;
+    setFirstPriority(nowFirstPriority);
+    localStorage.setItem("firstPriority", nowFirstPriority);
   };
   const onSecondPriorityHandler = (e) => {
-    setSecondPriority(e.target.value);
+    const nowSecondPriority = e.value;
+    setSecondPriority(nowSecondPriority);
+    localStorage.setItem("secondPriority", nowSecondPriority);
   };
   const onThirdPriorityHandler = (e) => {
-    setThirdPriority(e.target.value);
+    const nowThirdPriority = e.value;
+    setThirdPriority(nowThirdPriority);
+    localStorage.setItem("thirdPriority", nowThirdPriority);
   };
 
   const selectStyle = {
@@ -150,25 +165,28 @@ function DetailProfile() {
             options={bodyTypeData}
             isSearchable={false}
             isClearable={true}
-            openMenuOnClick={setBodyType}
+            onChange={onBodyTypeHandler}
           />
           <Select
             className="address"
             placeholder="주소 : ex) 강남구"
             options={addressData}
             isSearchable={false}
+            onChange={onAddressHandler}
           />
           <Select
             className="department"
             placeholder="대학"
             options={departmentData}
             isSearchable={false}
+            onChange={onDepartMentHandler}
           />
           <Select
             className="character1"
             placeholder="성격1"
             options={characterData}
             isSearchable={false}
+            onChange={onCharacterHandler}
           />
           <Select
             className="character2"

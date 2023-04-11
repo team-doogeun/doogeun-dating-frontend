@@ -11,10 +11,7 @@ import ModalComponent from "../SmallComponent/ModalComponent";
 
 // 회원가입 페이지
 function MyProfile(props) {
-  // 회원가입 입력요소(기본)
-  // studentId(학번), externalId(카카오 아이디)
-  let navigation = useNavigate();
-
+  // 회원가입 입력요소
   // ID
   const [id, setID] = useState("");
   const [idMsg, setIDMsg] = useState("");
@@ -42,7 +39,7 @@ function MyProfile(props) {
 
   // 나이(dropdown)
   // 드롭다운 기능 : 다른 곳 클릭했을 시 자동으로 사라짐
-  const [age, setAge] = useState("나이");
+  const [age, setAge] = useState(null);
 
   // email(@konkuk.ac.kr 필수입력)
   const [email, setEmail] = useState("");
@@ -130,32 +127,10 @@ function MyProfile(props) {
     }
   };
 
-  const onGenderHandler1 = (e) => {
-    const gender1 = document.getElementById("btn-check-outlined").value;
-    localStorage.setItem("gender", gender1);
-
-    // gender 배열에 남자 담기
-    if (gender.includes("남자")) {
-      setGender(gender.filter((item) => item !== "남자"));
-      setManChecked(false);
-    } else {
-      setGender([...gender, "남자"]);
-      setManChecked(true);
-    }
-  };
-
-  const onGenderHandler2 = (e) => {
-    const gender2 = document.getElementById("danger-outlined").value;
-    localStorage.setItem("gender", gender2);
-
-    // gender 배열에 여자 담기
-    if (gender.includes("여자")) {
-      setGender(gender.filter((item) => item !== "여자"));
-      setWomanChecked(false);
-    } else {
-      setGender([...gender, "여자"]);
-      setWomanChecked(true);
-    }
+  const onGenderHandler = (e) => {
+    const nowGender = e.currentTarget.value;
+    setGender(nowGender);
+    localStorage.setItem("gender", nowGender);
   };
 
   const onEmailHandler = (e) => {
@@ -223,10 +198,6 @@ function MyProfile(props) {
     return val;
   };
 
-  const onSubmitHandler = (e) => {
-    // register action 부분을 여기에 미리 작성
-  };
-
   return (
     <div className="MyProfilePage" id="MyProfile">
       <div className="MyProfileForm">
@@ -283,11 +254,12 @@ function MyProfile(props) {
           <div className="genderContainer">
             <input
               type="checkbox"
-              class="btn-check"
+              class="btn-check checked"
               id="btn-check-outlined"
               autocomplete="off"
               value="남자"
-              onChange={onGenderHandler1}
+              checked={gender === "남자"}
+              onClick={onGenderHandler}
             />
             <label class="btn btn-outline-primary" for="btn-check-outlined">
               남자
@@ -295,12 +267,12 @@ function MyProfile(props) {
             <div className="marginBetween"></div>
             <input
               type="checkbox"
-              class="btn-check"
+              class="btn-check checked"
               id="danger-outlined"
               autocomplete="off"
               value="여자"
-              onChange={onGenderHandler2}
-              disabled={gender.length === 1}
+              checked={gender === "여자"}
+              onClick={onGenderHandler}
             />
             <label class="btn btn-outline-danger" for="danger-outlined">
               여자
@@ -309,6 +281,11 @@ function MyProfile(props) {
 
           <Select
             className="ageDropDown"
+            value={age}
+            onChange={(age) => {
+              setAge(age.value);
+              localStorage.setItem("age", age.value);
+            }}
             options={ageData}
             placeholder={"나이"}
           />
