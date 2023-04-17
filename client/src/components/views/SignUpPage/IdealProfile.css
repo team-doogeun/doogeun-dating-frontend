@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "titleFont";
+  src: url("../../../fonts/SingleDay-Regular.ttf");
+}
+
 /* DetailProfile */
 .IdealProfileForm {
   display: flex;
@@ -15,9 +20,10 @@
   margin-top: 10px;
 }
 
+.title,
+.age,
 .height,
 .bodyType,
-.address,
 .department,
 .character1,
 .character2,
@@ -27,10 +33,17 @@
   margin-top: 20px;
 }
 
+.title {
+  font-family: "titleFont";
+  font-size: 24px;
+  text-align: center;
+}
+
 /* message */
 .message {
   display: flex;
   margin-top: 3px;
+  font-weight: 500;
 }
 
 .success {

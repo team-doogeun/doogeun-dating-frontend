@@ -18,91 +18,80 @@ import ModalComponent from "../SmallComponent/ModalComponent";
 
 function IdealProfile() {
   // 상태관리 변수
+  const [idealAge, setIdealAge] = useState(null);
   const [idealHeight, setIdealHeight] = useState("");
   const [idealHeightMsg, setIdealHeightMsg] = useState("");
   const [idealIsHeight, setIdealIsHeight] = useState(false);
-  const [idealBodyType, setIdealBodyType] = useState({});
-  const [idealDepartment, setIdealDepartment] = useState("");
-  const [idealCharacter, setIdealCharacter] = useState([]);
-  const [idealmbti, setIdealMBTI] = useState("");
+  const [idealBodyType, setIdealBodyType] = useState(null);
+  const [idealDepartment, setIdealDepartment] = useState(null);
+  const [idealCharacter, setIdealCharacter] = useState(null);
+  const [idealmbti, setIdealMBTI] = useState(null);
   const [idealHobby, setIdealHobby] = useState([]);
-  const [idealDrink, setIdealDrink] = useState("");
-  const [idealsmoke, setIdealSmoke] = useState("");
+  const [idealDrink, setIdealDrink] = useState(null);
+  const [idealsmoke, setIdealSmoke] = useState(null);
 
   // 입력 함수
+  const onAgeHandler = (e) => {
+    const nowAge = e.value;
+    setIdealAge(nowAge);
+    localStorage.setItem("idealAge", nowAge);
+  };
+
   const onHeightHandler = (e) => {
     const nowIdealHeight = e.currentTarget.value;
     setIdealHeight(nowIdealHeight);
 
-    if (100 < nowIdealHeight || nowIdealHeight > 250) {
-      setIdealHeightMsg("키는 100cm 이상 250cm 이하로 입력바랍니다.");
-      setIdealIsHeight(false);
-      localStorage.setItem("idealHeight", "");
-    } else {
+    if (100 <= nowIdealHeight && nowIdealHeight <= 250) {
       setIdealHeightMsg("올바른 형식입니다.");
       setIdealIsHeight(true);
       localStorage.setItem("idealHeight", nowIdealHeight);
+    } else {
+      setIdealHeightMsg("키는 100cm 이상 250cm 이하로 입력바랍니다.");
+      setIdealIsHeight(false);
+      localStorage.setItem("idealHeight", "");
     }
   };
 
   const onBodyTypeHandler = (e) => {
-    const nowBodyType = e.target.value;
+    const nowBodyType = e.value;
     setIdealBodyType(nowBodyType);
-    localStorage.setItem("idealHeight", JSON.stringify(nowBodyType));
-  };
-
-  const onAddressHandler = (e) => {
-    const nowAddress = e.currentTarget.value;
-    //setAddress(nowAddress);
-    localStorage.setItem("idealAddress", nowAddress);
+    localStorage.setItem("idealHeight", nowBodyType);
   };
 
   const onDepartmentHandler = (e) => {
-    const nowDepartment = e.currentTarget.value;
-    //setDepartment(nowDepartment);
+    const nowDepartment = e.value;
+    setIdealDepartment(nowDepartment);
     localStorage.setItem("idealDepartment", nowDepartment);
   };
 
-  const onCharacterHandler = (e) => {
-    // for (let i = 0; i < character.length; i++) {
-    //   if (character[i].value === e.currentTarget.value) {
-    //     character.splice(i, 1);
-    //     characterData = [...character];
-    //     break;
-    //   }
-    // }
+  const onCharacterHandler1 = (e) => {
+    const nowCharacter = e.value;
+    setIdealDepartment(nowCharacter);
+    localStorage.setItem("idealCharacter1", nowCharacter);
+  };
+
+  const onCharacterHandler2 = (e) => {
+    const nowCharacter = e.value;
+    setIdealDepartment(nowCharacter);
+    localStorage.setItem("idealCharacter2", nowCharacter);
   };
 
   const onMBTIHandler = (e) => {
-    const nowMBTI = e.currentTarget.value;
-    // setMBTI(nowMBTI);
+    const nowMBTI = e.value;
+    setIdealMBTI(nowMBTI);
     localStorage.setItem("idealMBTI", nowMBTI);
   };
 
   const onDrinkHandler = (e) => {
-    const nowDrink = e.currentTarget.value;
-    console.log(nowDrink);
-    //setDrink(nowDrink);
+    const nowDrink = e.value;
+    setIdealDrink(nowDrink);
     localStorage.setItem("idealDrink", nowDrink);
   };
 
   const onSmokeHandler = (e) => {
-    const nowSmoke = e.currentTarget.value;
-    //setSmoke(nowSmoke);
+    const nowSmoke = e.value;
+    setIdealSmoke(nowSmoke);
     localStorage.setItem("idealSmoke", nowSmoke);
-  };
-
-  // 우선순위가 겹치면!
-  // 다음 버튼 눌렀을 때 우선순위가 겹칩니다.
-  // 알람 띄우고 페이지 안 넘어가게 하기
-  const onFirstPriorityHandler = (e) => {
-    //setFirstPriority(e.target.value);
-  };
-  const onSecondPriorityHandler = (e) => {
-    //setSecondPriority(e.target.value);
-  };
-  const onThirdPriorityHandler = (e) => {
-    //setThirdPriority(e.target.value);
   };
 
   const selectStyle = {
@@ -142,20 +131,22 @@ function IdealProfile() {
     <div className="IdealProfilePage" id="IdealProfile">
       <div className="IdealProfileForm" onSubmit={RegisterForm}>
         <div className="IdealProfileInputs">
+          <div className="title">이상형 프로필 작성</div>
           <Select
             className="age"
             placeholder="나이"
             options={ageRangeData}
             isSearchable={false}
             isClearable={true}
+            onChange={onAgeHandler}
           />
 
           <input
             className="height"
-            onChange={onHeightHandler}
+            placeholder="키 ex) 165"
             value={idealHeight}
             type="text"
-            placeholder="키 ex) 165"
+            onChange={onHeightHandler}
           ></input>
           {idealHeight.length > 0 && (
             <div className={`message ${idealIsHeight ? "success" : "error"}`}>
@@ -163,11 +154,6 @@ function IdealProfile() {
             </div>
           )}
 
-          {/* value 값 받아오는거 나중에 구현 */}
-          {/* getOptionValue={(e) => {
-              setBodyType(e.value);
-              console.log(bodyType);
-            }} */}
           <Select
             className="bodyType"
             placeholder="체형"
@@ -177,28 +163,25 @@ function IdealProfile() {
             onChange={onBodyTypeHandler}
           />
           <Select
-            className="address"
-            placeholder="주소 : ex) 강남구"
-            options={addressData}
-            isSearchable={false}
-          />
-          <Select
             className="department"
             placeholder="대학"
             options={departmentData}
             isSearchable={false}
+            onChange={onDepartmentHandler}
           />
           <Select
             className="character1"
             placeholder="성격1"
             options={characterData}
             isSearchable={false}
+            onChange={onCharacterHandler1}
           />
           <Select
             className="character2"
             placeholder="성격2"
             options={characterData}
             isSearchable={false}
+            onChange={onCharacterHandler2}
           />
           <Select
             className="mbti"
@@ -207,6 +190,7 @@ function IdealProfile() {
             noOptionsMessage={() => {
               return "없는데용:)";
             }}
+            onChange={onCharacterHandler2}
           />
           <ModalComponent
             mainContent="Hobby"
@@ -226,13 +210,15 @@ function IdealProfile() {
             placeholder="흡연"
             options={smokeData}
             isSearchable={false}
+            onChange={onSmokeHandler}
           />
 
-          <div className="nextButton">
-            <button className="footerButton" onClick={() => {}}>
-              제출
-            </button>
-          </div>
+          <ModalComponent
+            mainContent="NextPage"
+            contentName="다음"
+            header="알림"
+            nextPage=""
+          />
         </div>
       </div>
     </div>

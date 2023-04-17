@@ -202,6 +202,7 @@ function MyProfile(props) {
     <div className="MyProfilePage" id="MyProfile">
       <div className="MyProfileForm">
         <div className="MyProfileInputs">
+          <div className="title">개인 프로필 작성</div>
           <input
             onChange={onIDHandler}
             placeholder="아이디"
@@ -281,10 +282,9 @@ function MyProfile(props) {
 
           <Select
             className="ageDropDown"
-            value={age}
             onChange={(age) => {
               setAge(age.value);
-              localStorage.setItem("age", age.value);
+              sessionStorage.setItem("age", age.value);
             }}
             options={ageData}
             placeholder={"나이"}

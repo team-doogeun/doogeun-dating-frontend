@@ -65,7 +65,13 @@ function NavBar() {
   return (
     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top bg-body-tertiary">
       <div class="container-fluid touchItem">
-        <a class="navbar-brand text-white touchItem" href="/">
+        <a
+          class="navbar-brand text-white touchItem"
+          onClick={() => {
+            localStorage.clear();
+          }}
+          href="/"
+        >
           DuGeun
         </a>
         <button

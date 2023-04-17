@@ -1,6 +1,8 @@
 import "./App.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
+
+import axios from "axios";
 
 // 작업하는 페이지
 import HomePage from "./components/views/HomePage/HomePage";

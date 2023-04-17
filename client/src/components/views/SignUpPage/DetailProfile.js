@@ -20,31 +20,32 @@ function DetailProfile() {
   const [height, setHeight] = useState("");
   const [heightMsg, setHeightMsg] = useState("");
   const [isHeight, setIsHeight] = useState(false);
-  const [bodyType, setBodyType] = useState({});
-  const [address, setAddress] = useState("");
-  const [department, setDepartment] = useState("");
+  const [bodyType, setBodyType] = useState(null);
+  const [address, setAddress] = useState(null);
+  const [department, setDepartment] = useState(null);
   const [character, setCharacter] = useState([]);
-  const [mbti, setMBTI] = useState("");
+  const [mbti, setMBTI] = useState(null);
   const [hobby, setHobby] = useState([]);
-  const [drink, setDrink] = useState("");
-  const [smoke, setSmoke] = useState("");
+  const [drink, setDrink] = useState(null);
+  const [smoke, setSmoke] = useState(null);
   // 우선순위
-  const [firstPriority, setFirstPriority] = useState("");
-  const [secondPriority, setSecondPriority] = useState("");
-  const [thirdPriority, setThirdPriority] = useState("");
+  const [firstPriority, setFirstPriority] = useState(null);
+  const [secondPriority, setSecondPriority] = useState(null);
+  const [thirdPriority, setThirdPriority] = useState(null);
 
   // 입력함수
   const onHeightHandler = (e) => {
     const nowHeight = e.currentTarget.value;
-    setHeight(nowHeight);
 
-    if (100 < nowHeight || nowHeight > 250) {
-      setHeightMsg("키는 100cm 이상 250cm 이하로 입력바랍니다.");
-      setIsHeight(false);
-    } else {
+    if (100 <= nowHeight && nowHeight <= 250) {
       setHeightMsg("올바른 형식입니다.");
       setIsHeight(true);
+      setHeight(nowHeight);
       localStorage.setItem("height", nowHeight);
+    } else {
+      setHeightMsg("키는 100cm 이상 250cm 이하로 입력바랍니다.");
+      setIsHeight(false);
+      localStorage.setItem("height", "");
     }
   };
 
@@ -66,14 +67,16 @@ function DetailProfile() {
     localStorage.setItem("department", nowDepartment);
   };
 
-  const onCharacterHandler = (e) => {
-    for (let i = 0; i < character.length; i++) {
-      if (character[i].value === e.currentTarget.value) {
-        character.splice(i, 1);
-        characterData = [...character];
-        break;
-      }
-    }
+  const onCharacterHandler1 = (e) => {
+    const nowCharacter = e.value;
+    setDepartment(nowCharacter);
+    localStorage.setItem("character1", nowCharacter);
+  };
+
+  const onCharacterHandler2 = (e) => {
+    const nowCharacter = e.value;
+    setDepartment(nowCharacter);
+    localStorage.setItem("character2", nowCharacter);
   };
 
   const onMBTIHandler = (e) => {
@@ -96,8 +99,26 @@ function DetailProfile() {
 
   // 우선순위가 겹치면!
   // 필터링 하는 기능 넣기
+
+  // 원본배열 존재
+  // 선택한 우선순위를 제거한 배열을 얕게 복사
+  // 선택당한 우선순위는 임시저장
+
+  // 1. 선택된거 제거했다가 2. 다른걸로 바꾸면 3. 다시 나타났다가
+  let [optionData1, setOptionData1] = useState([...priorityData]);
   const onFirstPriorityHandler = (e) => {
     const nowFirstPriority = e.value;
+
+    // 필터링 코드인데 적용이 안된다.
+    // 따로 test 해봐야됨
+    let v1 = JSON.stringify(localStorage.getItem("firstPriority"));
+    let v2 = localStorage.getItem("secondPriority");
+    let v3 = localStorage.getItem("thirdPriority");
+    let c1 = optionData1.filter(
+      (x) => x.value !== v1 || x.value !== v2 || x.value !== v3
+    );
+    setOptionData1(c1);
+
     setFirstPriority(nowFirstPriority);
     localStorage.setItem("firstPriority", nowFirstPriority);
   };
@@ -142,7 +163,9 @@ function DetailProfile() {
     <div className="DetailProfilePage" id="DetailProfile">
       <div className="DetailProfileForm">
         <div className="DetailProfileInputs">
+          <div className="title">상세 프로필 작성</div>
           <input
+            className="height"
             onChange={onHeightHandler}
             value={height}
             type="text"
@@ -186,13 +209,14 @@ function DetailProfile() {
             placeholder="성격1"
             options={characterData}
             isSearchable={false}
-            onChange={onCharacterHandler}
+            onChange={onCharacterHandler1}
           />
           <Select
             className="character2"
             placeholder="성격2"
             options={characterData}
             isSearchable={false}
+            onChange={onCharacterHandler2}
           />
           <Select
             className="mbti"
@@ -201,6 +225,7 @@ function DetailProfile() {
             noOptionsMessage={() => {
               return "없는데용:)";
             }}
+            onChange={onMBTIHandler}
           />
           {/* hobby1 hobby2 : 디자인 고민 */}
           <ModalComponent
@@ -214,22 +239,25 @@ function DetailProfile() {
             placeholder="음주"
             options={drinkData}
             isSearchable={false}
+            onChange={onDrinkHandler}
           />
           <Select
             className="smoke"
             placeholder="흡연"
             options={smokeData}
             isSearchable={false}
+            onChange={onSmokeHandler}
           />
 
           {/* 우선순위 */}
           <Select
             className="firstPriority"
             placeholder="우선순위 1"
-            options={priorityData}
+            options={optionData1}
             isSearchable={false}
             styles={selectStyle}
             maxMenuHeight={220}
+            onChange={onFirstPriorityHandler}
           />
           <Select
             className="secondPriority"
@@ -238,6 +266,7 @@ function DetailProfile() {
             isSearchable={false}
             styles={selectStyle}
             maxMenuHeight={220}
+            onChange={onSecondPriorityHandler}
           />
           <Select
             className="thirdPriority"
@@ -246,6 +275,7 @@ function DetailProfile() {
             isSearchable={false}
             styles={selectStyle}
             maxMenuHeight={220}
+            onChange={onThirdPriorityHandler}
           />
 
           <ModalComponent
