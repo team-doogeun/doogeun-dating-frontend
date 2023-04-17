@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./DetailProfile.css";
 import {
   bodyTypeData,
@@ -6,13 +6,11 @@ import {
   addressData,
   characterData,
   mbtiData,
-  hobbyData,
   drinkData,
   smokeData,
   priorityData,
 } from "./AttributeData";
 import Select from "react-select";
-import { useNavigate } from "react-router-dom";
 import ModalComponent from "../SmallComponent/ModalComponent";
 
 function DetailProfile() {
@@ -29,9 +27,8 @@ function DetailProfile() {
   const [drink, setDrink] = useState(null);
   const [smoke, setSmoke] = useState(null);
   // 우선순위
-  const [firstPriority, setFirstPriority] = useState(null);
-  const [secondPriority, setSecondPriority] = useState(null);
-  const [thirdPriority, setThirdPriority] = useState(null);
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [priority, setPriority] = useState([]);
 
   // 입력함수
   const onHeightHandler = (e) => {
@@ -97,41 +94,20 @@ function DetailProfile() {
     localStorage.setItem("smoke", nowSmoke);
   };
 
-  // 우선순위가 겹치면!
-  // 필터링 하는 기능 넣기
-
-  // 원본배열 존재
-  // 선택한 우선순위를 제거한 배열을 얕게 복사
-  // 선택당한 우선순위는 임시저장
-
-  // 1. 선택된거 제거했다가 2. 다른걸로 바꾸면 3. 다시 나타났다가
-  let [optionData1, setOptionData1] = useState([...priorityData]);
-  const onFirstPriorityHandler = (e) => {
-    const nowFirstPriority = e.value;
-
-    // 필터링 코드인데 적용이 안된다.
-    // 따로 test 해봐야됨
-    let v1 = JSON.stringify(localStorage.getItem("firstPriority"));
-    let v2 = localStorage.getItem("secondPriority");
-    let v3 = localStorage.getItem("thirdPriority");
-    let c1 = optionData1.filter(
-      (x) => x.value !== v1 || x.value !== v2 || x.value !== v3
-    );
-    setOptionData1(c1);
-
-    setFirstPriority(nowFirstPriority);
-    localStorage.setItem("firstPriority", nowFirstPriority);
+  // 우선순위 결정
+  const handleChange = (selected) => {
+    if (selected.length <= 3) {
+      setSelectedOptions(selected);
+      setPriority(selected.map((option) => option.value));
+    }
   };
-  const onSecondPriorityHandler = (e) => {
-    const nowSecondPriority = e.value;
-    setSecondPriority(nowSecondPriority);
-    localStorage.setItem("secondPriority", nowSecondPriority);
-  };
-  const onThirdPriorityHandler = (e) => {
-    const nowThirdPriority = e.value;
-    setThirdPriority(nowThirdPriority);
-    localStorage.setItem("thirdPriority", nowThirdPriority);
-  };
+
+  // 우선순위 로컬스토리지 저장 : state 상태 동기화
+  // value값만 문자열로 저장시켜주기
+  useEffect(() => {
+    const priorityValues = selectedOptions.map((option) => option.value);
+    localStorage.setItem("Priority", JSON.stringify(priorityValues));
+  }, [selectedOptions]);
 
   const selectStyle = {
     menu: (provided) => ({ ...provided, zIndex: 9999 }),
@@ -152,9 +128,9 @@ function DetailProfile() {
       hobby2: hobby[1],
       drink: drink,
       smoke: smoke,
-      firstPriority: firstPriority,
-      secondPriority: secondPriority,
-      thirdPriority: thirdPriority,
+      // firstPriority: firstPriority,
+      // secondPriority: secondPriority,
+      // thirdPriority: thirdPriority,
     };
   };
 
@@ -252,31 +228,24 @@ function DetailProfile() {
           {/* 우선순위 */}
           <Select
             className="firstPriority"
-            placeholder="우선순위 1"
-            options={optionData1}
-            isSearchable={false}
-            styles={selectStyle}
-            maxMenuHeight={220}
-            onChange={onFirstPriorityHandler}
-          />
-          <Select
-            className="secondPriority"
-            placeholder="우선순위 2"
+            placeholder="우선순위"
             options={priorityData}
-            isSearchable={false}
             styles={selectStyle}
-            maxMenuHeight={220}
-            onChange={onSecondPriorityHandler}
+            maxMenuHeight={250}
+            isMulti={true}
+            closeMenuOnSelect={false}
+            onChange={handleChange}
           />
-          <Select
-            className="thirdPriority"
-            placeholder="우선순위 3"
-            options={priorityData}
-            isSearchable={false}
-            styles={selectStyle}
-            maxMenuHeight={220}
-            onChange={onThirdPriorityHandler}
-          />
+          {priority.length > 0 && (
+            <div>
+              <div>우선순위는 최대 3개까지만 반영이 됩니다. </div>
+              <ul>
+                {priority.map((option, index) => (
+                  <div>{`${index + 1} ${option}`}</div>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <ModalComponent
             mainContent="NextPage"
