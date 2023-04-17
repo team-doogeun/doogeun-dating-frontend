@@ -1,12 +1,7 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
-import { loginUser } from "../../../_actions/user_action";
 import "./MyProfile.css";
 import { ageData } from "./AttributeData";
-import DetailProfile from "./DetailProfile";
-import { useNavigate } from "react-router-dom";
-import NextPopupModal from "../SmallComponent/NextPopupModal/NextPopupModal";
 import ModalComponent from "../SmallComponent/ModalComponent";
 
 // 회원가입 페이지
@@ -34,12 +29,12 @@ function MyProfile(props) {
 
   // 성별 : 배열로 관리(필터링 필요)
   const [gender, setGender] = useState([]);
-  const [manChecked, setManChecked] = useState(false);
-  const [womanChecked, setWomanChecked] = useState(false);
+  const [isGender, setIsGender] = useState(false);
 
   // 나이(dropdown)
   // 드롭다운 기능 : 다른 곳 클릭했을 시 자동으로 사라짐
   const [age, setAge] = useState(null);
+  const [isAge, setIsAge] = useState(false);
 
   // email(@konkuk.ac.kr 필수입력)
   const [email, setEmail] = useState("");
@@ -56,12 +51,34 @@ function MyProfile(props) {
   const [kakaoIDMsg, setKakaoMSg] = useState("");
   const [isKakaoID, setIsKakaoID] = useState(false);
 
-  // useEffect(() => {
-  //   let pageValid =
-  //     isID && isPW && isConfirmPW && isEmail && isName && isStudentID;
-  //   if (pageValid) {
-  //   }
-  // }, [pageValid]);
+  // 유효성 검사
+  // 다음페이지로 넘어가기 위해
+  // 정보를 다 입력했는지?
+  const [pageValid, setPageValid] = useState(false);
+
+  useEffect(() => {
+    setPageValid(
+      isID &&
+        isPW &&
+        isConfirmPW &&
+        isName &&
+        isGender &&
+        isAge &&
+        isEmail &&
+        isStudentID &&
+        isKakaoID
+    );
+  }, [
+    isID,
+    isPW,
+    isConfirmPW,
+    isName,
+    isGender,
+    isAge,
+    isEmail,
+    isStudentID,
+    isKakaoID,
+  ]);
 
   // 입력함수
   const onIDHandler = (e) => {
@@ -86,7 +103,6 @@ function MyProfile(props) {
     setPW(nowPW);
 
     if (pwRegex.test(nowPW)) {
-      console.log(pwRegex.test(nowPW));
       setPWMsg("안전한 비밀번호에요.");
       setIsPW(true);
       localStorage.setItem("pw", nowPW);
@@ -112,6 +128,23 @@ function MyProfile(props) {
     }
   };
 
+  // 비밀번호 같은지 재검사
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (pw === confirmPW) {
+        setIsConfirmPW(true);
+        setConfirmPWMsg("똑같은 비밀번호입니다.");
+        localStorage.setItem("confirmPW", confirmPW);
+      } else {
+        setIsConfirmPW(false);
+        setConfirmPWMsg("비밀번호가 다릅니다!");
+        localStorage.setItem("confirmPW", "");
+      }
+    }, 500); // 1초마다 실행
+
+    return () => clearInterval(intervalId);
+  }, [pw, confirmPW]);
+
   const onNameHandler = (e) => {
     const nowName = e.currentTarget.value;
     setName(nowName);
@@ -130,6 +163,7 @@ function MyProfile(props) {
   const onGenderHandler = (e) => {
     const nowGender = e.currentTarget.value;
     setGender(nowGender);
+    setIsGender(true);
     localStorage.setItem("gender", nowGender);
   };
 
@@ -177,6 +211,7 @@ function MyProfile(props) {
     const nowKakaoID = e.currentTarget.value;
     setKakaoID(nowKakaoID);
     setKakaoMSg("매칭시 교환되는 아이디입니다.\n신중하게 입력해주세요.");
+    setIsKakaoID(true);
     localStorage.setItem("kakaoID", nowKakaoID);
   };
 
@@ -284,6 +319,7 @@ function MyProfile(props) {
             className="ageDropDown"
             onChange={(age) => {
               setAge(age.value);
+              setIsAge(true);
               sessionStorage.setItem("age", age.value);
             }}
             options={ageData}
@@ -327,6 +363,7 @@ function MyProfile(props) {
             contentName="다음"
             header="알림"
             nextPage="detailprofile"
+            disabled={!pageValid}
           />
         </div>
       </div>

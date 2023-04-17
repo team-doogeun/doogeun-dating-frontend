@@ -16,28 +16,84 @@ import ModalComponent from "../SmallComponent/ModalComponent";
 function DetailProfile() {
   // 상태관리 변수
   const [height, setHeight] = useState("");
-  const [heightMsg, setHeightMsg] = useState("");
   const [isHeight, setIsHeight] = useState(false);
+  const [heightMsg, setHeightMsg] = useState("");
+
   const [bodyType, setBodyType] = useState(null);
+  const [isBodyType, setIsBodyType] = useState(null);
+
   const [address, setAddress] = useState(null);
+  const [isAddress, setIsAddress] = useState(false);
+
   const [department, setDepartment] = useState(null);
+  const [isDepartment, setIsDepartment] = useState(false);
+
   const [character, setCharacter] = useState([]);
+  const [isCharacter1, setIsCharacter1] = useState(false);
+  const [isCharacter2, setIsCharacter2] = useState(false);
+
   const [mbti, setMBTI] = useState(null);
-  const [hobby, setHobby] = useState([]);
+  const [isMBTI, setIsMBTI] = useState(false);
+
+  // isHobby 어떻게 할까
+  const [isHobby, setIsHobby] = useState(false);
+
   const [drink, setDrink] = useState(null);
+  const [isDrink, setIsDrink] = useState(false);
+
   const [smoke, setSmoke] = useState(null);
+  const [isSmoke, setIsSmoke] = useState(false);
+
   // 우선순위
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [isSelectedOptions, setIsSelectedOptions] = useState(false);
   const [priority, setPriority] = useState([]);
+
+  const [pageValid, setPageValid] = useState(false);
+
+  // 입력값, 선택값 유효성 검사
+  useEffect(() => {
+    setPageValid(
+      isHeight &&
+        isBodyType &&
+        isAddress &&
+        isDepartment &&
+        isCharacter1 &&
+        isCharacter2 &&
+        isMBTI &&
+        isHobby &&
+        isDrink &&
+        isSmoke &&
+        isSelectedOptions
+    );
+  }, [
+    isHeight,
+    isBodyType,
+    isAddress,
+    isDepartment,
+    isCharacter1,
+    isCharacter2,
+    isMBTI,
+    isHobby,
+    isDrink,
+    isSmoke,
+    isSelectedOptions,
+  ]);
+
+  // useEffect(()=>{
+  //   let arrLen = localStorage.getItem('hobbyData');
+  //   if(arrLen.length === 2) setIsHobby(true);
+  //   else setIsHobby(false);
+  // }, [arrLen.length])
 
   // 입력함수
   const onHeightHandler = (e) => {
     const nowHeight = e.currentTarget.value;
+    setHeight(nowHeight);
 
     if (100 <= nowHeight && nowHeight <= 250) {
       setHeightMsg("올바른 형식입니다.");
       setIsHeight(true);
-      setHeight(nowHeight);
       localStorage.setItem("height", nowHeight);
     } else {
       setHeightMsg("키는 100cm 이상 250cm 이하로 입력바랍니다.");
@@ -49,48 +105,56 @@ function DetailProfile() {
   const onBodyTypeHandler = (e) => {
     const nowBodyType = e.value;
     setBodyType(nowBodyType);
+    setIsBodyType(true);
     localStorage.setItem("bodyType", nowBodyType);
   };
 
   const onAddressHandler = (e) => {
     const nowAddress = e.value;
     setAddress(nowAddress);
+    setIsAddress(true);
     localStorage.setItem("address", nowAddress);
   };
 
   const onDepartMentHandler = (e) => {
     const nowDepartment = e.value;
     setDepartment(nowDepartment);
+    setIsDepartment(true);
     localStorage.setItem("department", nowDepartment);
   };
 
   const onCharacterHandler1 = (e) => {
     const nowCharacter = e.value;
-    setDepartment(nowCharacter);
+    setCharacter(e.value);
+    setIsCharacter1(true);
     localStorage.setItem("character1", nowCharacter);
   };
 
   const onCharacterHandler2 = (e) => {
     const nowCharacter = e.value;
-    setDepartment(nowCharacter);
+    setCharacter(e.value);
+    setIsCharacter2(true);
     localStorage.setItem("character2", nowCharacter);
   };
 
   const onMBTIHandler = (e) => {
     const nowMBTI = e.value;
     setMBTI(nowMBTI);
+    setIsMBTI(true);
     localStorage.setItem("mbti", nowMBTI);
   };
 
   const onDrinkHandler = (e) => {
     const nowDrink = e.value;
     setDrink(nowDrink);
+    setIsDrink(true);
     localStorage.setItem("drink", nowDrink);
   };
 
   const onSmokeHandler = (e) => {
     const nowSmoke = e.value;
     setSmoke(nowSmoke);
+    setIsSmoke(true);
     localStorage.setItem("smoke", nowSmoke);
   };
 
@@ -99,6 +163,8 @@ function DetailProfile() {
     if (selected.length <= 3) {
       setSelectedOptions(selected);
       setPriority(selected.map((option) => option.value));
+      if (selected.length === 3) setIsSelectedOptions(true);
+      else setIsSelectedOptions(false);
     }
   };
 
@@ -124,8 +190,7 @@ function DetailProfile() {
       character1: character[0],
       character2: character[1],
       mbti: mbti,
-      hobby1: hobby[0],
-      hobby2: hobby[1],
+
       drink: drink,
       smoke: smoke,
       // firstPriority: firstPriority,
@@ -153,17 +218,11 @@ function DetailProfile() {
             </div>
           )}
 
-          {/* value 값 받아오는거 나중에 구현 */}
-          {/* getOptionValue={(e) => {
-              setBodyType(e.value);
-              console.log(bodyType);
-            }} */}
           <Select
             className="bodyType"
             placeholder="체형"
             options={bodyTypeData}
             isSearchable={false}
-            isClearable={true}
             onChange={onBodyTypeHandler}
           />
           <Select
@@ -203,7 +262,7 @@ function DetailProfile() {
             }}
             onChange={onMBTIHandler}
           />
-          {/* hobby1 hobby2 : 디자인 고민 */}
+
           <ModalComponent
             mainContent="Hobby"
             contentName="취미"
@@ -237,13 +296,22 @@ function DetailProfile() {
             onChange={handleChange}
           />
           {priority.length > 0 && (
-            <div>
-              <div>우선순위는 최대 3개까지만 반영이 됩니다. </div>
-              <ul>
+            <div
+              style={{
+                marginTop: "10px",
+                fontSize: "16px",
+                fontFamily: "priority",
+              }}
+            >
+              <div>
+                우선순위는 최대 <span style={{ color: "red" }}>3개</span>
+                까지만 반영이 됩니다.{" "}
+              </div>
+              <div style={{ marginTop: "5px" }}>
                 {priority.map((option, index) => (
-                  <div>{`${index + 1} ${option}`}</div>
+                  <div>{`${index + 1}. ${option}`}</div>
                 ))}
-              </ul>
+              </div>
             </div>
           )}
 
@@ -252,6 +320,7 @@ function DetailProfile() {
             contentName="다음"
             header="알림"
             nextPage="idealprofile"
+            disabled={!pageValid}
           />
         </div>
       </div>

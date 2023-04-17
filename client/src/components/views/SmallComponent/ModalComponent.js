@@ -43,6 +43,7 @@ const ModalComponent = (props) => {
         <button
           className={chooseContentName(props.contentName)}
           onClick={openModal}
+          disabled={props.disabled}
         >
           {props.contentName}
         </button>

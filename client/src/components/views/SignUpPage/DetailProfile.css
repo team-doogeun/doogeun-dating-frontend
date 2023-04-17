@@ -3,6 +3,11 @@
   src: url("../../../fonts/SingleDay-Regular.ttf");
 }
 
+@font-face {
+  font-family: "priority";
+  src: url("../../../fonts/GmarketSansTTFBold.ttf");
+}
+
 /* DetailProfile */
 .DetailProfileForm {
   display: flex;

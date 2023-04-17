@@ -32,8 +32,6 @@ function HobbyPopupModal() {
     if (selected.length === 0) localStorage.removeItem("hobbyData");
   }, [selected]);
 
-  console.log(localStorage.getItem("hobbyData"));
-
   return (
     <div className="hobbyContainer">
       {hobbyData.map((i) => (
@@ -54,4 +52,5 @@ function HobbyPopupModal() {
     </div>
   );
 }
-export default HobbyPopupModal;
+
+export { HobbyPopupModal as default };
