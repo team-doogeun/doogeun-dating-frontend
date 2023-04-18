@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import "./DetailProfile.css";
 import {
   bodyTypeData,
@@ -12,6 +12,8 @@ import {
 } from "./AttributeData";
 import Select from "react-select";
 import ModalComponent from "../SmallComponent/ModalComponent";
+
+const dataContext = React.createContext();
 
 function DetailProfile() {
   // 상태관리 변수
@@ -61,7 +63,6 @@ function DetailProfile() {
         isCharacter1 &&
         isCharacter2 &&
         isMBTI &&
-        isHobby &&
         isDrink &&
         isSmoke &&
         isSelectedOptions
@@ -74,17 +75,11 @@ function DetailProfile() {
     isCharacter1,
     isCharacter2,
     isMBTI,
-    isHobby,
+
     isDrink,
     isSmoke,
     isSelectedOptions,
   ]);
-
-  // useEffect(()=>{
-  //   let arrLen = localStorage.getItem('hobbyData');
-  //   if(arrLen.length === 2) setIsHobby(true);
-  //   else setIsHobby(false);
-  // }, [arrLen.length])
 
   // 입력함수
   const onHeightHandler = (e) => {
@@ -144,6 +139,10 @@ function DetailProfile() {
     localStorage.setItem("mbti", nowMBTI);
   };
 
+  function updateIsHobby(isHobby) {
+    setIsHobby(isHobby);
+  }
+
   const onDrinkHandler = (e) => {
     const nowDrink = e.value;
     setDrink(nowDrink);
@@ -190,12 +189,8 @@ function DetailProfile() {
       character1: character[0],
       character2: character[1],
       mbti: mbti,
-
       drink: drink,
       smoke: smoke,
-      // firstPriority: firstPriority,
-      // secondPriority: secondPriority,
-      // thirdPriority: thirdPriority,
     };
   };
 
@@ -263,11 +258,14 @@ function DetailProfile() {
             onChange={onMBTIHandler}
           />
 
-          <ModalComponent
-            mainContent="Hobby"
-            contentName="취미"
-            header="취미"
-          />
+          {/* Context API 사용해서 자식 컴포넌트에서 부모컴포넌트의 데이터를 관리하는 것이 가능 */}
+          <dataContext.Provider value={{ isHobby, setIsHobby }}>
+            <ModalComponent
+              mainContent="Hobby"
+              contentName="취미"
+              header="취미"
+            />
+          </dataContext.Provider>
 
           <Select
             className="drink"
@@ -320,7 +318,7 @@ function DetailProfile() {
             contentName="다음"
             header="알림"
             nextPage="idealprofile"
-            disabled={!pageValid}
+            disabled={!(pageValid && isHobby)}
           />
         </div>
       </div>
@@ -328,8 +326,4 @@ function DetailProfile() {
   );
 }
 
-const DropDownComponent = (props) => {
-  <div className={props.classname}></div>;
-};
-
-export default DetailProfile;
+export { DetailProfile as default, dataContext };

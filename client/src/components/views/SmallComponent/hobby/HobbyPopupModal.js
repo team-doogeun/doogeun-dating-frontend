@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./HobbyPopupModal.css";
 import { hobbyData } from "../../SignUpPage/AttributeData";
+import { dataContext } from "../../SignUpPage/DetailProfile";
 
 // 전체 버튼이 하나의 selected 에 저장되는게 아니라
 // 버튼 각각의 selected 값이 존재
 // 왜냐하면 HobbyButton 컴포넌트를 selected와 분리하지 않고 여러개를 만들었기 때문..
 // 하나의 selected 변수안에 여러가지 버튼이 컨트롤 되도록 해야된다.
-function HobbyPopupModal() {
+function HobbyPopupModal(props) {
   const [selected, setSelected] = useState([]);
+
+  // 전달받은 isHobby값을 여기서 컨트롤 함
+  const { isHobby, setIsHobby } = useContext(dataContext);
 
   // 버튼을 최대 2개까지
   // 로컬스토리지에 데이터가 저장되는게 1박자 느리다.
@@ -15,7 +19,7 @@ function HobbyPopupModal() {
     const nowValue = e.currentTarget.value;
 
     if (selected.includes(nowValue)) {
-      // 이미 버튼이 눌러져있을 때 누르는 경 : 해제
+      // 이미 버튼이 눌러져있을 때 누르는 경우 : 해제
       // filter : 조건을 통과하는 애만 모은다
       setSelected(selected.filter((item) => item !== nowValue));
     } else if (selected.length < 2) {
@@ -30,6 +34,10 @@ function HobbyPopupModal() {
     localStorage.setItem("hobbyData", JSON.stringify(selected));
     // 배열의 길이 = 0, 그럼 삭제
     if (selected.length === 0) localStorage.removeItem("hobbyData");
+
+    // 배열의 길이가 = 2, true / < 2, false
+    if (selected.length === 2) setIsHobby(true);
+    else setIsHobby(false);
   }, [selected]);
 
   return (
