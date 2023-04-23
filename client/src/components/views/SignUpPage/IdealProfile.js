@@ -1,39 +1,58 @@
-import React, { useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import "./IdealProfile.css";
 import {
   ageRangeData,
   bodyTypeData,
   departmentData,
-  addressData,
   characterData,
   mbtiData,
-  hobbyData,
   drinkData,
   smokeData,
 } from "./AttributeData";
-import { useNavigate } from "react-router-dom";
 import { useRegister } from "../../Api/useRegister";
 import Select from "react-select";
 import ModalComponent from "../SmallComponent/ModalComponent";
 
+const dataContext2 = React.createContext();
+
 function IdealProfile() {
   // 상태관리 변수
   const [idealAge, setIdealAge] = useState(null);
+  const [isIdealAge, setIsIdealAge] = useState(false);
+
   const [idealHeight, setIdealHeight] = useState("");
   const [idealHeightMsg, setIdealHeightMsg] = useState("");
-  const [idealIsHeight, setIdealIsHeight] = useState(false);
+  const [isIdealHeight, setIsIdealHeight] = useState(false);
+
   const [idealBodyType, setIdealBodyType] = useState(null);
+  const [isIdealBodyType, setIsIdealBodyType] = useState(false);
+
   const [idealDepartment, setIdealDepartment] = useState(null);
-  const [idealCharacter, setIdealCharacter] = useState(null);
-  const [idealmbti, setIdealMBTI] = useState(null);
+  const [isIdealDepartment, setIsIdealDepartment] = useState(false);
+
+  const [idealCharacter1, setIdealCharacter1] = useState(null);
+  const [isIdealCharacter1, setIsIdealCharacter1] = useState(false);
+
+  const [idealCharacter2, setIdealCharacter2] = useState(null);
+  const [isIdealCharacter2, setIsIdealCharacter2] = useState(false);
+
+  const [idealMBTI, setIdealMBTI] = useState(null);
+  const [isIdealMBTI, setIsIdealMBTI] = useState(false);
+
   const [idealHobby, setIdealHobby] = useState([]);
+  const [isIdealHobby, setIsIdealHobby] = useState(false);
+
   const [idealDrink, setIdealDrink] = useState(null);
+  const [isIdealDrink, setIsIdealDrink] = useState(false);
+
   const [idealsmoke, setIdealSmoke] = useState(null);
+  const [isIdealsmoke, setIsIdealSmoke] = useState(false);
 
   // 입력 함수
   const onAgeHandler = (e) => {
     const nowAge = e.value;
     setIdealAge(nowAge);
+    setIsIdealAge(true);
     localStorage.setItem("idealAge", nowAge);
   };
 
@@ -43,11 +62,11 @@ function IdealProfile() {
 
     if (100 <= nowIdealHeight && nowIdealHeight <= 250) {
       setIdealHeightMsg("올바른 형식입니다.");
-      setIdealIsHeight(true);
+      setIsIdealHeight(true);
       localStorage.setItem("idealHeight", nowIdealHeight);
     } else {
       setIdealHeightMsg("키는 100cm 이상 250cm 이하로 입력바랍니다.");
-      setIdealIsHeight(false);
+      setIsIdealHeight(false);
       localStorage.setItem("idealHeight", "");
     }
   };
@@ -55,48 +74,80 @@ function IdealProfile() {
   const onBodyTypeHandler = (e) => {
     const nowBodyType = e.value;
     setIdealBodyType(nowBodyType);
-    localStorage.setItem("idealHeight", nowBodyType);
+    setIsIdealBodyType(true);
+    localStorage.setItem("idealBodyType", nowBodyType);
   };
 
   const onDepartmentHandler = (e) => {
     const nowDepartment = e.value;
     setIdealDepartment(nowDepartment);
+    setIsIdealDepartment(true);
     localStorage.setItem("idealDepartment", nowDepartment);
   };
 
   const onCharacterHandler1 = (e) => {
     const nowCharacter = e.value;
-    setIdealDepartment(nowCharacter);
+    setIdealCharacter1(nowCharacter);
+    setIsIdealCharacter1(true);
     localStorage.setItem("idealCharacter1", nowCharacter);
   };
 
   const onCharacterHandler2 = (e) => {
     const nowCharacter = e.value;
-    setIdealDepartment(nowCharacter);
+    setIdealCharacter2(nowCharacter);
+    setIsIdealCharacter2(true);
     localStorage.setItem("idealCharacter2", nowCharacter);
   };
 
   const onMBTIHandler = (e) => {
     const nowMBTI = e.value;
     setIdealMBTI(nowMBTI);
+    setIsIdealMBTI(true);
     localStorage.setItem("idealMBTI", nowMBTI);
   };
 
   const onDrinkHandler = (e) => {
     const nowDrink = e.value;
     setIdealDrink(nowDrink);
+    setIsIdealDrink(true);
     localStorage.setItem("idealDrink", nowDrink);
   };
 
   const onSmokeHandler = (e) => {
     const nowSmoke = e.value;
     setIdealSmoke(nowSmoke);
+    setIsIdealSmoke(true);
     localStorage.setItem("idealSmoke", nowSmoke);
   };
 
-  const selectStyle = {
-    menu: (provided) => ({ ...provided, zIndex: 9999 }),
-  };
+  // 유효성
+  const [pageValid, setPageValid] = useState(false);
+
+  useEffect(() => {
+    setPageValid(
+      isIdealAge &&
+        isIdealHeight &&
+        isIdealBodyType &&
+        isIdealDepartment &&
+        isIdealCharacter1 &&
+        isIdealCharacter2 &&
+        isIdealMBTI &&
+        isIdealHobby &&
+        isIdealDrink &&
+        isIdealsmoke
+    );
+  }, [
+    isIdealAge,
+    isIdealHeight,
+    isIdealBodyType,
+    isIdealDepartment,
+    isIdealCharacter1,
+    isIdealCharacter2,
+    isIdealMBTI,
+    isIdealHobby,
+    isIdealDrink,
+    isIdealsmoke,
+  ]);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -149,7 +200,7 @@ function IdealProfile() {
             onChange={onHeightHandler}
           ></input>
           {idealHeight.length > 0 && (
-            <div className={`message ${idealIsHeight ? "success" : "error"}`}>
+            <div className={`message ${isIdealHeight ? "success" : "error"}`}>
               {idealHeightMsg}
             </div>
           )}
@@ -190,13 +241,17 @@ function IdealProfile() {
             noOptionsMessage={() => {
               return "없는데용:)";
             }}
-            onChange={onCharacterHandler2}
+            onChange={onMBTIHandler}
           />
-          <ModalComponent
-            mainContent="Hobby"
-            contentName="취미"
-            header="취미"
-          />
+
+          <dataContext2.Provider value={{ isIdealHobby, setIsIdealHobby }}>
+            <ModalComponent
+              mainContent="idealHobby"
+              contentName="취미"
+              header="취미"
+              hobbyName="idealHobby"
+            />
+          </dataContext2.Provider>
 
           <Select
             className="drink"
@@ -214,10 +269,11 @@ function IdealProfile() {
           />
 
           <ModalComponent
-            mainContent="NextPage"
+            mainContent="nextPage"
             contentName="다음"
             header="알림"
             nextPage=""
+            pageValid={!(pageValid && isIdealHobby)}
           />
         </div>
       </div>
@@ -225,4 +281,4 @@ function IdealProfile() {
   );
 }
 
-export default IdealProfile;
+export { IdealProfile as default, dataContext2 };

@@ -63,10 +63,10 @@ function NavBar() {
   };
 
   return (
-    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top bg-body-tertiary">
-      <div class="container-fluid touchItem">
+    <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top bg-body-tertiary">
+      <div className="container-fluid touchItem">
         <a
-          class="navbar-brand text-white touchItem"
+          className="navbar-brand text-white touchItem"
           onClick={() => {
             localStorage.clear();
           }}
@@ -75,7 +75,7 @@ function NavBar() {
           DuGeun
         </a>
         <button
-          class="navbar-toggler"
+          className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
@@ -83,26 +83,26 @@ function NavBar() {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item">
               <a
-                class="nav-link text-white touchItem"
+                className="nav-link text-white touchItem"
                 aria-current="page"
                 href="/blinddate"
               >
                 소개팅
               </a>
             </li>
-            <li class="nav-item ">
-              <a class="nav-link text-white touchItem" href="/meeting">
+            <li className="nav-item ">
+              <a className="nav-link text-white touchItem" href="/meeting">
                 미팅
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link text-white touchItem" href="/mypage">
+            <li className="nav-item">
+              <a className="nav-link text-white touchItem" href="/mypage">
                 마이페이지
               </a>
             </li>
@@ -117,7 +117,7 @@ function NavBar() {
             ) : (
               <div className="buttons__right">
                 <ModalComponent
-                  mainContent="Login"
+                  mainContent="login"
                   contentName="로그인"
                   header="로그인"
                 />

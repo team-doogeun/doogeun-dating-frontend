@@ -1,51 +1,64 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./HobbyPopupModal.css";
 import { hobbyData } from "../../SignUpPage/AttributeData";
+import { hobbyData2 } from "../../SignUpPage/AttributeData";
 import { dataContext } from "../../SignUpPage/DetailProfile";
+import { dataContext2 } from "../../SignUpPage/IdealProfile";
+
+// 일단 나중에 수정 ㄱㄱ
 
 // 전체 버튼이 하나의 selected 에 저장되는게 아니라
 // 버튼 각각의 selected 값이 존재
 // 왜냐하면 HobbyButton 컴포넌트를 selected와 분리하지 않고 여러개를 만들었기 때문..
 // 하나의 selected 변수안에 여러가지 버튼이 컨트롤 되도록 해야된다.
 function HobbyPopupModal(props) {
+  const hobbyName = props.hobbbyName;
+  console.log(hobbyName);
+  // 선
+  return (
+    <div className="hobbyContainer">
+      {true ? <DetailHobby /> : <IdealHobby />}
+    </div>
+  );
+}
+
+const DetailHobby = (props) => {
   const [selected, setSelected] = useState([]);
-
-  // 전달받은 isHobby값을 여기서 컨트롤 함
-  const { isHobby, setIsHobby } = useContext(dataContext);
-
+  // 전달받은 isHobby값을 여기서 컨트롤 함 -> dataContext
+  const { isDetailHobby, setIsDetailHobby } = useContext(dataContext);
+  console.log(hobbyData);
   // 버튼을 최대 2개까지
   // 로컬스토리지에 데이터가 저장되는게 1박자 느리다.
   const handleClick = (e) => {
     const nowValue = e.currentTarget.value;
 
-    if (selected.includes(nowValue)) {
-      // 이미 버튼이 눌러져있을 때 누르는 경우 : 해제
-      // filter : 조건을 통과하는 애만 모은다
+    // 이미 버튼이 눌러져있을 때 누르는 경우 : 해제
+    // filter : 조건을 통과하는 애만 모은다
+    if (selected.includes(nowValue))
       setSelected(selected.filter((item) => item !== nowValue));
-    } else if (selected.length < 2) {
-      // 안 눌러져있던걸 추가하는 경우
-      // 추가할때 값이 늘어나니까 length 제한을 걸어두면 됨
-      setSelected([...selected, nowValue]);
-    }
+    // 안 눌러져있던걸 추가하는 경우
+    // 추가할때 값이 늘어나니까 length 제한을 걸어두면 됨
+    else if (selected.length < 2) setSelected([...selected, nowValue]);
   };
 
-  // useState -> 동기화 시키기
+  // 상태값이 바뀐후 저장되도록 -> 동기화 시키기
   useEffect(() => {
-    localStorage.setItem("hobbyData", JSON.stringify(selected));
+    localStorage.setItem("detailHobbyData", JSON.stringify(selected));
+
     // 배열의 길이 = 0, 그럼 삭제
-    if (selected.length === 0) localStorage.removeItem("hobbyData");
+    if (selected.length === 0) localStorage.removeItem("detailHobbyData");
 
     // 배열의 길이가 = 2, true / < 2, false
-    if (selected.length === 2) setIsHobby(true);
-    else setIsHobby(false);
-  }, [selected]);
+    if (selected.length === 2) setIsDetailHobby(true);
+    else setIsDetailHobby(false);
+  }, [selected, setIsDetailHobby]);
 
   return (
-    <div className="hobbyContainer">
+    <div>
       {hobbyData.map((i) => (
         <div>
           <button
-            key={i.value}
+            key={`detail-${i.value}`}
             value={i.value}
             label={i.label}
             onClick={handleClick}
@@ -59,6 +72,48 @@ function HobbyPopupModal(props) {
       ))}
     </div>
   );
-}
+};
+
+const IdealHobby = (props) => {
+  const [selected2, setSelected2] = useState([]);
+  const { isIdealHobby, setIsIdealHobby } = useContext(dataContext2);
+
+  const handleClick = (e) => {
+    const nowValue = e.currentTarget.value;
+
+    if (selected2.includes(nowValue))
+      setSelected2(selected2.filter((item) => item !== nowValue));
+    else if (selected2.length < 2) setSelected2([...selected2, nowValue]);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("idealHobbyData", JSON.stringify(selected2));
+
+    if (selected2.length === 0) localStorage.removeItem("idealHobbyData");
+
+    if (selected2.length === 2) setIsIdealHobby(true);
+    else setIsIdealHobby(false);
+  }, [selected2, setIsIdealHobby]);
+
+  return (
+    <div>
+      {hobbyData2.map((i) => (
+        <div>
+          <button
+            key={`ideal-${i.value}`}
+            value={i.value}
+            label={i.label}
+            onClick={handleClick}
+            className={
+              selected2.includes(i.value) ? "buttonItem clicked" : "buttonItem"
+            }
+          >
+            {i.label}
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+};
 
 export { HobbyPopupModal as default };

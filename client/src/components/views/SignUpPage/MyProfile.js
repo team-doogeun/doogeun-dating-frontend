@@ -107,7 +107,7 @@ function MyProfile(props) {
       setIsPW(true);
       localStorage.setItem("pw", nowPW);
     } else {
-      setPWMsg("숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!");
+      setPWMsg("숫자+영문자+특수문자 조합으로 8자리 이상!");
       setIsPW(false);
       localStorage.setItem("pw", "");
     }
@@ -290,27 +290,30 @@ function MyProfile(props) {
           <div className="genderContainer">
             <input
               type="checkbox"
-              class="btn-check checked"
+              className="btn-check checked"
               id="btn-check-outlined"
-              autocomplete="off"
               value="남자"
               checked={gender === "남자"}
               onClick={onGenderHandler}
+              readOnly
             />
-            <label class="btn btn-outline-primary" for="btn-check-outlined">
+            <label
+              className="btn btn-outline-primary"
+              htmlFor="btn-check-outlined"
+            >
               남자
             </label>
             <div className="marginBetween"></div>
             <input
               type="checkbox"
-              class="btn-check checked"
+              className="btn-check checked"
               id="danger-outlined"
-              autocomplete="off"
               value="여자"
               checked={gender === "여자"}
               onClick={onGenderHandler}
+              readOnly
             />
-            <label class="btn btn-outline-danger" for="danger-outlined">
+            <label className="btn btn-outline-danger" htmlFor="danger-outlined">
               여자
             </label>
           </div>

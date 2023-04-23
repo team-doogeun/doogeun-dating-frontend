@@ -20,6 +20,8 @@ const ModalComponent = (props) => {
     document.body.style.overflow = "unset";
   };
 
+  console.log(props.mainContent);
+
   const chooseContentName = (x) => {
     switch (x) {
       case "로그인":
@@ -49,7 +51,7 @@ const ModalComponent = (props) => {
         header={props.header}
         mainContent={props.mainContent}
         nextPage={props.nextPage}
-        isHobby={props.isHobby}
+        hobbbyName={props.hobbyName}
       ></ModalContent>
     </React.Fragment>
   );
@@ -72,9 +74,10 @@ const ModalContent = (props) => {
           <main>
             {
               {
-                Login: <SignIn />,
-                Hobby: <HobbyPopupModal isHobby={props.isHobby} />,
-                NextPage: <NextPopupModal />,
+                login: <SignIn />,
+                detailHobby: <HobbyPopupModal />,
+                idealHobby: <HobbyPopupModal />,
+                nextPage: <NextPopupModal />,
               }[mainContent]
             }
           </main>

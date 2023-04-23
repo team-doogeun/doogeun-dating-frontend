@@ -38,7 +38,7 @@ function DetailProfile() {
   const [isMBTI, setIsMBTI] = useState(false);
 
   // isHobby 어떻게 할까
-  const [isHobby, setIsHobby] = useState(false);
+  const [isDetailHobby, setIsDetailHobby] = useState(false);
 
   const [drink, setDrink] = useState(null);
   const [isDrink, setIsDrink] = useState(false);
@@ -51,6 +51,7 @@ function DetailProfile() {
   const [isSelectedOptions, setIsSelectedOptions] = useState(false);
   const [priority, setPriority] = useState([]);
 
+  // 유효성
   const [pageValid, setPageValid] = useState(false);
 
   // 입력값, 선택값 유효성 검사
@@ -75,7 +76,6 @@ function DetailProfile() {
     isCharacter1,
     isCharacter2,
     isMBTI,
-
     isDrink,
     isSmoke,
     isSelectedOptions,
@@ -139,10 +139,6 @@ function DetailProfile() {
     localStorage.setItem("mbti", nowMBTI);
   };
 
-  function updateIsHobby(isHobby) {
-    setIsHobby(isHobby);
-  }
-
   const onDrinkHandler = (e) => {
     const nowDrink = e.value;
     setDrink(nowDrink);
@@ -171,7 +167,7 @@ function DetailProfile() {
   // value값만 문자열로 저장시켜주기
   useEffect(() => {
     const priorityValues = selectedOptions.map((option) => option.value);
-    localStorage.setItem("Priority", JSON.stringify(priorityValues));
+    localStorage.setItem("priority", JSON.stringify(priorityValues));
   }, [selectedOptions]);
 
   const selectStyle = {
@@ -206,6 +202,7 @@ function DetailProfile() {
             value={height}
             type="text"
             placeholder="키 ex) 165"
+            autoComplete="off"
           ></input>
           {height.length > 0 && (
             <div className={`message ${isHeight ? "success" : "error"}`}>
@@ -259,11 +256,12 @@ function DetailProfile() {
           />
 
           {/* Context API 사용해서 자식 컴포넌트에서 부모컴포넌트의 데이터를 관리하는 것이 가능 */}
-          <dataContext.Provider value={{ isHobby, setIsHobby }}>
+          <dataContext.Provider value={{ isDetailHobby, setIsDetailHobby }}>
             <ModalComponent
-              mainContent="Hobby"
+              mainContent="detailHobby"
               contentName="취미"
               header="취미"
+              hobbyName="detailHobby"
             />
           </dataContext.Provider>
 
@@ -314,11 +312,11 @@ function DetailProfile() {
           )}
 
           <ModalComponent
-            mainContent="NextPage"
+            mainContent="nextPage"
             contentName="다음"
             header="알림"
             nextPage="idealprofile"
-            disabled={!(pageValid && isHobby)}
+            disabled={!(pageValid && isDetailHobby)}
           />
         </div>
       </div>
