@@ -51,7 +51,7 @@ const ModalComponent = (props) => {
         header={props.header}
         mainContent={props.mainContent}
         nextPage={props.nextPage}
-        hobbbyName={props.hobbyName}
+        hobbyName={props.hobbyName}
       ></ModalContent>
     </React.Fragment>
   );
@@ -75,14 +75,14 @@ const ModalContent = (props) => {
             {
               {
                 login: <SignIn />,
-                detailHobby: <HobbyPopupModal />,
-                idealHobby: <HobbyPopupModal />,
+                detailHobby: <HobbyPopupModal hobbyName={props.hobbyName} />,
+                idealHobby: <HobbyPopupModal hobbyName={props.hobbyName} />,
                 nextPage: <NextPopupModal />,
               }[mainContent]
             }
           </main>
           <footer className="footerContainer">
-            {mainContent === "NextPage" ? (
+            {mainContent === "nextPage" ? (
               <a href={`/${nextPage}`} className="Msg">
                 <button className="yesButton">
                   <span className="text">예</span>
@@ -91,10 +91,10 @@ const ModalContent = (props) => {
             ) : null}
 
             <button
-              className={mainContent === "NextPage" ? "noButton" : "close"}
+              className={mainContent === "nextPage" ? "noButton" : "close"}
               onClick={close}
             >
-              {mainContent === "NextPage" ? (
+              {mainContent === "nextPage" ? (
                 <span>아니오</span>
               ) : (
                 <span>close</span>

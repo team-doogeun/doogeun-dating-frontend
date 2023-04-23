@@ -5,19 +5,17 @@ import { hobbyData2 } from "../../SignUpPage/AttributeData";
 import { dataContext } from "../../SignUpPage/DetailProfile";
 import { dataContext2 } from "../../SignUpPage/IdealProfile";
 
-// 일단 나중에 수정 ㄱㄱ
-
 // 전체 버튼이 하나의 selected 에 저장되는게 아니라
 // 버튼 각각의 selected 값이 존재
 // 왜냐하면 HobbyButton 컴포넌트를 selected와 분리하지 않고 여러개를 만들었기 때문..
 // 하나의 selected 변수안에 여러가지 버튼이 컨트롤 되도록 해야된다.
 function HobbyPopupModal(props) {
-  const hobbyName = props.hobbbyName;
-  console.log(hobbyName);
+  const hobbyName = props.hobbyName;
+
   // 선
   return (
     <div className="hobbyContainer">
-      {true ? <DetailHobby /> : <IdealHobby />}
+      {hobbyName === "detailHobby" ? <DetailHobby /> : <IdealHobby />}
     </div>
   );
 }
@@ -26,7 +24,7 @@ const DetailHobby = (props) => {
   const [selected, setSelected] = useState([]);
   // 전달받은 isHobby값을 여기서 컨트롤 함 -> dataContext
   const { isDetailHobby, setIsDetailHobby } = useContext(dataContext);
-  console.log(hobbyData);
+
   // 버튼을 최대 2개까지
   // 로컬스토리지에 데이터가 저장되는게 1박자 느리다.
   const handleClick = (e) => {
@@ -53,25 +51,21 @@ const DetailHobby = (props) => {
     else setIsDetailHobby(false);
   }, [selected, setIsDetailHobby]);
 
-  return (
+  return hobbyData.map((i) => (
     <div>
-      {hobbyData.map((i) => (
-        <div>
-          <button
-            key={`detail-${i.value}`}
-            value={i.value}
-            label={i.label}
-            onClick={handleClick}
-            className={
-              selected.includes(i.value) ? "buttonItem clicked" : "buttonItem"
-            }
-          >
-            {i.label}
-          </button>
-        </div>
-      ))}
+      <button
+        key={`detail-${i.value}`}
+        value={i.value}
+        label={i.label}
+        onClick={handleClick}
+        className={
+          selected.includes(i.value) ? "buttonItem clicked" : "buttonItem"
+        }
+      >
+        {i.label}
+      </button>
     </div>
-  );
+  ));
 };
 
 const IdealHobby = (props) => {
@@ -95,25 +89,22 @@ const IdealHobby = (props) => {
     else setIsIdealHobby(false);
   }, [selected2, setIsIdealHobby]);
 
-  return (
+  // 이상하게 key값이 안들어가있다
+  return hobbyData2.map((i) => (
     <div>
-      {hobbyData2.map((i) => (
-        <div>
-          <button
-            key={`ideal-${i.value}`}
-            value={i.value}
-            label={i.label}
-            onClick={handleClick}
-            className={
-              selected2.includes(i.value) ? "buttonItem clicked" : "buttonItem"
-            }
-          >
-            {i.label}
-          </button>
-        </div>
-      ))}
+      <button
+        key={`ideal-${i.value}`}
+        value={i.value}
+        label={i.label}
+        onClick={handleClick}
+        className={
+          selected2.includes(i.value) ? "buttonItem clicked" : "buttonItem"
+        }
+      >
+        {i.label}
+      </button>
     </div>
-  );
+  ));
 };
 
 export { HobbyPopupModal as default };
