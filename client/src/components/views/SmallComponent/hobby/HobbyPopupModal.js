@@ -61,6 +61,7 @@ const DetailHobby = (props) => {
         className={
           selected.includes(i.value) ? "buttonItem clicked" : "buttonItem"
         }
+        type="button"
       >
         {i.label}
       </button>
@@ -100,6 +101,7 @@ const IdealHobby = (props) => {
         className={
           selected2.includes(i.value) ? "buttonItem clicked" : "buttonItem"
         }
+        type="button"
       >
         {i.label}
       </button>

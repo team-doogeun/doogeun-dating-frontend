@@ -20,8 +20,6 @@ const ModalComponent = (props) => {
     document.body.style.overflow = "unset";
   };
 
-  console.log(props.mainContent);
-
   const chooseContentName = (x) => {
     switch (x) {
       case "로그인":
@@ -37,13 +35,32 @@ const ModalComponent = (props) => {
   return (
     <React.Fragment>
       <div className="buttonContainer">
-        <button
+        {props.contentName === "다음" ? (
+          <button
+            className={chooseContentName(props.contentName)}
+            onClick={openModal}
+            disabled={props.disabled}
+            type="submit"
+          >
+            {props.contentName}
+          </button>
+        ) : (
+          <button
+            className={chooseContentName(props.contentName)}
+            onClick={openModal}
+            disabled={props.disabled}
+            type="button"
+          >
+            {props.contentName}
+          </button>
+        )}
+        {/* <button
           className={chooseContentName(props.contentName)}
           onClick={openModal}
           disabled={props.disabled}
         >
           {props.contentName}
-        </button>
+        </button> */}
       </div>
       <ModalContent
         open={modalOpen}

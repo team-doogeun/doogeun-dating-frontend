@@ -149,134 +149,161 @@ function IdealProfile() {
     isIdealsmoke,
   ]);
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
+  useEffect(() => {}, []);
 
-    let IdealProfileData = {
-      // height: height,
-      // bodyType: bodyType,
-      // address: address,
-      // department: department,
-      // character1: character[0],
-      // character2: character[1],
-      // mbti: mbti,
-      // hobby1: hobby[0],
-      // hobby2: hobby[1],
-      // drink: drink,
-      // smoke: smoke,
-      // firstPriority: firstPriority,
-      // secondPriority: secondPriority,
-      // thirdPriority: thirdPriority,
-    };
+  // 서버에 넘어가는 유저 데이터
+  const userData = {
+    user: {
+      userId: localStorage.getItem("id"),
+      password: localStorage.getItem("pw"),
+      confirmPassword: localStorage.getItem("confirmPW"),
+      name: localStorage.getItem("name"),
+      gender: localStorage.getItem("gender"),
+      age: localStorage.getItem("age"),
+      email: localStorage.getItem("email"),
+      studentId: localStorage.getItem("studentID"),
+      externalId: localStorage.getItem("kakaoID"),
+    },
+    detailProfile: {
+      height: localStorage.getItem("height"),
+      bodyType: localStorage.getItem("bodyType"),
+      address: localStorage.getItem("address"),
+      department: localStorage.getItem("department"),
+      character1: localStorage.getItem("character1"),
+      character2: localStorage.getItem("character2"),
+      hobby1: localStorage.getItem("detailHobbyData"),
+      hobby2: localStorage.getItem("detailHobbyData"),
+      drink: localStorage.getItem("drink"),
+      smoke: localStorage.getItem("smoke"),
+      firstPriority: localStorage.getItem("priority"),
+    },
+    idealTypeProfile: {
+      idealAge: localStorage.getItem("idealAge"),
+      idealHeight: localStorage.getItem("idealHeight"),
+      idealBodyType: localStorage.getItem("idealBodyType"),
+      idealDepartment: localStorage.getItem("idealDepartment"),
+      idealCharacter1: localStorage.getItem("idealCharacter1"),
+      idealCharacter2: localStorage.getItem("idealCharacter2"),
+      idealMbti: localStorage.getItem("MBTI"),
+      idealHobby1: localStorage.getItem("idealHobbyData"),
+      idealDrink: localStorage.getItem("idealDrink"),
+      idealSmoke: localStorage.getItem("idealSmoke"),
+    },
   };
+
+  const { mutate } = useRegister();
 
   // 제출시 서버에 보내지는 api 호출
   // mutateAsync는 오류를 수동으로 잡아야돼서
   // 웬만하면 mutate를 사용하는 것이 맞다
-  const RegisterForm = async () => {
-    const registerMutation = useRegister();
+
+  const RegisterForm = (e) => {
+    e.preventDefault();
+    console.log(mutate(userData));
   };
 
   // react-hook-form 알아보고 적용하기
   return (
     <div className="IdealProfilePage" id="IdealProfile">
-      <div className="IdealProfileForm" onSubmit={RegisterForm}>
-        <div className="IdealProfileInputs">
-          <div className="title">이상형 프로필 작성</div>
-          <Select
-            className="age"
-            placeholder="나이"
-            options={ageRangeData}
-            isSearchable={false}
-            isClearable={true}
-            onChange={onAgeHandler}
-          />
-
-          <input
-            className="height"
-            placeholder="키 ex) 165"
-            value={idealHeight}
-            type="text"
-            onChange={onHeightHandler}
-          ></input>
-          {idealHeight.length > 0 && (
-            <div className={`message ${isIdealHeight ? "success" : "error"}`}>
-              {idealHeightMsg}
-            </div>
-          )}
-
-          <Select
-            className="bodyType"
-            placeholder="체형"
-            options={bodyTypeData}
-            isSearchable={false}
-            isClearable={true}
-            onChange={onBodyTypeHandler}
-          />
-          <Select
-            className="department"
-            placeholder="대학"
-            options={departmentData}
-            isSearchable={false}
-            onChange={onDepartmentHandler}
-          />
-          <Select
-            className="character1"
-            placeholder="성격1"
-            options={characterData}
-            isSearchable={false}
-            onChange={onCharacterHandler1}
-          />
-          <Select
-            className="character2"
-            placeholder="성격2"
-            options={characterData}
-            isSearchable={false}
-            onChange={onCharacterHandler2}
-          />
-          <Select
-            className="mbti"
-            placeholder="mbti"
-            options={mbtiData}
-            noOptionsMessage={() => {
-              return "없는데용:)";
-            }}
-            onChange={onMBTIHandler}
-          />
-
-          <dataContext2.Provider value={{ isIdealHobby, setIsIdealHobby }}>
-            <ModalComponent
-              mainContent="idealHobby"
-              contentName="취미"
-              header="취미"
-              hobbyName="idealHobby"
+      <form onSubmit={RegisterForm}>
+        <div className="IdealProfileForm">
+          <div className="IdealProfileInputs">
+            <div className="title">이상형 프로필 작성</div>
+            <Select
+              className="age"
+              placeholder="나이"
+              options={ageRangeData}
+              isSearchable={false}
+              isClearable={true}
+              onChange={onAgeHandler}
             />
-          </dataContext2.Provider>
 
-          <Select
-            className="drink"
-            placeholder="음주"
-            options={drinkData}
-            isSearchable={false}
-            onChange={onDrinkHandler}
-          />
-          <Select
-            className="smoke"
-            placeholder="흡연"
-            options={smokeData}
-            isSearchable={false}
-            onChange={onSmokeHandler}
-          />
+            <input
+              className="height"
+              placeholder="키 ex) 165"
+              value={idealHeight}
+              type="text"
+              onChange={onHeightHandler}
+            ></input>
+            {idealHeight.length > 0 && (
+              <div className={`message ${isIdealHeight ? "success" : "error"}`}>
+                {idealHeightMsg}
+              </div>
+            )}
 
-          <ModalComponent
-            mainContent="nextPage"
-            contentName="다음"
-            header="알림"
-            nextPage=""
-            pageValid={!(pageValid && isIdealHobby)}
-          />
+            <Select
+              className="bodyType"
+              placeholder="체형"
+              options={bodyTypeData}
+              isSearchable={false}
+              isClearable={true}
+              onChange={onBodyTypeHandler}
+            />
+            <Select
+              className="department"
+              placeholder="대학"
+              options={departmentData}
+              isSearchable={false}
+              onChange={onDepartmentHandler}
+            />
+            <Select
+              className="character1"
+              placeholder="성격1"
+              options={characterData}
+              isSearchable={false}
+              onChange={onCharacterHandler1}
+            />
+            <Select
+              className="character2"
+              placeholder="성격2"
+              options={characterData}
+              isSearchable={false}
+              onChange={onCharacterHandler2}
+            />
+            <Select
+              className="mbti"
+              placeholder="mbti"
+              options={mbtiData}
+              noOptionsMessage={() => {
+                return "없는데용:)";
+              }}
+              onChange={onMBTIHandler}
+            />
+
+            <dataContext2.Provider value={{ isIdealHobby, setIsIdealHobby }}>
+              <ModalComponent
+                mainContent="idealHobby"
+                contentName="취미"
+                header="취미"
+                hobbyName="idealHobby"
+              />
+            </dataContext2.Provider>
+
+            <Select
+              className="drink"
+              placeholder="음주"
+              options={drinkData}
+              isSearchable={false}
+              onChange={onDrinkHandler}
+            />
+            <Select
+              className="smoke"
+              placeholder="흡연"
+              options={smokeData}
+              isSearchable={false}
+              onChange={onSmokeHandler}
+            />
+
+            <ModalComponent
+              mainContent="nextPage"
+              contentName="다음"
+              header="알림"
+              nextPage=""
+              pageValid={!(pageValid && isIdealHobby)}
+            />
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

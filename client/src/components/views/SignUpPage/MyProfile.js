@@ -362,7 +362,7 @@ function MyProfile(props) {
           {kakaoID.length > 0 && <div className="kakaoIDMsg">{kakaoIDMsg}</div>}
 
           <ModalComponent
-            mainContent="NextPage"
+            mainContent="nextPage"
             contentName="다음"
             header="알림"
             nextPage="detailprofile"

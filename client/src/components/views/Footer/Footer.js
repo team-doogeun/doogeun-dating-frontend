@@ -9,8 +9,10 @@ function Footer() {
         <section className="d-flex justify-content-between p-4 text-white">
           <div className="me-5">
             <span>
-              Get connected with us on social networks : just call me 010 +
-              ((1&lt;&lt;9)**3+(1&lt;&lt;8)**3+(1&lt;&lt;7)**3+(1&lt;&lt;3)**3+3)**3
+              {/* Get connected with us on social networks : just call me 010 +
+              ((1&lt;&lt;9)**3+(1&lt;&lt;8)**3+(1&lt;&lt;7)**3+(1&lt;&lt;3)**3+3)**3 */}
+              Get connected with us on social networks : just call me
+              010-3943-8003
             </span>
           </div>
 

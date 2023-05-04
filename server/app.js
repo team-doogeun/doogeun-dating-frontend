@@ -37,3 +37,16 @@ app.post("/api/todo", (req, res) => {
 app.listen(4000, function () {
   console.log("Example app listening on port 4000!");
 });
+
+const user2 = [];
+
+app.post("/", (req, res) => {
+  const { user, detailProfile, idealTypeProfile } = req.body;
+  user2.push({
+    user,
+    detailProfile,
+    idealTypeProfile,
+  });
+  console.log(user2);
+  return res.send("success");
+});
