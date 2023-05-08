@@ -48,5 +48,5 @@ app.post("/", (req, res) => {
     idealTypeProfile,
   });
   console.log(user2);
-  return res.send("success");
+  return res.send(user2);
 });
