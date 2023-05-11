@@ -205,7 +205,7 @@ function IdealProfile() {
     e.preventDefault();
     mutate(userData);
     // 여기도 일단 경로 "/"로 바꾸면 됨, 지금은 테스트 중
-    window.location.href = "/idealprofile";
+    //window.location.href = "/idealprofile";
   };
 
   // react-hook-form 알아보고 적용하기
