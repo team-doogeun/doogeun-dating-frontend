@@ -149,8 +149,6 @@ function IdealProfile() {
     isIdealsmoke,
   ]);
 
-  useEffect(() => {}, []);
-
   // 서버에 넘어가는 유저 데이터
   const userData = {
     user: {
@@ -163,32 +161,38 @@ function IdealProfile() {
       email: localStorage.getItem("email"),
       studentId: localStorage.getItem("studentID"),
       externalId: localStorage.getItem("kakaoID"),
+      detailProfile: {
+        height: localStorage.getItem("height"),
+        bodyType: localStorage.getItem("bodyType"),
+        address: localStorage.getItem("address"),
+        department: localStorage.getItem("department"),
+        character1: localStorage.getItem("character1"),
+        character2: localStorage.getItem("character2"),
+        Hobby1: JSON.parse(localStorage.getItem("detailHobbyData"))[0],
+        Hobby2: JSON.parse(localStorage.getItem("detailHobbyData"))[1],
+        drink: localStorage.getItem("drink"),
+        smoke: localStorage.getItem("smoke"),
+        firstPriority: JSON.parse(localStorage.getItem("priority"))[0],
+        secondPriority: JSON.parse(localStorage.getItem("priority"))[1],
+        thirdPriority: JSON.parse(localStorage.getItem("priority"))[2],
+      },
+      idealTypeProfile: {
+        idealAge: localStorage.getItem("idealAge"),
+        idealHeight: localStorage.getItem("idealHeight"),
+        idealBodyType: localStorage.getItem("idealBodyType"),
+        idealDepartment: localStorage.getItem("idealDepartment"),
+        idealCharacter1: localStorage.getItem("idealCharacter1"),
+        idealCharacter2: localStorage.getItem("idealCharacter2"),
+        idealMbti: localStorage.getItem("MBTI"),
+        idealHobby1: JSON.parse(localStorage.getItem("idealHobbyData"))[0],
+        idealHobby2: JSON.parse(localStorage.getItem("idealHobbyData"))[1],
+        idealDrink: localStorage.getItem("idealDrink"),
+        idealSmoke: localStorage.getItem("idealSmoke"),
+      },
     },
-    detailProfile: {
-      height: localStorage.getItem("height"),
-      bodyType: localStorage.getItem("bodyType"),
-      address: localStorage.getItem("address"),
-      department: localStorage.getItem("department"),
-      character1: localStorage.getItem("character1"),
-      character2: localStorage.getItem("character2"),
-      hobby1: localStorage.getItem("detailHobbyData"),
-      hobby2: localStorage.getItem("detailHobbyData"),
-      drink: localStorage.getItem("drink"),
-      smoke: localStorage.getItem("smoke"),
-      firstPriority: localStorage.getItem("priority"),
-    },
-    idealTypeProfile: {
-      idealAge: localStorage.getItem("idealAge"),
-      idealHeight: localStorage.getItem("idealHeight"),
-      idealBodyType: localStorage.getItem("idealBodyType"),
-      idealDepartment: localStorage.getItem("idealDepartment"),
-      idealCharacter1: localStorage.getItem("idealCharacter1"),
-      idealCharacter2: localStorage.getItem("idealCharacter2"),
-      idealMbti: localStorage.getItem("MBTI"),
-      idealHobby1: localStorage.getItem("idealHobbyData"),
-      idealDrink: localStorage.getItem("idealDrink"),
-      idealSmoke: localStorage.getItem("idealSmoke"),
-    },
+    basicFilePath: localStorage.getItem("basicFilePath"),
+    secondFilePath: localStorage.getItem("secondFilePath"),
+    thirdFilePath: localStorage.getItem("thirdFilePath"),
   };
 
   const { mutate } = useRegister();
@@ -199,7 +203,9 @@ function IdealProfile() {
 
   const RegisterForm = (e) => {
     e.preventDefault();
-    console.log(mutate(userData));
+    mutate(userData);
+    // 여기도 일단 경로 "/"로 바꾸면 됨, 지금은 테스트 중
+    window.location.href = "/idealprofile";
   };
 
   // react-hook-form 알아보고 적용하기
@@ -294,13 +300,13 @@ function IdealProfile() {
               onChange={onSmokeHandler}
             />
 
-            <ModalComponent
-              mainContent="nextPage"
-              contentName="다음"
-              header="알림"
-              nextPage=""
-              pageValid={!(pageValid && isIdealHobby)}
-            />
+            <button
+              className="btn-hover pink nextButton submitButton"
+              type="submit"
+              disabled={!(pageValid && isIdealHobby)}
+            >
+              제출
+            </button>
           </div>
         </div>
       </form>

@@ -15,7 +15,7 @@ const useAuthToken = () => {
     isLoading,
     isError,
     error,
-  } = useQuery("authToken", async () => {
+  } = useQuery(["authToken"], async () => {
     // fetch : 서버에서 데이터를 받아옴(게임 업데이트 생각하면 됨)
     // 로그인 화면 : get, url (/)
     const response = await fetch("/");

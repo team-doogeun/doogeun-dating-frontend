@@ -140,8 +140,9 @@ function MyProfile(props) {
         setConfirmPWMsg("비밀번호가 다릅니다!");
         localStorage.setItem("confirmPW", "");
       }
-    }, 500); // 1초마다 실행
+    }, 500); // 0.5초마다 실행
 
+    // 한 번 실행하고 clear 해준다. 즉, 재실행 x
     return () => clearInterval(intervalId);
   }, [pw, confirmPW]);
 

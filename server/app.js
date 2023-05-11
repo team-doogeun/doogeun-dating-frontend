@@ -38,15 +38,10 @@ app.listen(4000, function () {
   console.log("Example app listening on port 4000!");
 });
 
-const user2 = [];
-
 app.post("/", (req, res) => {
-  const { user, detailProfile, idealTypeProfile } = req.body;
-  user2.push({
-    user,
-    detailProfile,
-    idealTypeProfile,
-  });
-  console.log(user2);
-  return res.send(user2);
+  // 보내는 변수명과 받는 변수명이 똑같아야 인식이 된다!
+  const { user, image1, image2, image3 } = req.body;
+
+  console.log(user, image1, image2, image3);
+  return res.send(user);
 });

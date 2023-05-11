@@ -61,7 +61,14 @@
 /* footer Button */
 .nextButton {
   margin-top: 20px;
-  text-align: center;
+  text-decoration: none;
+  justify-content: center;
+  display: block;
+  margin: 20px auto 0;
+}
+
+.submitButton {
+  text-decoration: none;
 }
 
 .footerButton {

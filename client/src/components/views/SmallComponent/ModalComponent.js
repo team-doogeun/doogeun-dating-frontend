@@ -28,6 +28,8 @@ const ModalComponent = (props) => {
         return "btn-hover pink hobbyButton";
       case "다음":
         return "btn-hover pink nextButton";
+      case "제출":
+        return "btn-hover pink nextButton";
       default:
         return "";
     }
@@ -35,32 +37,14 @@ const ModalComponent = (props) => {
   return (
     <React.Fragment>
       <div className="buttonContainer">
-        {props.contentName === "다음" ? (
-          <button
-            className={chooseContentName(props.contentName)}
-            onClick={openModal}
-            disabled={props.disabled}
-            type="submit"
-          >
-            {props.contentName}
-          </button>
-        ) : (
-          <button
-            className={chooseContentName(props.contentName)}
-            onClick={openModal}
-            disabled={props.disabled}
-            type="button"
-          >
-            {props.contentName}
-          </button>
-        )}
-        {/* <button
+        <button
           className={chooseContentName(props.contentName)}
           onClick={openModal}
           disabled={props.disabled}
+          type="button"
         >
           {props.contentName}
-        </button> */}
+        </button>
       </div>
       <ModalContent
         open={modalOpen}
@@ -100,7 +84,7 @@ const ModalContent = (props) => {
           </main>
           <footer className="footerContainer">
             {mainContent === "nextPage" ? (
-              <a href={`/${nextPage}`} className="Msg">
+              <a href={`/${nextPage}`} className="Msg" type="button">
                 <button className="yesButton">
                   <span className="text">예</span>
                 </button>
@@ -110,6 +94,7 @@ const ModalContent = (props) => {
             <button
               className={mainContent === "nextPage" ? "noButton" : "close"}
               onClick={close}
+              type="button"
             >
               {mainContent === "nextPage" ? (
                 <span>아니오</span>

@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import "./DetailProfile.css";
 import {
   bodyTypeData,
@@ -14,6 +14,7 @@ import Select from "react-select";
 import ModalComponent from "../SmallComponent/ModalComponent";
 
 const dataContext = React.createContext();
+const imgContext = React.createContext();
 
 function DetailProfile() {
   // 상태관리 변수
@@ -51,6 +52,9 @@ function DetailProfile() {
   const [isSelectedOptions, setIsSelectedOptions] = useState(false);
   const [priority, setPriority] = useState([]);
 
+  // 마지막으로 img
+  const [isImg, setIsImg] = useState(false);
+
   // 유효성
   const [pageValid, setPageValid] = useState(false);
 
@@ -66,7 +70,8 @@ function DetailProfile() {
         isMBTI &&
         isDrink &&
         isSmoke &&
-        isSelectedOptions
+        isSelectedOptions &&
+        isImg
     );
   }, [
     isHeight,
@@ -79,6 +84,7 @@ function DetailProfile() {
     isDrink,
     isSmoke,
     isSelectedOptions,
+    isImg,
   ]);
 
   // 입력함수
@@ -172,22 +178,6 @@ function DetailProfile() {
 
   const selectStyle = {
     menu: (provided) => ({ ...provided, zIndex: 9999 }),
-  };
-
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-
-    let DetailProfileData = {
-      height: height,
-      bodyType: bodyType,
-      address: address,
-      department: department,
-      character1: character[0],
-      character2: character[1],
-      mbti: mbti,
-      drink: drink,
-      smoke: smoke,
-    };
   };
 
   // react-hook-form 알아보고 적용하기
@@ -311,6 +301,14 @@ function DetailProfile() {
             </div>
           )}
 
+          <div className="imgAlign">
+            <imgContext.Provider value={{ isImg, setIsImg }}>
+              <UploadImage imgName="basic" />
+              <UploadImage imgName="second" />
+              <UploadImage imgName="third" />
+            </imgContext.Provider>
+          </div>
+
           <ModalComponent
             mainContent="nextPage"
             contentName="다음"
@@ -323,5 +321,50 @@ function DetailProfile() {
     </div>
   );
 }
+
+const UploadImage = (props) => {
+  const [file, setFile] = useState(null);
+  const { isImg, setIsImg } = useContext(imgContext);
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+      const imageUrl = event.target.result;
+
+      if (props.imgName === "basic") {
+        localStorage.setItem("basicFilePath", imageUrl);
+        setIsImg(true);
+        console.log(isImg);
+      } else if (props.imgName === "second")
+        localStorage.setItem("secondFilePath", imageUrl);
+      else if (props.imgName === "third")
+        localStorage.setItem("thirdFilePath", imageUrl);
+    };
+
+    reader.readAsDataURL(selectedFile);
+    setFile(selectedFile);
+  };
+
+  return (
+    <div>
+      <label htmlFor={`uploadImage-${props.imgName}`} className="uploadImage">
+        <input
+          id={`uploadImage-${props.imgName}`}
+          type="file"
+          onChange={handleFileChange}
+        />
+        {file && (
+          <img
+            className="uploadedFile"
+            src={URL.createObjectURL(file)}
+            alt="uploaded file"
+          />
+        )}
+      </label>
+    </div>
+  );
+};
 
 export { DetailProfile as default, dataContext };

@@ -51,10 +51,10 @@ const DetailHobby = (props) => {
     else setIsDetailHobby(false);
   }, [selected, setIsDetailHobby]);
 
+  // 배열의 최상단에 key 값이 있어야 각각 구별 가능
   return hobbyData.map((i) => (
-    <div>
+    <div key={`detail-${i.value}`}>
       <button
-        key={`detail-${i.value}`}
         value={i.value}
         label={i.label}
         onClick={handleClick}
@@ -92,9 +92,8 @@ const IdealHobby = (props) => {
 
   // 이상하게 key값이 안들어가있다
   return hobbyData2.map((i) => (
-    <div>
+    <div key={`ideal-${i.value}`}>
       <button
-        key={`ideal-${i.value}`}
         value={i.value}
         label={i.label}
         onClick={handleClick}
