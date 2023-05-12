@@ -33,7 +33,7 @@ const useRegister = () => {
     // post url : (/)
     // fetch의 경우 method를 무조건 명시해줘야함
     // 일단 경로는 http://localhost:80/user/signup
-    const response = await fetch("http://localhost:4000/users/signup", {
+    const response = await fetch("http://localhost:80/users/signup", {
       method: "POST",
       headers: headers,
       // Authorization: `Bearer ${authToken}`,
