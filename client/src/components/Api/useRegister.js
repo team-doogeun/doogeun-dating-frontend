@@ -11,18 +11,20 @@ const useRegister = () => {
     const imageData2 = localStorage.getItem("secondFilePath");
     const imageData3 = localStorage.getItem("thirdFilePath");
 
-    if (userData) {
-      formData.append(
-        "user",
-        new Blob([JSON.stringify(userData)], { type: "application/json" })
-      );
-    }
+    if (userData) formData.append("user", JSON.stringify(userData));
 
     // 첫번쨰 이미지 있으면 formData에 데이터 값 넣기
     if (imageData1) {
       formData.append("basicFilePath", imageData1);
-      formData.append("secondFilePath", imageData2);
-      formData.append("thirdFilePath", imageData3);
+      if (imageData2) formData.append("secondFilePath", imageData2);
+      else formData.append("secondFilePath", "");
+      if (imageData3) formData.append("thirdFilePath", imageData3);
+      else formData.append("thirdFilePath", "");
+    }
+
+    for (const [key, value] of formData.entries()) {
+      console.log(key);
+      console.log(value);
     }
 
     const headers = new Headers();

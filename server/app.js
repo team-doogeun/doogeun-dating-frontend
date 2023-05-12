@@ -2,6 +2,10 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const multer = require("multer");
+const bodyParser = require("body-parser");
+
+// body-parser 미들웨어 등록
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cors());
 // 웹에서 body에 데이터를 담아서 보내는데
@@ -9,6 +13,7 @@ app.use(cors());
 // 다음 두 줄이 필요
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+//bodyParser.json([options]);
 
 let id = 2;
 
@@ -47,19 +52,47 @@ app.listen(4000, function () {
 //   return res.send(user);
 // });
 
-// multer 설정
-const upload = multer({ dest: "uploads/" });
-
-// 업로드된 파일 처리하는 라우트 핸들러
-app.post("/users/signup", upload.single("basicFilePath"), (req, res) => {
-  const file = req.file; // 업로드된 파일
-
-  // 파일 처리 로직
-  console.log(file);
-
-  // 다른 데이터 처리 로직
-  const { user } = req.body;
-  console.log(user);
-
-  res.send("File uploaded successfully");
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
 });
+
+const upload = multer({ storage });
+app.use(upload.any());
+
+app.post(
+  "users/signup",
+  upload.fields([
+    { name: "user" },
+    { name: "basicFilePath" },
+    { name: "secondFilePath" },
+    { name: "thirdFilePath" },
+  ]),
+  (req, res) => {
+    // 업로드된 파일 및 필드에 대한 처리
+    const userField = req.body.user; // 'user' 필드 값
+    const firstFilePathField = req.body.firstFilePath; // 'firstFilePath' 필드 값
+    const secondFilePathField = req.body.secondFilePath; // 'secondFilePath' 필드 값
+    const thirdFilePathField = req.body.thirdFilePath; // 'thirdFilePath' 필드 값
+
+    // 파일 처리 로직
+    const firstFile = req.files.firstFilePath[0]; // 'firstFilePath' 필드에 업로드된 파일
+    const secondFile = req.files.secondFilePath[0]; // 'secondFilePath' 필드에 업로드된 파일
+    const thirdFile = req.files.thirdFilePath[0]; // 'thirdFilePath' 필드에 업로드된 파일
+
+    // 필드 및 파일 처리 결과 반환
+    res.send({
+      user: userField,
+      firstFilePath: firstFilePathField,
+      secondFilePath: secondFilePathField,
+      thirdFilePath: thirdFilePathField,
+      firstFile: firstFile,
+      secondFile: secondFile,
+      thirdFile: thirdFile,
+    });
+  }
+);
