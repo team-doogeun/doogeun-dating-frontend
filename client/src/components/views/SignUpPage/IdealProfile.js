@@ -149,6 +149,42 @@ function IdealProfile() {
     isIdealsmoke,
   ]);
 
+  const errorCatchHobbyData = (dataName, num) => {
+    try {
+      const hobbyData = JSON.parse(localStorage.getItem(`${dataName}`));
+      let hobby = "";
+
+      if (num === 0) hobby = hobbyData[0];
+      if (num === 1) hobby = hobbyData[1];
+
+      return hobby;
+    } catch (error) {
+      // 예외 발생 시 처리할 코드 작성
+      console.error(
+        "An error occurred while retrieving detail hobby data:",
+        error
+      );
+      return error;
+    }
+  };
+
+  const errorCatchPriority = (dataName, num) => {
+    try {
+      const priorityData = JSON.parse(localStorage.getItem(`${dataName}`));
+      let prioirty = "";
+
+      if (num === 0) prioirty = priorityData[0];
+      if (num === 1) prioirty = priorityData[1];
+      if (num === 2) prioirty = priorityData[2];
+
+      return prioirty;
+    } catch (error) {
+      // 예외 발생 시 처리할 코드 작성
+      console.error("An error occurred while retrieving priority data:", error);
+      return error;
+    }
+  };
+
   // 서버에 넘어가는 유저 데이터
   const userData = {
     user: {
@@ -168,13 +204,13 @@ function IdealProfile() {
         department: localStorage.getItem("department"),
         character1: localStorage.getItem("character1"),
         character2: localStorage.getItem("character2"),
-        Hobby1: JSON.parse(localStorage.getItem("detailHobbyData"))[0],
-        Hobby2: JSON.parse(localStorage.getItem("detailHobbyData"))[1],
+        Hobby1: errorCatchHobbyData("detailHobbyData", 0),
+        Hobby2: errorCatchHobbyData("detailHobbyData", 1),
         drink: localStorage.getItem("drink"),
         smoke: localStorage.getItem("smoke"),
-        firstPriority: JSON.parse(localStorage.getItem("priority"))[0],
-        secondPriority: JSON.parse(localStorage.getItem("priority"))[1],
-        thirdPriority: JSON.parse(localStorage.getItem("priority"))[2],
+        firstPriority: errorCatchPriority("priority", 0),
+        secondPriority: errorCatchPriority("priority", 1),
+        thirdPriority: errorCatchPriority("priority", 2),
       },
       idealTypeProfile: {
         idealAge: localStorage.getItem("idealAge"),
@@ -184,15 +220,12 @@ function IdealProfile() {
         idealCharacter1: localStorage.getItem("idealCharacter1"),
         idealCharacter2: localStorage.getItem("idealCharacter2"),
         idealMbti: localStorage.getItem("MBTI"),
-        idealHobby1: JSON.parse(localStorage.getItem("idealHobbyData"))[0],
-        idealHobby2: JSON.parse(localStorage.getItem("idealHobbyData"))[1],
+        idealHobby1: errorCatchHobbyData("idealHobbyData", 0),
+        idealHobby2: errorCatchHobbyData("idealHobbyData", 1),
         idealDrink: localStorage.getItem("idealDrink"),
         idealSmoke: localStorage.getItem("idealSmoke"),
       },
     },
-    basicFilePath: localStorage.getItem("basicFilePath"),
-    secondFilePath: localStorage.getItem("secondFilePath"),
-    thirdFilePath: localStorage.getItem("thirdFilePath"),
   };
 
   const { mutate } = useRegister();

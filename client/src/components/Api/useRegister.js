@@ -3,36 +3,47 @@ import { useMutation } from "@tanstack/react-query";
 
 const useRegister = () => {
   const authToken = useAuthToken();
+  const boundary = "----WebKitFormBoundaryExample"; // 경계 문자열
 
-  const imageData = localStorage.getItem("basicFilePath");
-  const formData = new FormData();
-  if (imageData !== null) {
-    formData.append("image", imageData);
-    console.log(formData);
-    console.log(imageData);
-  }
+  const registerMutation = useMutation(async (userData) => {
+    const formData = new FormData();
+    const imageData1 = localStorage.getItem("basicFilePath");
+    const imageData2 = localStorage.getItem("secondFilePath");
+    const imageData3 = localStorage.getItem("thirdFilePath");
 
-  const registerMutation = useMutation(async (userData, formData) => {
+    if (userData) {
+      formData.append(
+        "user",
+        new Blob([JSON.stringify(userData)], { type: "application/json" })
+      );
+    }
+
+    // 첫번쨰 이미지 있으면 formData에 데이터 값 넣기
+    if (imageData1) {
+      formData.append("basicFilePath", imageData1);
+      formData.append("secondFilePath", imageData2);
+      formData.append("thirdFilePath", imageData3);
+    }
+
+    const headers = new Headers();
+    headers.append("Content-Type", `multipart/form-data; boundary=${boundary}`);
+
     // post url : (/)
     // fetch의 경우 method를 무조건 명시해줘야함
     // 일단 경로는 http://localhost:80/user/signup
-    const response = await fetch("http://localhost:80/user/signup", {
+    const response = await fetch("http://localhost:4000/users/signup", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // Authorization: `Bearer ${authToken}`,
-      },
-      body: JSON.stringify(userData, formData),
+      headers: headers,
+      // Authorization: `Bearer ${authToken}`,
+      body: formData,
     });
 
     // 네트워크 오류
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-
+    console.log(formData);
     const data = await response.json();
-
-    console.log(data);
     return data;
   });
 

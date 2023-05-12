@@ -21,7 +21,7 @@ function App() {
         <Route path="/meeting" element={<MeetingPage />}></Route>
         <Route path="/myprofile" element={<MyProfile />}></Route>
         <Route path="/detailprofile" element={<DetailProfile />}></Route>
-        <Route path="/idealprofile" element={<IdealProfile />}></Route>
+        <Route path="/users/signup" element={<IdealProfile />}></Route>
       </Routes>
     </div>
   );

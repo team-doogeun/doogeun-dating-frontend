@@ -313,7 +313,7 @@ function DetailProfile() {
             mainContent="nextPage"
             contentName="다음"
             header="알림"
-            nextPage="idealprofile"
+            nextPage="users/signup"
             disabled={!(pageValid && isDetailHobby)}
           />
         </div>
@@ -354,6 +354,7 @@ const UploadImage = (props) => {
           id={`uploadImage-${props.imgName}`}
           type="file"
           onChange={handleFileChange}
+          name={`${props.imgName}FilePath`}
         />
         {file && (
           <img
