@@ -12,6 +12,7 @@ import {
 } from "./AttributeData";
 import Select from "react-select";
 import ModalComponent from "../SmallComponent/ModalComponent";
+import styled from "styled-components";
 
 const dataContext = React.createContext();
 const imgContext = React.createContext();
@@ -178,6 +179,19 @@ function DetailProfile() {
 
   const selectStyle = {
     menu: (provided) => ({ ...provided, zIndex: 9999 }),
+    control: (provided) => ({
+      ...provided,
+      width: "338px",
+      height: "50px",
+    }),
+  };
+
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      width: "338px",
+      height: "50px",
+    }),
   };
 
   // react-hook-form 알아보고 적용하기
@@ -186,14 +200,14 @@ function DetailProfile() {
       <div className="DetailProfileForm">
         <div className="DetailProfileInputs">
           <div className="title">상세 프로필 작성</div>
-          <input
+          <Input
             className="height"
             onChange={onHeightHandler}
             value={height}
             type="text"
             placeholder="키 ex) 165"
             autoComplete="off"
-          ></input>
+          ></Input>
           {height.length > 0 && (
             <div className={`message ${isHeight ? "success" : "error"}`}>
               {heightMsg}
@@ -205,6 +219,7 @@ function DetailProfile() {
             placeholder="체형"
             options={bodyTypeData}
             isSearchable={false}
+            styles={customStyles}
             onChange={onBodyTypeHandler}
           />
           <Select
@@ -212,6 +227,7 @@ function DetailProfile() {
             placeholder="주소 : ex) 강남구"
             options={addressData}
             isSearchable={false}
+            styles={customStyles}
             onChange={onAddressHandler}
           />
           <Select
@@ -219,6 +235,7 @@ function DetailProfile() {
             placeholder="대학"
             options={departmentData}
             isSearchable={false}
+            styles={customStyles}
             onChange={onDepartMentHandler}
           />
           <Select
@@ -226,6 +243,7 @@ function DetailProfile() {
             placeholder="성격1"
             options={characterData}
             isSearchable={false}
+            styles={customStyles}
             onChange={onCharacterHandler1}
           />
           <Select
@@ -233,6 +251,7 @@ function DetailProfile() {
             placeholder="성격2"
             options={characterData}
             isSearchable={false}
+            styles={customStyles}
             onChange={onCharacterHandler2}
           />
           <Select
@@ -242,6 +261,7 @@ function DetailProfile() {
             noOptionsMessage={() => {
               return "없는데용:)";
             }}
+            styles={customStyles}
             onChange={onMBTIHandler}
           />
 
@@ -260,6 +280,7 @@ function DetailProfile() {
             placeholder="음주"
             options={drinkData}
             isSearchable={false}
+            styles={customStyles}
             onChange={onDrinkHandler}
           />
           <Select
@@ -267,12 +288,13 @@ function DetailProfile() {
             placeholder="흡연"
             options={smokeData}
             isSearchable={false}
+            styles={customStyles}
             onChange={onSmokeHandler}
           />
 
           {/* 우선순위 */}
           <Select
-            className="firstPriority"
+            className="priority"
             placeholder="우선순위"
             options={priorityData}
             styles={selectStyle}
@@ -367,5 +389,17 @@ const UploadImage = (props) => {
     </div>
   );
 };
+
+const Input = styled.input`
+  width: 338px;
+  height: 50px;
+  border-radius: 5px;
+  border: 1px solid #dee2e6;
+  margin-top: 30px;
+  padding-left: 15px;
+  ::placeholder {
+    color: #a5a5a5;
+  }
+`;
 
 export { DetailProfile as default, dataContext };

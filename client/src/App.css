@@ -11,7 +11,7 @@
 }
 
 /* 자주 쓰는 tag css 작성 */
-input {
+/* input {
   background-color: #eee;
   border: 0.4px solid #eee;
   padding: 12px 15px;
@@ -30,4 +30,4 @@ input:focus {
 
 input[type="radio"] {
   display: none;
-}
+} */

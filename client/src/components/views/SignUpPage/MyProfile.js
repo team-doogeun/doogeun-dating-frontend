@@ -3,6 +3,7 @@ import Select from "react-select";
 import "./MyProfile.css";
 import { ageData } from "./AttributeData";
 import ModalComponent from "../SmallComponent/ModalComponent";
+import styled from "styled-components";
 
 // 회원가입 페이지
 function MyProfile(props) {
@@ -238,128 +239,131 @@ function MyProfile(props) {
     <div className="MyProfilePage" id="MyProfile">
       <div className="MyProfileForm">
         <div className="MyProfileInputs">
-          <div className="title">개인 프로필 작성</div>
-          <input
+          <div className="title">회원가입</div>
+          <Input
             onChange={onIDHandler}
             placeholder="아이디"
             value={id}
             type="text"
-          ></input>
+          ></Input>
           {id.length > 0 && (
             <div className={`message ${isID ? "success" : "error"}`}>
               {idMsg}
             </div>
           )}
 
-          <input
+          <Input
             onChange={onPWHandler}
             placeholder="비밀번호"
             value={pw}
             type="password"
-          ></input>
+          ></Input>
           {pw.length > 0 && (
             <div className={`message ${isPW ? "success" : "error"}`}>
               {pwMsg}
             </div>
           )}
 
-          <input
+          <Input
             onChange={onConfirmPWHandler}
             placeholder="비밀번호 확인"
             value={confirmPW}
             type="password"
             id="confirmPW"
-          ></input>
+          ></Input>
           {confirmPW.length > 0 && (
             <div className={`message ${isConfirmPW ? "success" : "error"}`}>
               {confirmPWMsg}
             </div>
           )}
 
-          <input
+          <Input
             onChange={onNameHandler}
             placeholder="이름"
             value={name}
             type="text"
-          ></input>
+          ></Input>
           {name.length > 0 && (
             <div className={`message ${isName ? "success" : "error"}`}>
               {nameMsg}
             </div>
           )}
+          <GenderAndAge>
+            <div className="genderContainer">
+              <input
+                type="checkbox"
+                className="btn-check checked"
+                id="btn-check-outlined"
+                value="남자"
+                checked={gender === "남자"}
+                onClick={onGenderHandler}
+                readOnly
+              />
+              <label
+                className="btn btn-outline-primary"
+                htmlFor="btn-check-outlined"
+              >
+                남자
+              </label>
+              <div className="marginBetween"></div>
+              <input
+                type="checkbox"
+                className="btn-check checked"
+                id="danger-outlined"
+                value="여자"
+                checked={gender === "여자"}
+                onClick={onGenderHandler}
+                readOnly
+              />
+              <label
+                className="btn btn-outline-danger"
+                htmlFor="danger-outlined"
+              >
+                여자
+              </label>
+            </div>
 
-          <div className="genderContainer">
-            <input
-              type="checkbox"
-              className="btn-check checked"
-              id="btn-check-outlined"
-              value="남자"
-              checked={gender === "남자"}
-              onClick={onGenderHandler}
-              readOnly
+            <Select
+              className="ageDropDown"
+              onChange={(age) => {
+                setAge(age.value);
+                setIsAge(true);
+                sessionStorage.setItem("age", age.value);
+              }}
+              options={ageData}
+              placeholder={"나이"}
             />
-            <label
-              className="btn btn-outline-primary"
-              htmlFor="btn-check-outlined"
-            >
-              남자
-            </label>
-            <div className="marginBetween"></div>
-            <input
-              type="checkbox"
-              className="btn-check checked"
-              id="danger-outlined"
-              value="여자"
-              checked={gender === "여자"}
-              onClick={onGenderHandler}
-              readOnly
-            />
-            <label className="btn btn-outline-danger" htmlFor="danger-outlined">
-              여자
-            </label>
-          </div>
-
-          <Select
-            className="ageDropDown"
-            onChange={(age) => {
-              setAge(age.value);
-              setIsAge(true);
-              sessionStorage.setItem("age", age.value);
-            }}
-            options={ageData}
-            placeholder={"나이"}
-          />
-
-          <input
+          </GenderAndAge>
+          <Input
             onChange={onEmailHandler}
             type="text"
             placeholder="@konkuk.ac.kr"
             value={email}
-          ></input>
+          ></Input>
           {email.length > 0 && (
             <div className={`message ${isEmail ? "success" : "error"}`}>
               {emailMsg}
             </div>
           )}
 
-          <input
+          <Input
             onChange={onStudentIDHandler}
             placeholder="학번"
             value={studentID}
             type="text"
-          ></input>
+          ></Input>
           {studentID.length > 0 && (
             <div className={`message ${isStudentID ? "success" : "error"}`}>
               {studentIDMsg}
             </div>
           )}
 
-          <input
+          <Input
             onChange={onKakaoIDHandler}
             placeholder="카카오ID"
             value={kakaoID}
             type="text"
-          ></input>
+          ></Input>
           {kakaoID.length > 0 && <div className="kakaoIDMsg">{kakaoIDMsg}</div>}
 
           <ModalComponent
@@ -374,5 +378,23 @@ function MyProfile(props) {
     </div>
   );
 }
+
+const Input = styled.input`
+  width: 338px;
+  height: 50px;
+  border-radius: 5px;
+  border: 1px solid #dee2e6;
+  margin-top: 30px;
+  padding-left: 15px;
+  ::placeholder {
+    color: #a5a5a5;
+  }
+`;
+
+const GenderAndAge = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
 export { MyProfile as default };

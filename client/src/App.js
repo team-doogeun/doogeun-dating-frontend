@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import GmarketSansTTFBold from "./fonts/GmarketSansTTFBold.ttf";
+import "./App.css";
 // 작업하는 페이지
 import HomePage from "./components/views/HomePage/HomePage";
 import BlindDatePage from "./components/views/BlindDatePage/BilndDatePage";
@@ -37,7 +38,7 @@ function App() {
           <Route path="/meeting" element={<MeetingPage />}></Route>
           <Route path="/myprofile" element={<MyProfile />}></Route>
           <Route path="/detailprofile" element={<DetailProfile />}></Route>
-          <Route path="/idealprofile" element={<IdealProfile />}></Route>
+          <Route path="/users/signup" element={<IdealProfile />}></Route>
           <Route path="/find" element={<FindPassword />} />
           <Route path="/*" element={<PageNotFound />} />
         </Routes>

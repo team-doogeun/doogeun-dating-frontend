@@ -12,6 +12,7 @@ import {
 import { useRegister } from "../../Api/useRegister";
 import Select from "react-select";
 import ModalComponent from "../SmallComponent/ModalComponent";
+import styled from "styled-components";
 
 const dataContext2 = React.createContext();
 
@@ -229,6 +230,14 @@ function IdealProfile() {
     },
   };
 
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      width: "338px",
+      height: "50px",
+    }),
+  };
+
   const { mutate } = useRegister();
 
   // 제출시 서버에 보내지는 api 호출
@@ -255,16 +264,17 @@ function IdealProfile() {
               options={ageRangeData}
               isSearchable={false}
               isClearable={true}
+              styles={customStyles}
               onChange={onAgeHandler}
             />
 
-            <input
+            <Input
               className="height"
               placeholder="키 ex) 165"
               value={idealHeight}
               type="text"
               onChange={onHeightHandler}
-            ></input>
+            ></Input>
             {idealHeight.length > 0 && (
               <div className={`message ${isIdealHeight ? "success" : "error"}`}>
                 {idealHeightMsg}
@@ -277,6 +287,7 @@ function IdealProfile() {
               options={bodyTypeData}
               isSearchable={false}
               isClearable={true}
+              styles={customStyles}
               onChange={onBodyTypeHandler}
             />
             <Select
@@ -284,6 +295,7 @@ function IdealProfile() {
               placeholder="대학"
               options={departmentData}
               isSearchable={false}
+              styles={customStyles}
               onChange={onDepartmentHandler}
             />
             <Select
@@ -291,6 +303,7 @@ function IdealProfile() {
               placeholder="성격1"
               options={characterData}
               isSearchable={false}
+              styles={customStyles}
               onChange={onCharacterHandler1}
             />
             <Select
@@ -298,6 +311,7 @@ function IdealProfile() {
               placeholder="성격2"
               options={characterData}
               isSearchable={false}
+              styles={customStyles}
               onChange={onCharacterHandler2}
             />
             <Select
@@ -307,6 +321,7 @@ function IdealProfile() {
               noOptionsMessage={() => {
                 return "없는데용:)";
               }}
+              styles={customStyles}
               onChange={onMBTIHandler}
             />
 
@@ -324,6 +339,7 @@ function IdealProfile() {
               placeholder="음주"
               options={drinkData}
               isSearchable={false}
+              styles={customStyles}
               onChange={onDrinkHandler}
             />
             <Select
@@ -331,6 +347,7 @@ function IdealProfile() {
               placeholder="흡연"
               options={smokeData}
               isSearchable={false}
+              styles={customStyles}
               onChange={onSmokeHandler}
             />
 
@@ -347,5 +364,17 @@ function IdealProfile() {
     </div>
   );
 }
+
+const Input = styled.input`
+  width: 338px;
+  height: 50px;
+  border-radius: 5px;
+  border: 1px solid #dee2e6;
+  margin-top: 30px;
+  padding-left: 15px;
+  ::placeholder {
+    color: #a5a5a5;
+  }
+`;
 
 export { IdealProfile as default, dataContext2 };
