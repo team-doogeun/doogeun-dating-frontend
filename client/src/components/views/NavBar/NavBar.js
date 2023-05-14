@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./NavBar.css";
-import ModalComponent from "../SmallComponent/ModalComponent";
+import styled from "styled-components";
+import Modal from "../../Modal/LoginModal";
 import { setSessionCookie } from "../SessionControl/Session";
+import SingInContainer from "../SignInPage/SignInContainer";
+import Logo from "../../../Img/Logo.svg";
+import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 function NavBar() {
   // 일단 Login 세션 구현
+  const navigator = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loginModal, setLoginModal] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
 
   // 컴포넌트가 마운트될 때, 서버에서 세션 확인 API를 호출하여 로그인 상태를 가져옵니다.
   // 그렇다면 브라우저를 다시 킬때를 말하는거겠지?
@@ -62,80 +69,124 @@ function NavBar() {
       .catch((err) => console.error(err));
   };
 
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+    setScrollPosition(position);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top bg-body-tertiary">
-      <div className="container-fluid touchItem">
-        <a
-          className="navbar-brand text-white touchItem"
-          onClick={() => {
-            localStorage.clear();
-          }}
-          href="/"
-        >
-          DuGeun
-        </a>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <a
-                className="nav-link text-white touchItem"
-                aria-current="page"
-                href="/blinddate"
+    <HeaderWrapper scrollPosition={scrollPosition}>
+      <HeaderContainer>
+        <LogoImage src={Logo} alt="logo" onClick={() => navigator("/")} />
+        <Nav>
+          {isLoggedIn ? (
+            <div>
+              <p>Welcome, user!</p>
+              <button onClick={handleLogout}>Logout</button>
+            </div>
+          ) : (
+            <>
+              <RegisterButton
+                onClick={() => {
+                  navigator("/myprofile");
+                }}
               >
-                소개팅
-              </a>
-            </li>
-            <li className="nav-item ">
-              <a className="nav-link text-white touchItem" href="/meeting">
-                미팅
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link text-white touchItem" href="/mypage">
-                마이페이지
-              </a>
-            </li>
-          </ul>
-          {/* startArea 이 부분은 css 나중에 수정 */}
-          <div className="startArea">
-            {isLoggedIn ? (
-              <div>
-                <p>Welcome, user!</p>
-                <button onClick={handleLogout}>Logout</button>
-              </div>
-            ) : (
-              <div className="buttons__right">
-                <ModalComponent
-                  mainContent="login"
-                  contentName="로그인"
-                  header="로그인"
-                />
-                <button
-                  className="signUp"
-                  onClick={(e) => {
-                    window.location.href = "/myprofile";
+                회원가입
+              </RegisterButton>
+              <LoginButton
+                onClick={() => {
+                  setLoginModal(true);
+                }}
+              >
+                로그인
+              </LoginButton>
+              {loginModal && (
+                <Modal
+                  CloseModal={() => {
+                    setLoginModal(!loginModal);
                   }}
                 >
-                  회원가입
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </nav>
+                  <SingInContainer />
+                </Modal>
+              )}
+            </>
+          )}
+        </Nav>
+      </HeaderContainer>
+    </HeaderWrapper>
   );
 }
+
+const HeaderWrapper = styled.header`
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #fff;
+  z-index: 1000;
+  box-shadow: ${(props) =>
+    props.scrollPosition >= 0
+      ? "0 0.125rem 0.0625rem -0.0625rem #d9d9d9"
+      : "none"};
+  transition: box-shadow 0.5s ease;
+`;
+
+const HeaderContainer = styled.div`
+  height: 6.25rem;
+  max-width: 65rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto;
+`;
+
+const Nav = styled.nav`
+  display: flex;
+  margin-left: auto;
+`;
+
+const buttonStyles = `
+  font-size: 1rem; 
+  padding: 0.5rem 1.5rem;
+  margin-left: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
+const LogoImage = styled.img`
+  cursor: pointer;
+`;
+
+const LoginButton = styled.button`
+  border: 0.0625rem solid #ff4572;
+  border-radius: 0.4375rem;
+  font-weight: 700;
+  background: #ff426f;
+  color: #fff;
+  ${buttonStyles}
+`;
+
+const RegisterButton = styled.button`
+  border: none;
+  font-weight: 700;
+  color: #777777;
+  background: transparent;
+  ${buttonStyles}
+
+  &:hover {
+    color: #ff4572;
+  }
+`;
 
 export default NavBar;

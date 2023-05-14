@@ -11,7 +11,10 @@ const useRegister = () => {
     const imageData2 = localStorage.getItem("secondFilePath");
     const imageData3 = localStorage.getItem("thirdFilePath");
 
-    if (userData) formData.append("user", JSON.stringify(userData));
+    const udata = JSON.stringify(userData);
+
+    if (userData)
+      formData.append("user", new Blob([udata], { type: "application/json" }));
 
     // 첫번쨰 이미지 있으면 formData에 데이터 값 넣기
     if (imageData1) {
@@ -28,14 +31,14 @@ const useRegister = () => {
     }
 
     const headers = new Headers();
-    headers.append("Content-Type", `multipart/form-data; boundary=${boundary}`);
+    //headers.append("Content-Type", `multipart/form-data; boundary=${boundary}`);
 
     // post url : (/)
     // fetch의 경우 method를 무조건 명시해줘야함
     // 일단 경로는 http://localhost:80/user/signup
     const response = await fetch("http://localhost:80/users/signup", {
       method: "POST",
-      headers: headers,
+      //headers: headers,
       // Authorization: `Bearer ${authToken}`,
       body: formData,
     });

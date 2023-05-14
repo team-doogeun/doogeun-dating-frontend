@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import "./ModalComponent.css";
-import SignIn from "../SignInPage/SignIn";
+import SingInContainer from "../SignInPage/SignInContainer";
 import NextPopupModal from "./NextPopupModal/NextPopupModal";
 import HobbyPopupModal from "./hobby/HobbyPopupModal";
 
@@ -75,7 +75,7 @@ const ModalContent = (props) => {
           <main>
             {
               {
-                login: <SignIn />,
+                login: <SingInContainer />,
                 detailHobby: <HobbyPopupModal hobbyName={props.hobbyName} />,
                 idealHobby: <HobbyPopupModal hobbyName={props.hobbyName} />,
                 nextPage: <NextPopupModal />,
