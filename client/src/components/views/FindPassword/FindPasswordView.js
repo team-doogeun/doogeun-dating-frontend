@@ -1,17 +1,20 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-const FindPassword = () => {
+const FindPasswordView = ({ submitEmail }) => {
   return (
     <>
       <FindPasswordContainer>
-        <h1>비밀번호 찾기</h1>
-        <p>
-          비밀번호를 잃어버리셨나요? 건국대학교 이메일을 입력해 주세요. 이메일을
-          통해 비밀번호 변경 링크가 전송됩니다.
-        </p>
-        <Input placeholder="이메일을 입력해주세요." />
-        <Button>이메일 전송하기</Button>
+        <form onSubmit={submitEmail}>
+          <h1>비밀번호 찾기</h1>
+          <p>
+            비밀번호를 잃어버리셨나요? 건국대학교 이메일을 입력해 주세요.
+            <br />
+            이메일을 통해 임시 비밀번호가 전송됩니다.
+          </p>
+          <Input placeholder="이메일을 입력해주세요." />
+          <Button>이메일 전송하기</Button>
+        </form>
       </FindPasswordContainer>
     </>
   );
@@ -22,13 +25,13 @@ const FindPasswordContainer = styled.div`
   width: 346px;
   height: 676px;
   min-height: 100vh;
-  > h1 {
+  > form > h1 {
     font-weight: 700;
     text-align: center;
     color: #000;
     margin-top: 100px;
   }
-  > p {
+  > form > p {
     font-weight: 600;
     text-align: center;
     color: #737373;
@@ -60,4 +63,4 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-export default FindPassword;
+export default FindPasswordView;
