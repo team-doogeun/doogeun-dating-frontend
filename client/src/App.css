@@ -9,25 +9,3 @@
   margin-left: 150px;
   margin-right: 150px;
 }
-
-/* 자주 쓰는 tag css 작성 */
-/* input {
-  background-color: #eee;
-  border: 0.4px solid #eee;
-  padding: 12px 15px;
-  width: 300px;
-  border-radius: 0.3rem;
-}
-
-input:hover {
-  border-color: palevioletred;
-}
-
-input:focus {
-  border-color: palevioletred;
-  outline: none;
-}
-
-input[type="radio"] {
-  display: none;
-} */

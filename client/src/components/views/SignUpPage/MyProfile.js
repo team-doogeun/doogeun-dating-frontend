@@ -328,7 +328,7 @@ function MyProfile(props) {
               onChange={(age) => {
                 setAge(age.value);
                 setIsAge(true);
-                sessionStorage.setItem("age", age.value);
+                localStorage.setItem("age", age.value);
               }}
               options={ageData}
               placeholder={"나이"}
