@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import "./HobbyPopupModal.css";
 import { hobbyData } from "../../SignUpPage/AttributeData";
 import { hobbyData2 } from "../../SignUpPage/AttributeData";
-import { dataContext } from "../../SignUpPage/DetailProfile";
-import { dataContext2 } from "../../SignUpPage/IdealProfile";
+import { hobbyContext } from "../../SignUpPage/DetailProfile";
+import { idealHobbyContext } from "../../SignUpPage/DetailProfile";
 
 // 전체 버튼이 하나의 selected 에 저장되는게 아니라
 // 버튼 각각의 selected 값이 존재
@@ -23,7 +23,7 @@ function HobbyPopupModal(props) {
 const DetailHobby = (props) => {
   const [selected, setSelected] = useState([]);
   // 전달받은 isHobby값을 여기서 컨트롤 함 -> dataContext
-  const { isDetailHobby, setIsDetailHobby } = useContext(dataContext);
+  const { isDetailHobby, setIsDetailHobby } = useContext(hobbyContext);
 
   // 버튼을 최대 2개까지
   // 로컬스토리지에 데이터가 저장되는게 1박자 느리다.
@@ -71,7 +71,7 @@ const DetailHobby = (props) => {
 
 const IdealHobby = (props) => {
   const [selected2, setSelected2] = useState([]);
-  const { isIdealHobby, setIsIdealHobby } = useContext(dataContext2);
+  const { isIdealHobby, setIsIdealHobby } = useContext(idealHobbyContext);
 
   const handleClick = (e) => {
     const nowValue = e.currentTarget.value;
