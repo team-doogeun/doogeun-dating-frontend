@@ -12,6 +12,7 @@ import DetailProfile from './components/views/SignUpPage/DetailProfile';
 import IdealProfile from './components/views/SignUpPage/IdealProfile';
 import FindPasswordContainer from './components/views/FindPassword/FindPasswordContainer';
 import PageNotFound from './components/views/PageNotFound/PageNotFound';
+import UserSettingContainer from './components/views/MyPage/UserSettings/UserSettingsContainer';
 
 const GlobalStyle = createGlobalStyle`
 @font-face {
@@ -42,6 +43,8 @@ function App() {
           <Route path="/users/signup" element={<IdealProfile />}></Route>
           <Route path="/find" element={<FindPasswordContainer />} />
           <Route path="/*" element={<PageNotFound />} />
+          {/* 마이페이지 기능 테스트 */}
+          <Route path="/userSetting" element={<UserSettingContainer />} />
         </Routes>
       </div>
     </>
