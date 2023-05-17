@@ -1,6 +1,8 @@
+import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import "./DetailProfile.css";
 import {
+  ageRangeData,
   bodyTypeData,
   departmentData,
   addressData,
@@ -12,12 +14,19 @@ import {
 } from "./AttributeData";
 import Select from "react-select";
 import ModalComponent from "../SmallComponent/ModalComponent";
-import styled from "styled-components";
 
-const dataContext = React.createContext();
+const hobbyContext = React.createContext();
+const idealHobbyContext = React.createContext();
 const imgContext = React.createContext();
 
 function DetailProfile() {
+  const [selectedFiles, setSelectedFiles] = useState({
+    basicFilePath: null,
+    secondFilePath: null,
+    thirdFilePath: null,
+  });
+  const [isFileSelected, setIsFileSelected] = useState(false);
+
   // 상태관리 변수
   const [height, setHeight] = useState("");
   const [isHeight, setIsHeight] = useState(false);
@@ -53,40 +62,157 @@ function DetailProfile() {
   const [isSelectedOptions, setIsSelectedOptions] = useState(false);
   const [priority, setPriority] = useState([]);
 
-  // 마지막으로 img
-  const [isImg, setIsImg] = useState(false);
+  //--------이상형-------
+  const [idealAge, setIdealAge] = useState(null);
+  const [isIdealAge, setIsIdealAge] = useState(false);
 
-  // 유효성
-  const [pageValid, setPageValid] = useState(false);
+  const [idealHeight, setIdealHeight] = useState("");
+  const [idealHeightMsg, setIdealHeightMsg] = useState("");
+  const [isIdealHeight, setIsIdealHeight] = useState(false);
 
-  // 입력값, 선택값 유효성 검사
-  useEffect(() => {
-    setPageValid(
-      isHeight &&
-        isBodyType &&
-        isAddress &&
-        isDepartment &&
-        isCharacter1 &&
-        isCharacter2 &&
-        isMBTI &&
-        isDrink &&
-        isSmoke &&
-        isSelectedOptions &&
-        isImg
-    );
-  }, [
-    isHeight,
-    isBodyType,
-    isAddress,
-    isDepartment,
-    isCharacter1,
-    isCharacter2,
-    isMBTI,
-    isDrink,
-    isSmoke,
-    isSelectedOptions,
-    isImg,
-  ]);
+  const [idealBodyType, setIdealBodyType] = useState(null);
+  const [isIdealBodyType, setIsIdealBodyType] = useState(false);
+
+  const [idealDepartment, setIdealDepartment] = useState(null);
+  const [isIdealDepartment, setIsIdealDepartment] = useState(false);
+
+  const [idealCharacter1, setIdealCharacter1] = useState(null);
+  const [isIdealCharacter1, setIsIdealCharacter1] = useState(false);
+
+  const [idealCharacter2, setIdealCharacter2] = useState(null);
+  const [isIdealCharacter2, setIsIdealCharacter2] = useState(false);
+
+  const [idealMBTI, setIdealMBTI] = useState(null);
+  const [isIdealMBTI, setIsIdealMBTI] = useState(false);
+
+  const [idealHobby, setIdealHobby] = useState([]);
+  const [isIdealHobby, setIsIdealHobby] = useState(false);
+
+  const [idealDrink, setIdealDrink] = useState(null);
+  const [isIdealDrink, setIsIdealDrink] = useState(false);
+
+  const [idealSmoke, setIdealSmoke] = useState(null);
+  const [isIdealSmoke, setIsIdealSmoke] = useState(false);
+
+  const errorCatchHobbyData = (dataName, num) => {
+    try {
+      const hobbyData = JSON.parse(localStorage.getItem(`${dataName}`));
+      let hobby = "";
+
+      if (num === 0) hobby = hobbyData[0];
+      if (num === 1) hobby = hobbyData[1];
+
+      return hobby;
+    } catch (error) {
+      // 예외 발생 시 처리할 코드 작성
+      console.error(
+        "An error occurred while retrieving detail hobby data:",
+        error
+      );
+      return error;
+    }
+  };
+
+  const errorCatchPriority = (dataName, num) => {
+    try {
+      const priorityData = JSON.parse(localStorage.getItem(`${dataName}`));
+      let prioirty = "";
+
+      if (num === 0) prioirty = priorityData[0];
+      if (num === 1) prioirty = priorityData[1];
+      if (num === 2) prioirty = priorityData[2];
+
+      return prioirty;
+    } catch (error) {
+      // 예외 발생 시 처리할 코드 작성
+      console.error("An error occurred while retrieving priority data:", error);
+      return error;
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const user = {
+      userId: localStorage.getItem("id"),
+      password: localStorage.getItem("pw"),
+      confirmPassword: localStorage.getItem("confirmPW"),
+      name: localStorage.getItem("name"),
+      gender: localStorage.getItem("gender"),
+      age: Number(localStorage.getItem("age")),
+      email: localStorage.getItem("email"),
+      studentId: localStorage.getItem("studentID"),
+      externalId: localStorage.getItem("kakaoID"),
+      detailProfile: {
+        height: localStorage.getItem("height"),
+        bodyType: localStorage.getItem("bodyType"),
+        address: localStorage.getItem("address"),
+        department: localStorage.getItem("department"),
+        character1: localStorage.getItem("character1"),
+        character2: localStorage.getItem("character2"),
+        mbti: localStorage.getItem("mbti"),
+        hobby1: errorCatchHobbyData("detailHobbyData", 0),
+        hobby2: errorCatchHobbyData("detailHobbyData", 1),
+        drink: localStorage.getItem("drink"),
+        smoke: localStorage.getItem("smoke"),
+        firstPriority: errorCatchPriority("priority", 0),
+        secondPriority: errorCatchPriority("priority", 1),
+        thirdPriority: errorCatchPriority("priority", 2),
+      },
+      idealTypeProfile: {
+        idealAge: idealAge,
+        idealHeight: idealHeight,
+        idealBodyType: idealBodyType,
+        idealDepartment: idealDepartment,
+        idealCharacter1: idealCharacter1,
+        idealCharacter2: idealCharacter2,
+        idealMbti: idealMBTI,
+        idealHobby1: errorCatchHobbyData("idealHobbyData", 0),
+        idealHobby2: errorCatchHobbyData("idealHobbyData", 1),
+        idealDrink: idealDrink,
+        idealSmoke: idealSmoke,
+      },
+    };
+
+    // formData.append("user", JSON.stringify(user));
+
+    const formData = new FormData();
+    const blob = new Blob([JSON.stringify(user)], { type: "application/json" });
+    formData.append("user", blob);
+
+    Object.keys(selectedFiles).forEach((fileId) => {
+      if (selectedFiles[fileId]) {
+        formData.append(fileId, selectedFiles[fileId]);
+      }
+    });
+
+    if (!isFileSelected) {
+      alert("파일을 추가하세요!");
+      return;
+    }
+
+    console.log(selectedFiles);
+    // console.log(formData.user);
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/users/signup",
+        formData
+        // {
+        //   headers: {
+        //     "Content-Type": "multipart/form-data",
+        //   },
+        // }
+      );
+
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   // 입력함수
   const onHeightHandler = (e) => {
@@ -170,6 +296,77 @@ function DetailProfile() {
     }
   };
 
+  const onIdealAgeHandler = (e) => {
+    const nowAge = e.value;
+    setIdealAge(nowAge);
+    setIsIdealAge(true);
+    localStorage.setItem("idealAge", nowAge);
+  };
+
+  const onIdealHeightHandler = (e) => {
+    const nowIdealHeight = e.currentTarget.value;
+    setIdealHeight(nowIdealHeight);
+
+    if (100 <= nowIdealHeight && nowIdealHeight <= 250) {
+      setIdealHeightMsg("올바른 형식입니다.");
+      setIsIdealHeight(true);
+      localStorage.setItem("idealHeight", nowIdealHeight);
+    } else {
+      setIdealHeightMsg("키는 100cm 이상 250cm 이하로 입력바랍니다.");
+      setIsIdealHeight(false);
+      localStorage.setItem("idealHeight", "");
+    }
+  };
+
+  const onIdealBodyTypeHandler = (e) => {
+    const nowBodyType = e.value;
+    setIdealBodyType(nowBodyType);
+    setIsIdealBodyType(true);
+    localStorage.setItem("idealBodyType", nowBodyType);
+  };
+
+  const onIdealDepartmentHandler = (e) => {
+    const nowDepartment = e.value;
+    setIdealDepartment(nowDepartment);
+    setIsIdealDepartment(true);
+    localStorage.setItem("idealDepartment", nowDepartment);
+  };
+
+  const onIdealCharacterHandler1 = (e) => {
+    const nowCharacter = e.value;
+    setIdealCharacter1(nowCharacter);
+    setIsIdealCharacter1(true);
+    localStorage.setItem("idealCharacter1", nowCharacter);
+  };
+
+  const onIdealCharacterHandler2 = (e) => {
+    const nowCharacter = e.value;
+    setIdealCharacter2(nowCharacter);
+    setIsIdealCharacter2(true);
+    localStorage.setItem("idealCharacter2", nowCharacter);
+  };
+
+  const onIdealMBTIHandler = (e) => {
+    const nowMBTI = e.value;
+    setIdealMBTI(nowMBTI);
+    setIsIdealMBTI(true);
+    localStorage.setItem("idealMBTI", nowMBTI);
+  };
+
+  const onIdealDrinkHandler = (e) => {
+    const nowDrink = e.value;
+    setIdealDrink(nowDrink);
+    setIsIdealDrink(true);
+    localStorage.setItem("idealDrink", nowDrink);
+  };
+
+  const onIdealSmokeHandler = (e) => {
+    const nowSmoke = e.value;
+    setIdealSmoke(nowSmoke);
+    setIsIdealSmoke(true);
+    localStorage.setItem("idealSmoke", nowSmoke);
+  };
+
   // 우선순위 로컬스토리지 저장 : state 상태 동기화
   // value값만 문자열로 저장시켜주기
   useEffect(() => {
@@ -179,227 +376,245 @@ function DetailProfile() {
 
   const selectStyle = {
     menu: (provided) => ({ ...provided, zIndex: 9999 }),
-    control: (provided) => ({
-      ...provided,
-      width: "338px",
-      height: "50px",
-    }),
   };
 
-  const customStyles = {
-    control: (provided) => ({
-      ...provided,
-      width: "338px",
-      height: "50px",
-    }),
+  const handleFileChange = (fileId) => (event) => {
+    setSelectedFiles((prevFiles) => ({
+      ...prevFiles,
+      [fileId]: event.target.files[0],
+    }));
+    setIsFileSelected(true);
   };
 
-  // react-hook-form 알아보고 적용하기
   return (
     <div className="DetailProfilePage" id="DetailProfile">
       <div className="DetailProfileForm">
         <div className="DetailProfileInputs">
           <div className="title">상세 프로필 작성</div>
-          <Input
-            className="height"
-            onChange={onHeightHandler}
-            value={height}
-            type="text"
-            placeholder="키 ex) 165"
-            autoComplete="off"
-          ></Input>
-          {height.length > 0 && (
-            <div className={`message ${isHeight ? "success" : "error"}`}>
-              {heightMsg}
-            </div>
-          )}
+          <form className="DetailProfileInputs" onSubmit={handleSubmit}>
+            <input
+              className="height"
+              onChange={onHeightHandler}
+              value={height}
+              type="text"
+              placeholder="키 ex) 165"
+              autoComplete="off"
+            ></input>
+            {height.length > 0 && (
+              <div className={`message ${isHeight ? "success" : "error"}`}>
+                {heightMsg}
+              </div>
+            )}
 
-          <Select
-            className="bodyType"
-            placeholder="체형"
-            options={bodyTypeData}
-            isSearchable={false}
-            styles={customStyles}
-            onChange={onBodyTypeHandler}
-          />
-          <Select
-            className="address"
-            placeholder="주소 : ex) 강남구"
-            options={addressData}
-            isSearchable={false}
-            styles={customStyles}
-            onChange={onAddressHandler}
-          />
-          <Select
-            className="department"
-            placeholder="대학"
-            options={departmentData}
-            isSearchable={false}
-            styles={customStyles}
-            onChange={onDepartMentHandler}
-          />
-          <Select
-            className="character1"
-            placeholder="성격1"
-            options={characterData}
-            isSearchable={false}
-            styles={customStyles}
-            onChange={onCharacterHandler1}
-          />
-          <Select
-            className="character2"
-            placeholder="성격2"
-            options={characterData}
-            isSearchable={false}
-            styles={customStyles}
-            onChange={onCharacterHandler2}
-          />
-          <Select
-            className="mbti"
-            placeholder="mbti"
-            options={mbtiData}
-            noOptionsMessage={() => {
-              return "없는데용:)";
-            }}
-            styles={customStyles}
-            onChange={onMBTIHandler}
-          />
-
-          {/* Context API 사용해서 자식 컴포넌트에서 부모컴포넌트의 데이터를 관리하는 것이 가능 */}
-          <dataContext.Provider value={{ isDetailHobby, setIsDetailHobby }}>
-            <ModalComponent
-              mainContent="detailHobby"
-              contentName="취미"
-              header="취미"
-              hobbyName="detailHobby"
+            <Select
+              className="bodyType"
+              placeholder="체형"
+              options={bodyTypeData}
+              isSearchable={false}
+              onChange={onBodyTypeHandler}
             />
-          </dataContext.Provider>
-
-          <Select
-            className="drink"
-            placeholder="음주"
-            options={drinkData}
-            isSearchable={false}
-            styles={customStyles}
-            onChange={onDrinkHandler}
-          />
-          <Select
-            className="smoke"
-            placeholder="흡연"
-            options={smokeData}
-            isSearchable={false}
-            styles={customStyles}
-            onChange={onSmokeHandler}
-          />
-
-          {/* 우선순위 */}
-          <Select
-            className="priority"
-            placeholder="우선순위"
-            options={priorityData}
-            styles={selectStyle}
-            maxMenuHeight={250}
-            isMulti={true}
-            closeMenuOnSelect={false}
-            onChange={handleChange}
-          />
-          {priority.length > 0 && (
-            <div
-              style={{
-                marginTop: "10px",
-                fontSize: "16px",
-                fontFamily: "priority",
+            <Select
+              className="address"
+              placeholder="주소 : ex) 강남구"
+              options={addressData}
+              isSearchable={false}
+              onChange={onAddressHandler}
+            />
+            <Select
+              className="department"
+              placeholder="대학"
+              options={departmentData}
+              isSearchable={false}
+              onChange={onDepartMentHandler}
+            />
+            <Select
+              className="character1"
+              placeholder="성격1"
+              options={characterData}
+              isSearchable={false}
+              onChange={onCharacterHandler1}
+            />
+            <Select
+              className="character2"
+              placeholder="성격2"
+              options={characterData}
+              isSearchable={false}
+              onChange={onCharacterHandler2}
+            />
+            <Select
+              className="mbti"
+              placeholder="mbti"
+              options={mbtiData}
+              noOptionsMessage={() => {
+                return "없는데용:)";
               }}
-            >
-              <div>
-                우선순위는 최대 <span style={{ color: "red" }}>3개</span>
-                까지만 반영이 됩니다.{" "}
+              onChange={onMBTIHandler}
+            />
+
+            {/* Context API 사용해서 자식 컴포넌트에서 부모컴포넌트의 데이터를 관리하는 것이 가능 */}
+            <hobbyContext.Provider value={{ isDetailHobby, setIsDetailHobby }}>
+              <ModalComponent
+                mainContent="detailHobby"
+                contentName="취미"
+                header="취미"
+                hobbyName="detailHobby"
+              />
+            </hobbyContext.Provider>
+
+            <Select
+              className="drink"
+              placeholder="음주"
+              options={drinkData}
+              isSearchable={false}
+              onChange={onDrinkHandler}
+            />
+            <Select
+              className="smoke"
+              placeholder="흡연"
+              options={smokeData}
+              isSearchable={false}
+              onChange={onSmokeHandler}
+            />
+
+            {/* 우선순위 */}
+            <Select
+              className="firstPriority"
+              placeholder="우선순위"
+              options={priorityData}
+              styles={selectStyle}
+              maxMenuHeight={250}
+              isMulti={true}
+              closeMenuOnSelect={false}
+              onChange={handleChange}
+            />
+            {priority.length > 0 && (
+              <div
+                style={{
+                  marginTop: "10px",
+                  fontSize: "16px",
+                  fontFamily: "priority",
+                }}
+              >
+                <div>
+                  우선순위는 최대 <span style={{ color: "red" }}>3개</span>
+                  까지만 반영이 됩니다.{" "}
+                </div>
+                <div style={{ marginTop: "5px" }}>
+                  {priority.map((option, index) => (
+                    <div>{`${index + 1}. ${option}`}</div>
+                  ))}
+                </div>
               </div>
-              <div style={{ marginTop: "5px" }}>
-                {priority.map((option, index) => (
-                  <div>{`${index + 1}. ${option}`}</div>
-                ))}
+            )}
+            <input type="file" onChange={handleFileChange("basicFilePath")} />
+            <input type="file" onChange={handleFileChange("secondFilePath")} />
+            <input type="file" onChange={handleFileChange("thirdFilePath")} />
+
+            <div>------------------------</div>
+
+            <div className="title">이상형 프로필 작성</div>
+            <Select
+              className="age"
+              placeholder="나이"
+              options={ageRangeData}
+              isSearchable={false}
+              isClearable={true}
+              onChange={onIdealAgeHandler}
+            />
+
+            <input
+              className="height"
+              placeholder="키 ex) 165"
+              value={idealHeight}
+              type="text"
+              onChange={onIdealHeightHandler}
+            ></input>
+            {idealHeight.length > 0 && (
+              <div className={`message ${isIdealHeight ? "success" : "error"}`}>
+                {idealHeightMsg}
+              </div>
+            )}
+
+            <Select
+              className="bodyType"
+              placeholder="체형"
+              options={bodyTypeData}
+              isSearchable={false}
+              isClearable={true}
+              onChange={onIdealBodyTypeHandler}
+            />
+            <Select
+              className="department"
+              placeholder="대학"
+              options={departmentData}
+              isSearchable={false}
+              onChange={onIdealDepartmentHandler}
+            />
+            <Select
+              className="character1"
+              placeholder="성격1"
+              options={characterData}
+              isSearchable={false}
+              onChange={onIdealCharacterHandler1}
+            />
+            <Select
+              className="character2"
+              placeholder="성격2"
+              options={characterData}
+              isSearchable={false}
+              onChange={onIdealCharacterHandler2}
+            />
+            <Select
+              className="mbti"
+              placeholder="mbti"
+              options={mbtiData}
+              noOptionsMessage={() => {
+                return "없는데용:)";
+              }}
+              onChange={onIdealMBTIHandler}
+            />
+
+            <idealHobbyContext.Provider
+              value={{ isIdealHobby, setIsIdealHobby }}
+            >
+              <ModalComponent
+                mainContent="idealHobby"
+                contentName="취미"
+                header="취미"
+                hobbyName="idealHobby"
+              />
+            </idealHobbyContext.Provider>
+
+            <Select
+              className="drink"
+              placeholder="음주"
+              options={drinkData}
+              isSearchable={false}
+              onChange={onIdealDrinkHandler}
+            />
+            <Select
+              className="smoke"
+              placeholder="흡연"
+              options={smokeData}
+              isSearchable={false}
+              onChange={onIdealSmokeHandler}
+            />
+
+            <div className="DetailProfilePage" id="DetailProfile">
+              <div className="DetailProfileForm">
+                <button
+                  className="btn-hover pink nextButton submitButton"
+                  type="submit"
+                >
+                  제출
+                </button>
               </div>
             </div>
-          )}
-
-          <div className="imgAlign">
-            <imgContext.Provider value={{ isImg, setIsImg }}>
-              <UploadImage imgName="basic" />
-              <UploadImage imgName="second" />
-              <UploadImage imgName="third" />
-            </imgContext.Provider>
-          </div>
-
-          <ModalComponent
-            mainContent="nextPage"
-            contentName="다음"
-            header="알림"
-            nextPage="users/signup"
-            disabled={!(pageValid && isDetailHobby)}
-          />
+          </form>
         </div>
       </div>
     </div>
   );
 }
 
-const UploadImage = (props) => {
-  const [file, setFile] = useState(null);
-  const { isImg, setIsImg } = useContext(imgContext);
-
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = (event) => {
-      const imageUrl = event.target.result;
-
-      if (props.imgName === "basic") {
-        localStorage.setItem("basicFilePath", imageUrl);
-        setIsImg(true);
-        console.log(isImg);
-      } else if (props.imgName === "second")
-        localStorage.setItem("secondFilePath", imageUrl);
-      else if (props.imgName === "third")
-        localStorage.setItem("thirdFilePath", imageUrl);
-    };
-
-    reader.readAsDataURL(selectedFile);
-    setFile(selectedFile);
-  };
-
-  return (
-    <div>
-      <label htmlFor={`uploadImage-${props.imgName}`} className="uploadImage">
-        <input
-          id={`uploadImage-${props.imgName}`}
-          type="file"
-          onChange={handleFileChange}
-          name={`${props.imgName}FilePath`}
-        />
-        {file && (
-          <img
-            className="uploadedFile"
-            src={URL.createObjectURL(file)}
-            alt="uploaded file"
-          />
-        )}
-      </label>
-    </div>
-  );
-};
-
-const Input = styled.input`
-  width: 338px;
-  height: 50px;
-  border-radius: 5px;
-  border: 1px solid #dee2e6;
-  margin-top: 30px;
-  padding-left: 15px;
-  ::placeholder {
-    color: #a5a5a5;
-  }
-`;
-
-export { DetailProfile as default, dataContext };
+export { DetailProfile as default, hobbyContext, idealHobbyContext };
