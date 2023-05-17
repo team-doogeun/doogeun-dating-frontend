@@ -14,6 +14,7 @@ import {
 } from "./AttributeData";
 import Select from "react-select";
 import ModalComponent from "../SmallComponent/ModalComponent";
+import styled from "styled-components";
 
 const hobbyContext = React.createContext();
 const idealHobbyContext = React.createContext();
@@ -374,10 +375,6 @@ function DetailProfile() {
     localStorage.setItem("priority", JSON.stringify(priorityValues));
   }, [selectedOptions]);
 
-  const selectStyle = {
-    menu: (provided) => ({ ...provided, zIndex: 9999 }),
-  };
-
   const handleFileChange = (fileId) => (event) => {
     setSelectedFiles((prevFiles) => ({
       ...prevFiles,
@@ -386,20 +383,29 @@ function DetailProfile() {
     setIsFileSelected(true);
   };
 
+  const customStyle = {
+    control: (provided, state) => ({
+      ...provided,
+      width: "338px", // 원하는 너비 값으로 변경
+      height: "50px", // 원하는 높이 값으로 변경
+    }),
+  };
+
   return (
     <div className="DetailProfilePage" id="DetailProfile">
       <div className="DetailProfileForm">
-        <div className="DetailProfileInputs">
-          <div className="title">상세 프로필 작성</div>
-          <form className="DetailProfileInputs" onSubmit={handleSubmit}>
-            <input
+        <form className="DetailProfileInputs" onSubmit={handleSubmit}>
+          <div className="DetailProfilePart">
+            <div className="title">상세 프로필 작성</div>
+            <Input
               className="height"
               onChange={onHeightHandler}
               value={height}
               type="text"
               placeholder="키 ex) 165"
               autoComplete="off"
-            ></input>
+              style={customStyle}
+            ></Input>
             {height.length > 0 && (
               <div className={`message ${isHeight ? "success" : "error"}`}>
                 {heightMsg}
@@ -412,35 +418,45 @@ function DetailProfile() {
               options={bodyTypeData}
               isSearchable={false}
               onChange={onBodyTypeHandler}
+              style={customStyle}
             />
+
             <Select
               className="address"
               placeholder="주소 : ex) 강남구"
               options={addressData}
               isSearchable={false}
               onChange={onAddressHandler}
+              style={customStyle}
             />
+
             <Select
               className="department"
               placeholder="대학"
               options={departmentData}
               isSearchable={false}
               onChange={onDepartMentHandler}
+              style={customStyle}
             />
+
             <Select
               className="character1"
               placeholder="성격1"
               options={characterData}
               isSearchable={false}
               onChange={onCharacterHandler1}
+              style={customStyle}
             />
+
             <Select
               className="character2"
               placeholder="성격2"
               options={characterData}
               isSearchable={false}
               onChange={onCharacterHandler2}
+              style={customStyle}
             />
+
             <Select
               className="mbti"
               placeholder="mbti"
@@ -449,6 +465,7 @@ function DetailProfile() {
                 return "없는데용:)";
               }}
               onChange={onMBTIHandler}
+              style={customStyle}
             />
 
             {/* Context API 사용해서 자식 컴포넌트에서 부모컴포넌트의 데이터를 관리하는 것이 가능 */}
@@ -467,13 +484,16 @@ function DetailProfile() {
               options={drinkData}
               isSearchable={false}
               onChange={onDrinkHandler}
+              style={customStyle}
             />
+
             <Select
               className="smoke"
               placeholder="흡연"
               options={smokeData}
               isSearchable={false}
               onChange={onSmokeHandler}
+              style={customStyle}
             />
 
             {/* 우선순위 */}
@@ -481,7 +501,7 @@ function DetailProfile() {
               className="firstPriority"
               placeholder="우선순위"
               options={priorityData}
-              styles={selectStyle}
+              styles={customStyle}
               maxMenuHeight={250}
               isMulti={true}
               closeMenuOnSelect={false}
@@ -509,9 +529,9 @@ function DetailProfile() {
             <input type="file" onChange={handleFileChange("basicFilePath")} />
             <input type="file" onChange={handleFileChange("secondFilePath")} />
             <input type="file" onChange={handleFileChange("thirdFilePath")} />
+          </div>
 
-            <div>------------------------</div>
-
+          <div className="IdealProfilePart">
             <div className="title">이상형 프로필 작성</div>
             <Select
               className="age"
@@ -520,15 +540,17 @@ function DetailProfile() {
               isSearchable={false}
               isClearable={true}
               onChange={onIdealAgeHandler}
+              style={customStyle}
             />
 
-            <input
+            <Input
               className="height"
               placeholder="키 ex) 165"
               value={idealHeight}
               type="text"
               onChange={onIdealHeightHandler}
-            ></input>
+              style={customStyle}
+            ></Input>
             {idealHeight.length > 0 && (
               <div className={`message ${isIdealHeight ? "success" : "error"}`}>
                 {idealHeightMsg}
@@ -542,28 +564,36 @@ function DetailProfile() {
               isSearchable={false}
               isClearable={true}
               onChange={onIdealBodyTypeHandler}
+              style={customStyle}
             />
+
             <Select
               className="department"
               placeholder="대학"
               options={departmentData}
               isSearchable={false}
               onChange={onIdealDepartmentHandler}
+              style={customStyle}
             />
+
             <Select
               className="character1"
               placeholder="성격1"
               options={characterData}
               isSearchable={false}
               onChange={onIdealCharacterHandler1}
+              style={customStyle}
             />
+
             <Select
               className="character2"
               placeholder="성격2"
               options={characterData}
               isSearchable={false}
               onChange={onIdealCharacterHandler2}
+              style={customStyle}
             />
+
             <Select
               className="mbti"
               placeholder="mbti"
@@ -572,6 +602,7 @@ function DetailProfile() {
                 return "없는데용:)";
               }}
               onChange={onIdealMBTIHandler}
+              style={customStyle}
             />
 
             <idealHobbyContext.Provider
@@ -591,30 +622,45 @@ function DetailProfile() {
               options={drinkData}
               isSearchable={false}
               onChange={onIdealDrinkHandler}
+              style={customStyle}
             />
+
             <Select
               className="smoke"
               placeholder="흡연"
               options={smokeData}
               isSearchable={false}
               onChange={onIdealSmokeHandler}
+              style={customStyle}
             />
+          </div>
 
-            <div className="DetailProfilePage" id="DetailProfile">
-              <div className="DetailProfileForm">
-                <button
-                  className="btn-hover pink nextButton submitButton"
-                  type="submit"
-                >
-                  제출
-                </button>
-              </div>
+          <div className="DetailProfilePage" id="DetailProfile">
+            <div className="DetailProfileForm">
+              <button
+                className="btn-hover pink nextButton submitButton"
+                type="submit"
+              >
+                제출
+              </button>
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   );
 }
+
+const Input = styled.input`
+  width: 338px;
+  height: 50px;
+  border-radius: 5px;
+  border: 1px solid #dee2e6;
+  margin-top: 30px;
+  padding-left: 15px;
+  ::placeholder {
+    color: #a5a5a5;
+  }
+`;
 
 export { DetailProfile as default, hobbyContext, idealHobbyContext };

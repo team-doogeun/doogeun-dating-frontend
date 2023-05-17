@@ -14,15 +14,25 @@
   justify-content: center;
   margin: 0 auto;
   width: 100%;
-  height: 720px;
+  height: 900px;
   z-index: 100;
 }
 
 /* Input Text(입력란) */
 .DetailProfileInputs {
-  width: 300px;
+  width: 100%;
   height: inherit;
   margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.DetailProfilePart {
+  max-width: 338px;
+}
+
+.IdealProfilePart {
+  max-width: 338px;
 }
 
 .title,
@@ -81,27 +91,6 @@
   letter-spacing: 4px;
   cursor: pointer;
 }
-
-/* uploadImage */
-/* .uploadImage {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  padding: 16px;
-  width: 150px;
-  height: 150px;
-  margin: 0 auto;
-  margin-top: 32px;
-}
-
-.uploadedFile {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-} */
 
 .imgAlign {
   display: flex;

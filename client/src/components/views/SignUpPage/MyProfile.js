@@ -217,22 +217,13 @@ function MyProfile(props) {
     localStorage.setItem("kakaoID", nowKakaoID);
   };
 
-  let MyProfileData = {
-    id: id,
-    password: pw,
-    confirmpassword: confirmPW,
-    name: name,
-    gender: gender,
-    age: age,
-    email: email,
-    studentId: studentID,
-    externalID: kakaoID,
-  };
-
-  const localStorageGetItem = (key, value) => {
-    const val =
-      localStorage.getItem(key) !== "" ? localStorage.getItem(key) : value;
-    return val;
+  const customStyle = {
+    menu: (provided) => ({ ...provided, zIndex: 9999 }),
+    control: (provided, state) => ({
+      ...provided,
+      width: "338px", // 원하는 너비 값으로 변경
+      height: "50px", // 원하는 높이 값으로 변경
+    }),
   };
 
   return (
@@ -325,6 +316,7 @@ function MyProfile(props) {
 
             <Select
               className="ageDropDown"
+              style={customStyle}
               onChange={(age) => {
                 setAge(age.value);
                 setIsAge(true);
@@ -363,6 +355,7 @@ function MyProfile(props) {
             placeholder="카카오ID"
             value={kakaoID}
             type="text"
+            style={customStyle}
           ></Input>
           {kakaoID.length > 0 && <div className="kakaoIDMsg">{kakaoIDMsg}</div>}
 

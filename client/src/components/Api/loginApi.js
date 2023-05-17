@@ -12,6 +12,7 @@ const getCookie = (key) => {
   return checkKeyExistence ? true : false;
 };
 
+//
 const getCookieValue = (key) => {
   if (getCookie(key)) {
     const CookieValue = document.cookie

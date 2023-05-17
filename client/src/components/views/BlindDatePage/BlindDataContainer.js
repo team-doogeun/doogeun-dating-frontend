@@ -2,14 +2,7 @@ import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-
-function BlindDatePage() {
-  return (
-    <div>
-      <DataFetchingComponent></DataFetchingComponent>
-    </div>
-  );
-}
+import BlindDateView from "./BilndDateView";
 
 const FindUserID = () => {
   // url에서 userId 가져오기
@@ -20,14 +13,11 @@ const FindUserID = () => {
   return userId;
 };
 
-// 컴포넌트는 항상 대문자로 시작
 const GetMatchUser = async () => {
   const userId = FindUserID();
-
   const response = await axios.get(
     `http://localhost:80/blindDate/${userId}/mathces`
   );
-
   return response.data;
 };
 
@@ -54,6 +44,7 @@ const DataFetchingComponent = () => {
   );
 
   // 매주 월요일에 데이터 갱신
+  // 여걸 어디에 넣어놔야지? 카드?
   const checkAndRefetch = () => {
     const today = new Date();
     if (today.getDay() === 1) {
@@ -62,11 +53,14 @@ const DataFetchingComponent = () => {
   };
 
   // 좋아요 누르기
+  // 디자인된 사진 안에 넣어놓기
   const handleLike = async () => {
     try {
       await axios.post("http://localhost:80/blindDate/like", {
         userId: String(FindUserID()),
+
         /* 첫번째 유저인지, 두번째 유저인지 구분필요 */
+        // 분기로 처리해야됨
         targetUserId: data.userId,
       });
     } catch (error) {
@@ -75,25 +69,16 @@ const DataFetchingComponent = () => {
   };
 
   if (isLoading) {
-    return <span>Loading...</span>;
+    console.log("Loading");
   }
 
   if (isError) {
-    return <span>Error: {error.message}</span>;
+    console.log("Error");
   }
 
   // 유저 정보 출력
   // 1주일에 2명 소개
-  return (
-    <div>
-      <ul>
-        {data.map((todo) => (
-          <li key={todo.id}>{todo.title}</li>
-        ))}
-      </ul>
-      <LikeButton onClick={handleLike}></LikeButton>
-    </div>
-  );
+  return <BlindDateView userData={data}></BlindDateView>;
 };
 
 // 좋아요 버튼
@@ -101,4 +86,4 @@ const LikeButton = ({ onClick }) => {
   return <button onClick={onclick}>Like</button>;
 };
 
-export default BlindDatePage;
+export { DataFetchingComponent };
