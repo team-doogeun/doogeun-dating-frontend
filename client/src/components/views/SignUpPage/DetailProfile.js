@@ -18,7 +18,6 @@ import styled from "styled-components";
 
 const hobbyContext = React.createContext();
 const idealHobbyContext = React.createContext();
-const imgContext = React.createContext();
 
 function DetailProfile() {
   const [selectedFiles, setSelectedFiles] = useState({

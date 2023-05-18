@@ -29,7 +29,7 @@ const DataFetchingComponent = () => {
       refetchOnWindowFocus: false, // react-query는 사용자가 사용하는 윈도우가 다른 곳을 갔다가 다시 화면으로 돌아오면 이 함수를 재실행합니다. 그 재실행 여부 옵션 입니다.
       retry: 0, // 실패시 재호출 몇번 할지
       refetchOnMount: true, // 컴포넌트가 마운트될 때 데이터를 자동으로 다시 가져옵니다.
-      refetchInterval: 24 * 60 * 60 * 1000, // 24시간마다 데이터를 자동으로 다시 가져옵니다.
+      refetchInterval: 7 * 24 * 60 * 60 * 1000, // 24 * 7 이면 = 1주일마다 데이터를 자동으로 다시 가져옵니다.
 
       onSuccess: (data) => {
         // 성공시 콘솔찍기
@@ -45,6 +45,7 @@ const DataFetchingComponent = () => {
 
   // 매주 월요일에 데이터 갱신
   // 여걸 어디에 넣어놔야지? 카드?
+  // 근데 어떻게 1주일을 체크하냐? 알아서 query가 체크해주나?
   const checkAndRefetch = () => {
     const today = new Date();
     if (today.getDay() === 1) {
