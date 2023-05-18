@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import MyPageSidemenuContanier from "../MyPageSidemenu/MyPageSidemenuContainer";
 import styled from "styled-components";
 import { getCookieValue } from "../../../Api/loginApi";
 import profileImage from "../../../../Img/BasicProfilePhoto.png";
+import { passwordContext } from "./UserSettingsContainer";
 
-const UserSettingView = ({ navigate }) => {
+const UserSettingView = ({ navigate, changePassword }) => {
+  const { setNewPassword } = useContext(passwordContext);
+
   const userName = getCookieValue("name");
   const userId = getCookieValue("userId");
 
@@ -29,7 +32,14 @@ const UserSettingView = ({ navigate }) => {
           </UserinfoBox>
           <UserPassword>비밀번호</UserPassword>
           <UserPasswordBox>
-            <UserPasswordEditBtn>비밀번호 변경</UserPasswordEditBtn>
+            <form onSubmit={changePassword}>
+              <ChangePasswordBox
+                onChange={(e) => {
+                  setNewPassword(e.value);
+                }}
+              ></ChangePasswordBox>
+              <UserPasswordEditBtn>비밀번호 변경</UserPasswordEditBtn>
+            </form>
           </UserPasswordBox>
         </UserSettingWrapper>
       </UserSettingContainer>
@@ -213,6 +223,20 @@ const UserPasswordBox = styled.div`
   border: 1px solid #d9d9d9;
   border-radius: 8px;
   margin-top: 16px;
+`;
+
+const PasswordForm = styled.form``;
+
+const ChangePasswordBox = styled.input`
+  width: 338px;
+  height: 50px;
+  border-radius: 5px;
+  border: 1px solid #dee2e6;
+  margin-left: 15px;
+  padding-left: 15px;
+  ::placeholder {
+    color: #a5a5a5;
+  }
 `;
 
 const UserPasswordEditBtn = styled.button`
