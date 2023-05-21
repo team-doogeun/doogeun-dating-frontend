@@ -1,7 +1,5 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import io from "socket.io-client";
 import styled from "styled-components";
 
 // 미팅은 실시간이라 소켓통신을 기반으로 한다
@@ -10,25 +8,16 @@ import styled from "styled-components";
 // 해야될게 디자인
 // 그리고 인원이 다 차면 호스트가 카톡 아이디를 전부 받아옴
 // 참가할 때 : 카카오 아이디 요청(get)
+// 아이디 인증 : sessionId
 
 // 소켓 서버 주소에 맞게 변경
-const socket = io("http://loaclhost:8080/");
 
-const MeetingRoomView = () => {
+const MeetingRoomView = ({
+  socket,
+  initSocketConnection,
+  disconnectSocket,
+}) => {
   const [participants, setParticipants] = useState([]);
-
-  const initSocketConnection = () => {
-    if (socket) return;
-    socket.connect();
-  };
-
-  const disconnectSocket = () => {
-    if (socket === null || socket.connected === false) {
-      return;
-    }
-    socket.disconnect();
-    socket = undefined;
-  };
 
   useEffect(() => {
     // 마운트시 소켓 연결
@@ -58,17 +47,17 @@ const MeetingRoomView = () => {
   };
 
   return (
-    <div>
+    <MeetingContainer>
       <h1>Meeting Room</h1>
       <p>Participants: {participants.length}</p>
       <ParticipateButton onClick={addParticipant}>참여</ParticipateButton>
       <RunOutBUtton onClick={removeParticipant}>나가기</RunOutBUtton>
-    </div>
+    </MeetingContainer>
   );
 };
 
 const buttonStyles = `
-  font-size: 0.8rem; 
+  font-size: 0.8rem;
   padding: 0.3rem 1.0rem;
   margin-left: 1rem;
   cursor: pointer;
@@ -77,6 +66,16 @@ const buttonStyles = `
   &:hover {
     transform: scale(1.05);
   }
+`;
+
+const MeetingContainer = styled.div`
+  width: 100%;
+  min-height: calc(100vh - 530px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #ffffff;
+  color: #ffffff;
 `;
 
 const ParticipateButton = styled.button`
