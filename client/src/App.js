@@ -5,7 +5,7 @@ import GmarketSansTTFBold from "./fonts/GmarketSansTTFBold.ttf";
 import "./App.css";
 // 작업하는 페이지
 import HomePage from "./components/views/HomePage/HomePage";
-import BlindDatePage from "./components/views/BlindDatePage/BilndDateView";
+import BlindDatePage from "./components/views/BlindDatePage/BlindDateContainer";
 import MeetingPage from "./components/views/MeetingPage/MeetingRoomContainer";
 import MyProfile from "./components/views/SignUpPage/MyProfile";
 import DetailProfile from "./components/views/SignUpPage/DetailProfile";
