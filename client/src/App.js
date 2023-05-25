@@ -37,7 +37,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />}></Route>
           <Route path="/blindDate" element={<BlindDatePage />}></Route>
-          <Route path="/meeting" element={<MeetingPage />}></Route>
+          <Route path="/group" element={<MeetingPage />}></Route>
           <Route path="/myprofile" element={<MyProfile />}></Route>
           <Route path="/detailprofile" element={<DetailProfile />}></Route>
           <Route path="/users/signup" element={<IdealProfile />}></Route>

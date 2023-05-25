@@ -27,6 +27,7 @@ const BlindDateView = ({ getUserData, buttonLike }) => {
             Data.secondFilePath,
             Data.thirdFilePath,
           ];
+          // 기본 사진 있으면 -> 사진 데이터 저장 o
           if (userImage1[0]) setUserImage1([...userImage1]);
           else console.log("user1 사진 없음");
 
@@ -90,7 +91,7 @@ const BlindDateView = ({ getUserData, buttonLike }) => {
                     </div>
                   ))}
                 </Carousel>
-                <NameContainer>{userData.userId}</NameContainer>
+                <NameContainer>{`${userData.userId},`}</NameContainer>
                 <AgeContainer>{userData.age}</AgeContainer>
                 <TagContainer>
                   <Tag>{userData.addressType}</Tag>
@@ -136,7 +137,7 @@ const BlindDateView = ({ getUserData, buttonLike }) => {
                     </div>
                   ))}
                 </Carousel>
-                <NameContainer>{userData.userIdSec}</NameContainer>
+                <NameContainer>{`${userData.userIdSec},`}</NameContainer>
                 <AgeContainer>{userData.ageSec}</AgeContainer>
                 <TagContainer>
                   <Tag>{userData.addressTypeSec}</Tag>
@@ -221,7 +222,7 @@ const AgeContainer = styled.div`
   font-size: 1.2rem;
   position: absolute;
   bottom: 63px;
-  left: 100px;
+  margin-left: 10px;
   color: white;
   z-index: 3;
 `;
