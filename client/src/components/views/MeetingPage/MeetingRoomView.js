@@ -1,6 +1,6 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import "./meeting.css";
 import Modal from "../../Modal/LoginModal";
 
 // 카테고리 : 2대2/ 3대3
@@ -20,71 +20,63 @@ import Modal from "../../Modal/LoginModal";
 // 2. 내가 좋아요 받은 사람 : 좋아요 누를 수 있는 버튼 추가
 // 3. 매칭된 사람
 
-// 미팅은 실시간이라 소켓통신을 기반으로 한다
-// 들어올 수도 있고 나갈 수도 있다. -> 나가는건 이미 참여했다걸 확인한 후에 나간다.(서버에 get 요청 필요해 보임)
-
 // 해야될게 디자인
 // 그리고 인원이 다 차면 호스트가 카톡 아이디를 전부 받아옴
 // 시작을 눌러야 시작됨
 // 참가할 때 : 카카오 아이디 요청(get)
 // 아이디 인증 : sessionId
 
+// 만들기 누르면 makeRoom 사용
 const MeetingRoomView = ({ meetings, makeRoom, registerIn, registerOut }) => {
   const [meetingModal, setMeetingModal] = useState(false);
 
   return (
     <MeetingPage>
-      <MeetingRoomContainer>
-        {meetings.map((meetingData) => (
-          <MeetingCard
-            key={meetingData.id}
-            meetings={meetingData}
-            registerIn={registerIn}
-            registerOut={registerOut}
-          ></MeetingCard>
-        ))}
-      </MeetingRoomContainer>
-      <BtnContainer>
-        <MakeRoomButton>미팅방 만들기</MakeRoomButton>
-        {meetingModal && (
-          <Modal
-            CloseModal={() => {
-              setMeetingModal(!meetingModal);
-            }}
-          >
-            <MakeMeetingRoom />
-          </Modal>
-        )}
-      </BtnContainer>
+      <ScreenUp>
+        <MeetingRoomMsg>건전한 미팅!</MeetingRoomMsg>
+        <MeetingRoomContainer>
+          {meetings.map((meetingData) => (
+            <CardTmp
+              key={meetingData.id}
+              meetings={meetingData}
+              registerIn={registerIn}
+              registerOut={registerOut}
+            ></CardTmp>
+          ))}
+        </MeetingRoomContainer>
+      </ScreenUp>
       <PageNumContainer></PageNumContainer>
     </MeetingPage>
   );
 };
 
-const MeetingCard = ({ meetings, registerIn, registerOut }) => {
+const CardTmp = ({ meetings, registerIn, registerOut }) => {
   return (
-    <Card>
-      <CardBody>
-        <TotalNumber>{`총인원 : ${meetings.capacity}`}</TotalNumber>
-        <MaleFeMale>{`남 ${meetings.maleNum} : 여 ${meetings.femaleNum}`}</MaleFeMale>
-        <CardTitle>{`방 제목 : ${meetings.title}`}</CardTitle>
-        <CardText>{`소갯말 : ${meetings.groupBlindIntroduction}`}</CardText>
-        <ParticipateButton
-          onClick={() => {
-            registerIn(meetings.id, meetings.title);
-          }}
-        >
-          참여
-        </ParticipateButton>
-        <RunOutButton
-          onclick={() => {
-            registerOut(meetings.id, meetings.title);
-          }}
-        >
-          나가기
-        </RunOutButton>
-      </CardBody>
-    </Card>
+    <div className="card">
+      <div className="card-body">
+        <CardBody>
+          <MaleFeMale>{`${meetings.maleNum} : ${meetings.femaleNum}`}</MaleFeMale>
+          <CardTitle>{`Title : ${meetings.title}`}</CardTitle>
+          <CardText>{`Intro : ${meetings.groupBlindIntroduction}`}</CardText>
+          <BtnContainer>
+            <ParticipateButton
+              onClick={() => {
+                registerIn(meetings.id, meetings.title);
+              }}
+            >
+              참여
+            </ParticipateButton>
+            <RunOutButton
+              onclick={() => {
+                registerOut(meetings.id, meetings.title);
+              }}
+            >
+              나가기
+            </RunOutButton>
+          </BtnContainer>
+        </CardBody>
+      </div>
+    </div>
   );
 };
 
@@ -97,12 +89,26 @@ const MeetingPage = styled.div`
   margin: 0 auto;
 `;
 
+const ScreenUp = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const MeetingRoomMsg = styled.div`
+  width: 80%;
+  color: black;
+  font-size: 24px;
+  font-weight: 600;
+  align-items: center;
+  margin: auto 0;
+`;
+
 const MeetingRoomContainer = styled.div`
   width: 80%;
   min-height: calc(100vh - 530px);
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4개의 열을 동일한 너비로 설정 */
-  grid-gap: 30px;
+  grid-template-columns: repeat(2, 1fr); /* 4개의 열을 동일한 너비로 설정 */
+  grid-gap: 10px;
   margin: 0 auto;
   justify-content: center;
   align-items: center;
@@ -121,18 +127,26 @@ const Card = styled.div`
 
 const CardBody = styled.div`
   margin: 10px;
+  color: #777;
 `;
 
-const TotalNumber = styled.div``;
+const MaleFeMale = styled.div`
+  font-size: 22px;
+  font-weight: bold;
+  color: #ff4572;
+`;
 
 const CardTitle = styled.div`
-  align-items: center;
-  font-weight: 600;
+  font-size: 18px;
+  color: black;
+  font-weight: bold;
 `;
 
-const CardText = styled.p``;
-
-const MaleFeMale = styled.div``;
+const CardText = styled.div`
+  font-size: 18px;
+  color: black;
+  font-weight: bold;
+`;
 
 const buttonStyles = `
   font-size: 0.8rem;
@@ -144,6 +158,13 @@ const buttonStyles = `
   &:hover {
     transform: scale(1.05);
   }
+`;
+
+const BtnContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ParticipateButton = styled.button`
@@ -168,10 +189,6 @@ const RunOutButton = styled.button`
   &:hover {
     color: #ff4572;
   }
-`;
-
-const BtnContainer = styled.div`
-  display: flex;
 `;
 
 const MakeRoomButton = styled.button`

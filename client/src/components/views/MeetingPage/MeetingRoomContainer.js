@@ -23,11 +23,23 @@ const MeetingRoomContainer = () => {
     }
   };
 
+  // userId
+  const hostStart = async (title) => {
+    await axios
+      .post(`/group/new/${title}`, {})
+      .then((res) => {
+        console.log(`유저들의 카카오톡 아이디 : ${res}`);
+      })
+      .catch((error) => {
+        console.log("방 만들기 실패 " + error);
+      });
+  };
+
   // 만들기 기능
   // 만들기 눌렀을 때 : 모달창 띄워서 userData입력받기
   const makeRoom = async (userData) => {
     await axios
-      .post("/group/register", {
+      .post(`/group/new/${userData.title}`, {
         userData,
       })
       .then((res) => {
@@ -41,16 +53,11 @@ const MeetingRoomContainer = () => {
   };
 
   // 입장 버튼
-  const registerIn = async (id, title) => {
-    const userId = getCookieValue("userId");
-
+  const registerIn = async (title) => {
     await axios
-      .post(`/group/${userId}`, {
-        id: id,
-        title: title,
-      })
+      .post(`/group/${title}`)
       .then((res) => {
-        console.log(res.id + "," + res.title + "에 입장했습니다");
+        console.log(res);
       })
       .catch((error) => {
         console.log("방에 입장하지 못함" + error);
@@ -58,11 +65,11 @@ const MeetingRoomContainer = () => {
   };
 
   // 나가기 기능
-  const registerOut = async (id, title) => {
+  const registerOut = async (title, userId) => {
     await axios
-      .get("/group", {
-        id: id,
+      .get(`/group/${title}/exit`, {
         title: title,
+        userId: userId,
       })
       .then(() => {
         console.log("방 나가기 성공");
@@ -116,6 +123,26 @@ const MeetingRoomContainer = () => {
     },
     {
       id: "5",
+      title: "ㅎㅇ임",
+      maleNum: "3",
+      femaleNum: "3",
+      capacity: "6",
+      groupBlindCategory: "3:3",
+      groupBlindStatus: "NOT_FULL",
+      groupBlindIntroduction: "안녕하세요~",
+    },
+    {
+      id: "6",
+      title: "ㅎㅇ임",
+      maleNum: "3",
+      femaleNum: "3",
+      capacity: "6",
+      groupBlindCategory: "3:3",
+      groupBlindStatus: "NOT_FULL",
+      groupBlindIntroduction: "안녕하세요~",
+    },
+    {
+      id: "7",
       title: "ㅎㅇ임",
       maleNum: "3",
       femaleNum: "3",
