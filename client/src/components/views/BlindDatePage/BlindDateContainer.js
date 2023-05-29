@@ -13,7 +13,6 @@ const BlindDateContainer = () => {
     await axios
       .post("http://localhost:8080/blindDate/like", {
         userId: userId,
-        /* 첫번째 유저인지, 두번째 유저인지 구분필요 */
         targetUserId: targetUserId,
       })
       .then(() => {
