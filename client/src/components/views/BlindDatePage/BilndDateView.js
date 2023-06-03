@@ -4,6 +4,8 @@ import GirlImage1 from "../../../Img/girl1.png";
 import GirlImage2 from "../../../Img/girl.png";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // This is required for carousel styling
+import GmarketSansTTFBold from "../../../fonts/GmarketSansTTFBold.ttf";
+import Logo from "../../../Img/Logo.svg";
 
 const BlindDateView = ({ getUserData, buttonLike }) => {
   const [userData, setUserData] = useState(null);
@@ -12,6 +14,32 @@ const BlindDateView = ({ getUserData, buttonLike }) => {
   const [userImage1, setUserImage1] = useState([]);
   const [userImage2, setUserImage2] = useState([]);
 
+  // const userData = {
+  //   userId: "Seung",
+  //   name: "jhon",
+  //   age: 23,
+  //   bodyType: "슬림",
+  //   height: 170,
+  //   addressType: "용산구",
+  //   departmentType: "공과대학",
+  //   characterType: "다정",
+  //   emotionType: "이성적",
+  //   hobby1: "여행",
+  //   hobby2: "헬스",
+  //   mbtiType: "INTJ",
+  //   userIdSec: "mike123",
+  //   nameSec: "mike",
+  //   ageSec: 27,
+  //   heightSec: 170,
+  //   bodyTypeSec: "슬림",
+  //   addressTypeSec: "용산구",
+  //   departmentTypeSec: "경영대학",
+  //   characterTypeSec: "다정",
+  //   emotionTypeSec: "이성적",
+  //   firstHobbySec: "여행",
+  //   secondHobbySec: "헬스",
+  //   mbtiTypeSec: "INTJ",
+  // };
   useEffect(() => {
     // userData 세팅
     const UserDataFetch = async () => {
@@ -19,7 +47,7 @@ const BlindDateView = ({ getUserData, buttonLike }) => {
         const Data = await getUserData();
 
         if (Data) {
-          setUserData(Data);
+          //setUserData(Data);
           console.log("유저 데이터 저장 성공");
 
           let userImage1 = [
@@ -90,9 +118,10 @@ const BlindDateView = ({ getUserData, buttonLike }) => {
                       <img src={image} alt={`carousel-img-${index}`} />
                     </div>
                   ))}
+                  {/* <img src={GirlImage1} alt={`carousel-img-${GirlImage1}`} /> */}
                 </Carousel>
-                <NameContainer>{`${userData.userId},`}</NameContainer>
-                <AgeContainer>{userData.age}</AgeContainer>
+                <NameContainer>{`${userData.name}(${userData.age})`}</NameContainer>
+                {/* <AgeContainer>{userData.age}</AgeContainer> */}
                 <TagContainer>
                   <Tag>{userData.addressType}</Tag>
                   <Tag>{userData.departmentType}</Tag>
@@ -100,17 +129,23 @@ const BlindDateView = ({ getUserData, buttonLike }) => {
               </CardFront>
               <CardBack>
                 <InformationContainer>
-                  <DeptData>
-                    {`${userData.departmentTypeSec} - ${userData.studentId}`}
-                  </DeptData>
-                  <Name>{userData.userId}</Name>
-                  <DeptData>{`키 : ${userData.height}`}</DeptData>
-                  <DeptData>{`체형 : ${userData.bodyType}`}</DeptData>
-                  <DeptData>{`성격 1 : ${userData.characterType}`}</DeptData>
-                  <DeptData>{`성격 2 : ${userData.emotionType}`}</DeptData>
-                  <DeptData>{`취미 1 : ${userData.firstHobby}`}</DeptData>
-                  <DeptData>{`취미 2 : ${userData.secondHobby}`}</DeptData>
-                  <DeptData>{`MBTI : ${userData.mbtiType}`}</DeptData>
+                  <DeptData>{`${userData.departmentType}`}</DeptData>
+                  <Name>{`${userData.userId}님은`}</Name>
+                  <ExplainUserTag>어떤사람?</ExplainUserTag>
+                  <PartContainer>
+                    <LeftPart>
+                      <OtherData>{`키 : ${userData.height}`}</OtherData>
+                      <OtherData>{`체형 : ${userData.bodyType}`}</OtherData>
+                      <OtherData>{`성격 1 : ${userData.characterType}`}</OtherData>
+                      <OtherData>{`성격 2 : ${userData.emotionType}`}</OtherData>
+                    </LeftPart>
+                    <RightPart>
+                      <OtherData>{`취미 1 : ${userData.hobby1}`}</OtherData>
+                      <OtherData>{`취미 2 : ${userData.hobby2}`}</OtherData>
+                      <OtherData>{`MBTI : ${userData.mbtiType}`}</OtherData>
+                      <OtherData>{`거주지역 : ${userData.addressType}`}</OtherData>
+                    </RightPart>
+                  </PartContainer>
                 </InformationContainer>
               </CardBack>
             </CardInner>
@@ -136,9 +171,10 @@ const BlindDateView = ({ getUserData, buttonLike }) => {
                       <img src={image} alt={`carousel-img-${index}`} />
                     </div>
                   ))}
+                  {/* <img src={GirlImage2} alt={`carousel-img-${GirlImage2}`} /> */}
                 </Carousel>
-                <NameContainer>{`${userData.userIdSec},`}</NameContainer>
-                <AgeContainer>{userData.ageSec}</AgeContainer>
+                <NameContainer>{`${userData.nameSec}(${userData.ageSec})`}</NameContainer>
+                {/* <AgeContainer>{userData.age}</AgeContainer> */}
                 <TagContainer>
                   <Tag>{userData.addressTypeSec}</Tag>
                   <Tag>{userData.departmentTypeSec}</Tag>
@@ -146,17 +182,23 @@ const BlindDateView = ({ getUserData, buttonLike }) => {
               </CardFront>
               <CardBack>
                 <InformationContainer>
-                  <DeptData>
-                    {`${userData.departmentTypeSec} - ${userData.studentIdSec}`}
-                  </DeptData>
-                  <Name>{userData.userIdSec}</Name>
-                  <DeptData>{`키 : ${userData.heightSec}`}</DeptData>
-                  <DeptData>{`체형 : ${userData.bodyTypeSec}`}</DeptData>
-                  <DeptData>{`성격 1 : ${userData.characterTypeSec}`}</DeptData>
-                  <DeptData>{`성격 2 : ${userData.emotionTypeSec}`}</DeptData>
-                  <DeptData>{`취미 1 : ${userData.firstHobbySec}`}</DeptData>
-                  <DeptData>{`취미 2 : ${userData.secondHobbySec}`}</DeptData>
-                  <DeptData>{`MBTI : ${userData.mbtiTypeSec}`}</DeptData>
+                  <DeptData>{`${userData.departmentTypeSec}`}</DeptData>
+                  <Name>{`${userData.userIdSec}님은`}</Name>
+                  <ExplainUserTag>어떤사람?</ExplainUserTag>
+                  <PartContainer>
+                    <LeftPart>
+                      <OtherData>{`키 : ${userData.heightSec}`}</OtherData>
+                      <OtherData>{`체형 : ${userData.bodyTypeSec}`}</OtherData>
+                      <OtherData>{`성격 1 : ${userData.characterTypeSec}`}</OtherData>
+                      <OtherData>{`성격 2 : ${userData.emotionTypeSec}`}</OtherData>
+                    </LeftPart>
+                    <RightPart>
+                      <OtherData>{`취미 1 : ${userData.hobby1}`}</OtherData>
+                      <OtherData>{`취미 2 : ${userData.hobby2}`}</OtherData>
+                      <OtherData>{`MBTI : ${userData.mbtiType}`}</OtherData>
+                      <OtherData>{`거주지역 : ${userData.addressType}`}</OtherData>
+                    </RightPart>
+                  </PartContainer>
                 </InformationContainer>
               </CardBack>
             </CardInner>
@@ -168,6 +210,50 @@ const BlindDateView = ({ getUserData, buttonLike }) => {
   );
 };
 
+const PartContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 10px;
+`;
+
+{
+  /* <ImgContainter>
+<LogoImg src={Logo} alt="logo" />
+</ImgContainter> */
+}
+
+const ImgContainter = styled.div`
+  height: 20px;
+  max-width: 65rem;
+  align-items: center;
+  margin: auto;
+  margin-top: 10px;
+`;
+
+const LogoImg = styled.img`
+  width: 20px;
+  height: 20px;
+`;
+
+const ExplainUserTag = styled.div`
+  text-align: left;
+  font-weight: 700;
+  margin-left: 10px;
+  margin-bottom: 10px;
+`;
+
+const LeftPart = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+`;
+
+const RightPart = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+`;
+
 const BlindDateWrapper = styled.div`
   min-height: 100vh;
   max-width: 65rem;
@@ -175,6 +261,13 @@ const BlindDateWrapper = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   margin: auto;
+
+  @font-face {
+    font-family: "GmarketSansTTFBold";
+    src: local("GmarketSansTTFBold"), local("GmarketSansTTFBold");
+    font-style: normal;
+    src: url(${GmarketSansTTFBold}) format("truetype");
+  }
 `;
 
 const WriteContainer = styled.div`
@@ -231,6 +324,8 @@ const CardContainer = styled.div`
   display: flex;
   gap: 30px;
   flex-direction: column;
+  font-family: GmarketSansTTFBold, sans-serif, Arial;
+  font-weight: 300;
 `;
 
 const CardInner = styled.div`
@@ -333,18 +428,31 @@ const InformationContainer = styled.div`
 `;
 
 const DeptData = styled.p`
-  font-weight: 500;
-  margin: 10px;
+  font-weight: 600;
   text-align: center;
+  border: 1px solid pink;
+  border-radius: 6px;
+  background-color: #ff4572;
+  width: 100px;
+  margin-left: 10px;
+  color: white;
 `;
 
-const Name = styled.h1`
-  text-align: center;
+const OtherData = styled.div`
+  font-weight: 500;
+  margin: 10px;
+  text-align: left;
+`;
+
+const Name = styled.h2`
+  text-align: left;
   font-weight: 700;
+  margin-left: 10px;
+  margin-bottom: 10px;
 `;
 
 const Button = styled.button`
-  background-color: #747474;
+  background-color: #ff4572;
   color: white;
   padding: 10px 20px;
   border-radius: 5px;

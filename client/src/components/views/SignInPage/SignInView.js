@@ -3,12 +3,12 @@ import { Formik } from "formik";
 import styled, { keyframes } from "styled-components";
 import Logo from "../../../Img/Logo.svg";
 
-const LoginView = ({ loginSubmit, loginError, navigator }) => {
+const SignInView = ({ loginSubmit, loginError, navigator }) => {
   return (
     <>
       <Formik
         initialValues={{
-          email: "",
+          userId: "",
           password: "",
         }}
         onSubmit={loginSubmit}
@@ -23,8 +23,8 @@ const LoginView = ({ loginSubmit, loginError, navigator }) => {
               <InputFromWrapper>
                 <div className="input-forms-item">
                   <LoginInput
-                    value={values.email}
-                    name="email"
+                    value={values.userId}
+                    name="userId"
                     variant="outlined"
                     onChange={handleChange}
                     placeholder="아이디"
@@ -232,4 +232,4 @@ const ErrorMessage = styled.div`
 
   animation: ${shake} 0.5s linear;
 `;
-export default LoginView;
+export default SignInView;

@@ -7,7 +7,12 @@ import { getCookieValue } from "../../../Api/loginApi";
 import Modal from "../../../Modal/LoginModal";
 import RoomDataContainer from "../MeetingRoomData/RoomDataContainer";
 
-const MeetingPageSelectView = ({ meetings, registerIn, registerOut }) => {
+const MeetingPageSelectView = ({
+  meetings,
+  registerIn,
+  registerOut,
+  checkRoomData,
+}) => {
   // meetingRoom Control
   const [meetingRooms, setMeetingRooms] = useState([]);
   const [createRoom, setCreateRoom] = useState(false);
@@ -40,14 +45,6 @@ const MeetingPageSelectView = ({ meetings, registerIn, registerOut }) => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
-
-  const returnMeetingRoomsData = (roomId) => {
-    for (let i = 0; i < meetingRooms.length; i++) {
-      if (meetingRooms[i].id === roomId) {
-        return meetingRooms[i];
-      }
-    }
-  };
 
   const handleCreateRoom = async () => {
     const userId = getCookieValue("userId");
@@ -115,23 +112,6 @@ const MeetingPageSelectView = ({ meetings, registerIn, registerOut }) => {
     }
   };
 
-  const checkRoomData = async (roomid) => {
-    const userId = getCookieValue("userId");
-    const response = await axios
-      .get(`group/${roomid}/info`, {
-        userId: userId,
-        roomId: roomid,
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err + "미팅방 정보 요청 안됨");
-      });
-
-    return response;
-  };
-
   // 소개글
   return (
     <>
@@ -141,46 +121,53 @@ const MeetingPageSelectView = ({ meetings, registerIn, registerOut }) => {
       <MeetingPageSelectWrapper>
         <ContentWrapper>
           <RoomContainer>
-            {meetings.map((room) => (
-              <RoomCard key={room.id}>
-                <RoomCapacity>{`${room.maleNum}: ${room.femaleNum}`}</RoomCapacity>
-                <RoomTitle>{room.title}</RoomTitle>
-                <CheckRoomData onClick={() => setRoomDataModal(true)}>
-                  상세정보 확인
-                </CheckRoomData>
-                {roomDataModal && (
-                  <Modal
-                    CloseModal={() => {
-                      setRoomDataModal(!roomDataModal);
-                    }}
-                  >
-                    <RoomDataContainer
-                      roomData={returnMeetingRoomsData}
-                    ></RoomDataContainer>
-                  </Modal>
-                )}
+            {meetings.length === 0 ? (
+              <RoomCard />
+            ) : (
+              meetings.map((room) => (
+                <RoomCard key={room.id}>
+                  <RoomCapacity>{`${room.maleNum}: ${room.femaleNum}`}</RoomCapacity>
+                  <RoomTitle>{room.title}</RoomTitle>
+                  <CheckAndRegisterBlock>
+                    <CheckRoomData onClick={() => setRoomDataModal(true)}>
+                      상세정보 확인
+                    </CheckRoomData>
+                    {roomDataModal && (
+                      <Modal
+                        CloseModal={() => {
+                          setRoomDataModal(!roomDataModal);
+                        }}
+                      >
+                        {/* roomData 안엔 post쳐서 res 받아온 데이터가 들어가야함 -> 함수 필요*/}
+                        <RoomDataContainer
+                          roomData={checkRoomData(room.id)}
+                        ></RoomDataContainer>
+                      </Modal>
+                    )}
 
-                <RoomRegisterInOut>
-                  {isUserIn ? (
-                    <RoomRegisterOutBtn
-                      onClick={() => {
-                        registerOut();
-                      }}
-                    >
-                      나가기
-                    </RoomRegisterOutBtn>
-                  ) : (
-                    <RoomRegisterInBtn
-                      onClick={() => {
-                        registerIn();
-                      }}
-                    >
-                      참여
-                    </RoomRegisterInBtn>
-                  )}
-                </RoomRegisterInOut>
-              </RoomCard>
-            ))}
+                    <RoomRegisterInOut>
+                      {isUserIn ? (
+                        <RoomRegisterOutBtn
+                          onClick={() => {
+                            registerOut();
+                          }}
+                        >
+                          나가기
+                        </RoomRegisterOutBtn>
+                      ) : (
+                        <RoomRegisterInBtn
+                          onClick={() => {
+                            registerIn();
+                          }}
+                        >
+                          참여
+                        </RoomRegisterInBtn>
+                      )}
+                    </RoomRegisterInOut>
+                  </CheckAndRegisterBlock>
+                </RoomCard>
+              ))
+            )}
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
@@ -260,6 +247,16 @@ const MeetingPageSelectWrapper = styled.div`
   background: #f5f5f5;
 `;
 
+const EmptyRoom = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  max-width: 1040px;
+  text-align: center;
+  gap: 30px;
+  margin-bottom: 100px;
+`;
+
 const ContentWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -291,6 +288,14 @@ const StyledButton = styled.button`
   background-color: #ff2559;
 `;
 
+const CheckAndRegisterBlock = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 15px;
+  padding-top: 5px;
+`;
+
 // 참여 / 나가기
 const RoomRegisterInOut = styled.div`
   display: flex;
@@ -300,19 +305,20 @@ const RoomRegisterInOut = styled.div`
 `;
 
 const RoomRegisterInBtn = styled.button`
-  border: none;
-  border-radius: 0.3rem;
+  border: 1px solid #ff4572;
+  border-radius: 6px;
   font-weight: 700;
-  color: #777777;
+  font-size: 0.8rem;
+  width: 65px;
+  color: white;
   background: transparent;
-  font-size: 1rem;
   padding: 0.3rem 1rem;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+  background-color: #ff4572;
 
   &:hover {
     transform: scale(1.05);
-    color: #ff4572;
   }
 `;
 
@@ -341,7 +347,7 @@ const RoomCapacity = styled.div`
   background-color: white;
   margin-left: 20px;
   margin-top: 10px;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   width: 60px;
   text-align: left;
 `;
@@ -476,8 +482,18 @@ const RoomTitle = styled.h2`
 `;
 
 const CheckRoomData = styled.button`
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  background-color: white;
+  color: gray;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+    color: #ff4572;
+  }
 `;
 
 const Banner = styled.div`

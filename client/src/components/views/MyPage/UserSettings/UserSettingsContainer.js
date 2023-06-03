@@ -29,11 +29,7 @@ const UserSettingContainer = () => {
       });
   };
 
-  return (
-    <passwordContext.Provier value={setNewPassword}>
-      <UserSettingsView navigate={navigate} changePassword={changePassword} />
-    </passwordContext.Provier>
-  );
+  return <UserSettingsView navigate={navigate} />;
 };
 
 export { UserSettingContainer as default, passwordContext };

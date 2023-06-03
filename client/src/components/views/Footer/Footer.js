@@ -8,24 +8,18 @@ const Footer = () => {
         <Section>
           <h4>Contact</h4>
           <ul>
-            <li>새천년관 501호 개발실</li>
             <li>
-              <a href="/">+프론트엔드</a>
+              <p>소개팅</p>
             </li>
 
             <li>
-              <a href="/">+백엔드1</a>
-            </li>
-            <li>
-              <a href="/">+백엔드2</a>
+              <p>미팅</p>
             </li>
           </ul>
         </Section>
         <Section>
           <h4>Information</h4>
-          <p>대학생만이 누릴 수 있는 안전한 만남</p>
-          <p>이메일 : Dugeun112@gmail.com</p>
-          <p>사업자 번호 : 010-3123-1123</p>
+          <p>이메일 : doogeunS2@gmail.com</p>
           <p>주소 : 서울특별시 광진구 능동로 120</p>
         </Section>
       </Container>
@@ -40,7 +34,7 @@ const Footer = () => {
 const FooterWrapper = styled.div`
   background-color: #2a323b;
   color: #f5f5f5;
-  padding: 3rem 0;
+  padding: 1.5rem 0;
 `;
 
 const Container = styled.div`
@@ -57,7 +51,7 @@ const Section = styled.div`
   margin: 1rem;
 
   h4 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     margin-bottom: 1rem;
     color: #f5f5f5;
     text-align: left; // Changed from center to left

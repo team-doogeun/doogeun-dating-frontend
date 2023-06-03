@@ -3,11 +3,8 @@ import MyPageSidemenuContanier from "../MyPageSidemenu/MyPageSidemenuContainer";
 import styled from "styled-components";
 import { getCookieValue } from "../../../Api/loginApi";
 import profileImage from "../../../../Img/BasicProfilePhoto.png";
-import { passwordContext } from "./UserSettingsContainer";
 
-const UserSettingView = ({ navigate, changePassword }) => {
-  const { setNewPassword } = useContext(passwordContext);
-
+const UserSettingView = ({ navigate }) => {
   const userName = getCookieValue("name");
   const userId = getCookieValue("userId");
 
@@ -32,14 +29,8 @@ const UserSettingView = ({ navigate, changePassword }) => {
           </UserinfoBox>
           <UserPassword>비밀번호</UserPassword>
           <UserPasswordBox>
-            <form onSubmit={changePassword}>
-              <ChangePasswordBox
-                onChange={(e) => {
-                  setNewPassword(e.value);
-                }}
-              ></ChangePasswordBox>
-              <UserPasswordEditBtn>비밀번호 변경</UserPasswordEditBtn>
-            </form>
+            <ChangePasswordBox></ChangePasswordBox>
+            <UserPasswordEditBtn>비밀번호 변경</UserPasswordEditBtn>
           </UserPasswordBox>
         </UserSettingWrapper>
       </UserSettingContainer>

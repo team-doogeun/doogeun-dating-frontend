@@ -1,11 +1,31 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { checkCookieExistence } from "./components/Api/loginApi";
+import LoginModal from "./components/Modal/LoginModal";
+import SignInContainer from "./components/views/SignInPage/SignInContainer";
 
 const PrivateRoute = ({ children }) => {
+  const [showModal, setShowModal] = useState(false);
+  const navigator = useNavigate();
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   if (!checkCookieExistence()) {
-    alert("로그인이 필요한 페이지입니다");
-    return <Navigate to={`/`} />;
+    navigator("/");
+    return (
+      <LoginModal
+        CloseModal={() => {
+          setShowModal(!showModal);
+        }}
+      >
+        <SignInContainer />
+      </LoginModal>
+    );
   }
   return children;
 };

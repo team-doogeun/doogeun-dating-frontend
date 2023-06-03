@@ -201,11 +201,6 @@ function DetailProfile() {
       const response = await axios.post(
         "http://localhost:8080/users/signup",
         formData
-        // {
-        //   headers: {
-        //     "Content-Type": "multipart/form-data",
-        //   },
-        // }
       );
 
       console.log(response);
@@ -386,7 +381,7 @@ function DetailProfile() {
     control: (provided, state) => ({
       ...provided,
       width: "338px", // 원하는 너비 값으로 변경
-      height: "50px", // 원하는 높이 값으로 변경
+      height: "38px", // 원하는 높이 값으로 변경
     }),
   };
 
@@ -394,244 +389,253 @@ function DetailProfile() {
     <div className="DetailProfilePage" id="DetailProfile">
       <div className="DetailProfileForm">
         <form className="DetailProfileInputs" onSubmit={handleSubmit}>
-          <div className="DetailProfilePart">
-            <div className="title">상세 프로필 작성</div>
-            <Input
-              className="height"
-              onChange={onHeightHandler}
-              value={height}
-              type="text"
-              placeholder="키 ex) 165"
-              autoComplete="off"
-              style={customStyle}
-            ></Input>
-            {height.length > 0 && (
-              <div className={`message ${isHeight ? "success" : "error"}`}>
-                {heightMsg}
-              </div>
-            )}
+          <div className="InputParts">
+            <div className="DetailProfilePart">
+              <div className="title">상세 프로필 작성</div>
+              <Input
+                className="height"
+                onChange={onHeightHandler}
+                value={height}
+                type="text"
+                placeholder="키 ex) 165"
+                autoComplete="off"
+                style={customStyle}
+              ></Input>
+              {height.length > 0 && (
+                <div className={`message ${isHeight ? "success" : "error"}`}>
+                  {heightMsg}
+                </div>
+              )}
 
-            <Select
-              className="bodyType"
-              placeholder="체형"
-              options={bodyTypeData}
-              isSearchable={false}
-              onChange={onBodyTypeHandler}
-              style={customStyle}
-            />
-
-            <Select
-              className="address"
-              placeholder="주소 : ex) 강남구"
-              options={addressData}
-              isSearchable={false}
-              onChange={onAddressHandler}
-              style={customStyle}
-            />
-
-            <Select
-              className="department"
-              placeholder="대학"
-              options={departmentData}
-              isSearchable={false}
-              onChange={onDepartMentHandler}
-              style={customStyle}
-            />
-
-            <Select
-              className="character1"
-              placeholder="성격1"
-              options={characterData}
-              isSearchable={false}
-              onChange={onCharacterHandler1}
-              style={customStyle}
-            />
-
-            <Select
-              className="character2"
-              placeholder="성격2"
-              options={characterData}
-              isSearchable={false}
-              onChange={onCharacterHandler2}
-              style={customStyle}
-            />
-
-            <Select
-              className="mbti"
-              placeholder="mbti"
-              options={mbtiData}
-              noOptionsMessage={() => {
-                return "없는데용:)";
-              }}
-              onChange={onMBTIHandler}
-              style={customStyle}
-            />
-
-            {/* Context API 사용해서 자식 컴포넌트에서 부모컴포넌트의 데이터를 관리하는 것이 가능 */}
-            <hobbyContext.Provider value={{ isDetailHobby, setIsDetailHobby }}>
-              <ModalComponent
-                mainContent="detailHobby"
-                contentName="취미"
-                header="취미"
-                hobbyName="detailHobby"
+              <Select
+                className="bodyType"
+                placeholder="체형"
+                options={bodyTypeData}
+                isSearchable={false}
+                onChange={onBodyTypeHandler}
+                style={customStyle}
               />
-            </hobbyContext.Provider>
 
-            <Select
-              className="drink"
-              placeholder="음주"
-              options={drinkData}
-              isSearchable={false}
-              onChange={onDrinkHandler}
-              style={customStyle}
-            />
+              <Select
+                className="address"
+                placeholder="주소 : ex) 강남구"
+                options={addressData}
+                isSearchable={false}
+                onChange={onAddressHandler}
+                style={customStyle}
+              />
 
-            <Select
-              className="smoke"
-              placeholder="흡연"
-              options={smokeData}
-              isSearchable={false}
-              onChange={onSmokeHandler}
-              style={customStyle}
-            />
+              <Select
+                className="department"
+                placeholder="대학"
+                options={departmentData}
+                isSearchable={false}
+                onChange={onDepartMentHandler}
+                style={customStyle}
+              />
 
-            {/* 우선순위 */}
-            <Select
-              className="firstPriority"
-              placeholder="우선순위"
-              options={priorityData}
-              styles={customStyle}
-              maxMenuHeight={250}
-              isMulti={true}
-              closeMenuOnSelect={false}
-              onChange={handleChange}
-            />
-            {priority.length > 0 && (
-              <div
-                style={{
-                  marginTop: "10px",
-                  fontSize: "16px",
-                  fontFamily: "priority",
+              <Select
+                className="character1"
+                placeholder="성격1"
+                options={characterData}
+                isSearchable={false}
+                onChange={onCharacterHandler1}
+                style={customStyle}
+              />
+
+              <Select
+                className="character2"
+                placeholder="성격2"
+                options={characterData}
+                isSearchable={false}
+                onChange={onCharacterHandler2}
+                style={customStyle}
+              />
+
+              <Select
+                className="mbti"
+                placeholder="mbti"
+                options={mbtiData}
+                noOptionsMessage={() => {
+                  return "없는데용:)";
                 }}
-              >
-                <div>
-                  우선순위는 최대 <span style={{ color: "red" }}>3개</span>
-                  까지만 반영이 됩니다.{" "}
-                </div>
-                <div style={{ marginTop: "5px" }}>
-                  {priority.map((option, index) => (
-                    <div>{`${index + 1}. ${option}`}</div>
-                  ))}
-                </div>
-              </div>
-            )}
-            <input type="file" onChange={handleFileChange("basicFilePath")} />
-            <input type="file" onChange={handleFileChange("secondFilePath")} />
-            <input type="file" onChange={handleFileChange("thirdFilePath")} />
-          </div>
-
-          <div className="IdealProfilePart">
-            <div className="title">이상형 프로필 작성</div>
-            <Select
-              className="age"
-              placeholder="나이"
-              options={ageRangeData}
-              isSearchable={false}
-              isClearable={true}
-              onChange={onIdealAgeHandler}
-              style={customStyle}
-            />
-
-            <Input
-              className="height"
-              placeholder="키 ex) 165"
-              value={idealHeight}
-              type="text"
-              onChange={onIdealHeightHandler}
-              style={customStyle}
-            ></Input>
-            {idealHeight.length > 0 && (
-              <div className={`message ${isIdealHeight ? "success" : "error"}`}>
-                {idealHeightMsg}
-              </div>
-            )}
-
-            <Select
-              className="bodyType"
-              placeholder="체형"
-              options={bodyTypeData}
-              isSearchable={false}
-              isClearable={true}
-              onChange={onIdealBodyTypeHandler}
-              style={customStyle}
-            />
-
-            <Select
-              className="department"
-              placeholder="대학"
-              options={departmentData}
-              isSearchable={false}
-              onChange={onIdealDepartmentHandler}
-              style={customStyle}
-            />
-
-            <Select
-              className="character1"
-              placeholder="성격1"
-              options={characterData}
-              isSearchable={false}
-              onChange={onIdealCharacterHandler1}
-              style={customStyle}
-            />
-
-            <Select
-              className="character2"
-              placeholder="성격2"
-              options={characterData}
-              isSearchable={false}
-              onChange={onIdealCharacterHandler2}
-              style={customStyle}
-            />
-
-            <Select
-              className="mbti"
-              placeholder="mbti"
-              options={mbtiData}
-              noOptionsMessage={() => {
-                return "없는데용:)";
-              }}
-              onChange={onIdealMBTIHandler}
-              style={customStyle}
-            />
-
-            <idealHobbyContext.Provider
-              value={{ isIdealHobby, setIsIdealHobby }}
-            >
-              <ModalComponent
-                mainContent="idealHobby"
-                contentName="취미"
-                header="취미"
-                hobbyName="idealHobby"
+                onChange={onMBTIHandler}
+                style={customStyle}
               />
-            </idealHobbyContext.Provider>
 
-            <Select
-              className="drink"
-              placeholder="음주"
-              options={drinkData}
-              isSearchable={false}
-              onChange={onIdealDrinkHandler}
-              style={customStyle}
-            />
+              {/* Context API 사용해서 자식 컴포넌트에서 부모컴포넌트의 데이터를 관리하는 것이 가능 */}
+              <hobbyContext.Provider
+                value={{ isDetailHobby, setIsDetailHobby }}
+              >
+                <ModalComponent
+                  mainContent="detailHobby"
+                  contentName="취미"
+                  header="취미"
+                  hobbyName="detailHobby"
+                />
+              </hobbyContext.Provider>
 
-            <Select
-              className="smoke"
-              placeholder="흡연"
-              options={smokeData}
-              isSearchable={false}
-              onChange={onIdealSmokeHandler}
-              style={customStyle}
-            />
+              <Select
+                className="drink"
+                placeholder="음주"
+                options={drinkData}
+                isSearchable={false}
+                onChange={onDrinkHandler}
+                style={customStyle}
+              />
+
+              <Select
+                className="smoke"
+                placeholder="흡연"
+                options={smokeData}
+                isSearchable={false}
+                onChange={onSmokeHandler}
+                style={customStyle}
+              />
+
+              {/* 우선순위 */}
+              <Select
+                className="firstPriority"
+                placeholder="우선순위"
+                options={priorityData}
+                styles={customStyle}
+                maxMenuHeight={250}
+                isMulti={true}
+                closeMenuOnSelect={false}
+                onChange={handleChange}
+              />
+              {priority.length > 0 && (
+                <div
+                  style={{
+                    marginTop: "10px",
+                    fontSize: "16px",
+                    fontFamily: "priority",
+                  }}
+                >
+                  <div>
+                    우선순위는 최대 <span style={{ color: "red" }}>3개</span>
+                    까지만 반영이 됩니다.{" "}
+                  </div>
+                  <div style={{ marginTop: "5px" }}>
+                    {priority.map((option, index) => (
+                      <div>{`${index + 1}. ${option}`}</div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              <input type="file" onChange={handleFileChange("basicFilePath")} />
+              <input
+                type="file"
+                onChange={handleFileChange("secondFilePath")}
+              />
+              <input type="file" onChange={handleFileChange("thirdFilePath")} />
+            </div>
+
+            <div className="IdealProfilePart">
+              <div className="title">이상형 프로필 작성</div>
+              <Select
+                className="age"
+                placeholder="나이"
+                options={ageRangeData}
+                isSearchable={false}
+                isClearable={true}
+                onChange={onIdealAgeHandler}
+                style={customStyle}
+              />
+
+              <Input
+                className="height"
+                placeholder="키 ex) 165"
+                value={idealHeight}
+                type="text"
+                onChange={onIdealHeightHandler}
+                style={customStyle}
+              ></Input>
+              {idealHeight.length > 0 && (
+                <div
+                  className={`message ${isIdealHeight ? "success" : "error"}`}
+                >
+                  {idealHeightMsg}
+                </div>
+              )}
+
+              <Select
+                className="bodyType"
+                placeholder="체형"
+                options={bodyTypeData}
+                isSearchable={false}
+                isClearable={true}
+                onChange={onIdealBodyTypeHandler}
+                style={customStyle}
+              />
+
+              <Select
+                className="department"
+                placeholder="대학"
+                options={departmentData}
+                isSearchable={false}
+                onChange={onIdealDepartmentHandler}
+                style={customStyle}
+              />
+
+              <Select
+                className="character1"
+                placeholder="성격1"
+                options={characterData}
+                isSearchable={false}
+                onChange={onIdealCharacterHandler1}
+                style={customStyle}
+              />
+
+              <Select
+                className="character2"
+                placeholder="성격2"
+                options={characterData}
+                isSearchable={false}
+                onChange={onIdealCharacterHandler2}
+                style={customStyle}
+              />
+
+              <Select
+                className="mbti"
+                placeholder="mbti"
+                options={mbtiData}
+                noOptionsMessage={() => {
+                  return "없는데용:)";
+                }}
+                onChange={onIdealMBTIHandler}
+                style={customStyle}
+              />
+
+              <idealHobbyContext.Provider
+                value={{ isIdealHobby, setIsIdealHobby }}
+              >
+                <ModalComponent
+                  mainContent="idealHobby"
+                  contentName="취미"
+                  header="취미"
+                  hobbyName="idealHobby"
+                />
+              </idealHobbyContext.Provider>
+
+              <Select
+                className="drink"
+                placeholder="음주"
+                options={drinkData}
+                isSearchable={false}
+                onChange={onIdealDrinkHandler}
+                style={customStyle}
+              />
+
+              <Select
+                className="smoke"
+                placeholder="흡연"
+                options={smokeData}
+                isSearchable={false}
+                onChange={onIdealSmokeHandler}
+                style={customStyle}
+              />
+            </div>
           </div>
 
           <div className="DetailProfilePage" id="DetailProfile">

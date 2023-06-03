@@ -3,26 +3,29 @@ import SignInView from "./SignInView";
 import "react-toastify/dist/ReactToastify.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-const SingInContainer = () => {
+import { setCookie, setCookieExpires } from "../../Api/loginApi";
+const SignInContainer = () => {
   const navigator = useNavigate();
   const [loginError, setLoginError] = useState({});
   const loginSubmit = async (values) => {
-    const { email, password } = values;
+    const { userId, password } = values;
     try {
       await axios
-        .post("http://localhost:8080/user/login", {
-          email,
+        .post("http://localhost:8080/users/login", {
+          userId,
           password,
         })
         .then((res) => {
-          setLoginError({});
+          setCookieExpires("sessionId", res.data.sessionId);
+          setCookie("name", res.data.name);
+          setCookie("userId", res.data.userId);
           if (
-            window.location.pathname === "/select" ||
-            window.location.pathname === "/signup"
+            window.location.pathname === "/myprofile" ||
+            window.location.pathname === "/detailprofile"
           )
-            console.log("hello");
+            navigator("/");
           else window.location.reload();
+          setLoginError({});
         });
     } catch (e) {
       setLoginError({
@@ -40,4 +43,4 @@ const SingInContainer = () => {
   );
 };
 
-export default SingInContainer;
+export default SignInContainer;

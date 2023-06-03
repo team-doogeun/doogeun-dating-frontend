@@ -16,8 +16,8 @@
   display: flex;
   justify-content: center;
   margin: 0 auto;
-  width: 100%;
-  height: 620px;
+  width: 400px;
+  height: 1000px;
 }
 
 .title {
@@ -28,7 +28,7 @@
 
 /* Input Text(입력란) */
 .MyProfileInputs {
-  width: 300px;
+  width: 338px;
   height: inherit;
   margin-top: 10px;
 }
