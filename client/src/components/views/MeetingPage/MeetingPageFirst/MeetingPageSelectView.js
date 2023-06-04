@@ -18,7 +18,7 @@ const MeetingPageSelectView = ({
   const [createRoom, setCreateRoom] = useState(false);
   const [roomTitle, setRoomTitle] = useState("");
   const [roomIntro, setRoomIntro] = useState("");
-  const [roomSize, setRoomSize] = useState("2");
+  const [roomSize, setRoomSize] = useState(null);
 
   const [roomDataModal, setRoomDataModal] = useState(false);
 
@@ -48,24 +48,27 @@ const MeetingPageSelectView = ({
 
   const handleCreateRoom = async () => {
     const userId = getCookieValue("userId");
+    const sessionId = getCookieValue("sessionId");
 
     const newRoom = {
-      id: meetingRooms.length + 1,
       title: roomTitle,
-      maleNum: roomSize,
-      femaleNum: roomSize,
-      capacity: roomSize * 2,
-      groupBlindCategory: `${roomSize}:${roomSize}`,
-      groupBlindStatus: "NOT_FULL",
-      groupBlindIntroduction: "안녕하세요~",
+      capacityMale: roomSize,
+      capacityFeMale: roomSize,
+      groupBlindIntroduction: roomIntro,
     };
 
     try {
-      const response = await axios.post(`/group/${userId}`, {
-        newRoom,
-      });
-      const newMeetingRoom = response.data;
-      setMeetingRooms([...meetingRooms, newMeetingRoom]);
+      // const response =
+      await axios
+        .post(`http://localhost:8080/group/${userId}/new`, newRoom)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      // const newMeetingRoom = response.data;
+      // setMeetingRooms([...meetingRooms, newMeetingRoom]);
     } catch (error) {
       console.error("Error adding meeting room:", error);
     }
@@ -126,7 +129,7 @@ const MeetingPageSelectView = ({
             ) : (
               meetings.map((room) => (
                 <RoomCard key={room.id}>
-                  <RoomCapacity>{`${room.maleNum}: ${room.femaleNum}`}</RoomCapacity>
+                  <RoomCapacity>{`${room.capacityMale}: ${room.capacityFeMale}`}</RoomCapacity>
                   <RoomTitle>{room.title}</RoomTitle>
                   <CheckAndRegisterBlock>
                     <CheckRoomData onClick={() => setRoomDataModal(true)}>
@@ -207,20 +210,20 @@ const MeetingPageSelectView = ({
 
                 <ButtonWrapper>
                   <RoomSizeButton
-                    selected={roomSize === "2"}
-                    onClick={() => setRoomSize("2")}
+                    selected={roomSize === 2}
+                    onClick={() => setRoomSize(2)}
                   >
                     2대2
                   </RoomSizeButton>
                   <RoomSizeButton
-                    selected={roomSize === "3"}
-                    onClick={() => setRoomSize("3")}
+                    selected={roomSize === 3}
+                    onClick={() => setRoomSize(3)}
                   >
                     3대3
                   </RoomSizeButton>
                   <RoomSizeButton
-                    selected={roomSize === "4"}
-                    onClick={() => setRoomSize("4")}
+                    selected={roomSize === 4}
+                    onClick={() => setRoomSize(4)}
                   >
                     4대4
                   </RoomSizeButton>

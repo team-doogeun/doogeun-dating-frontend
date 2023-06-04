@@ -6,7 +6,8 @@ import {
   bodyTypeData,
   departmentData,
   addressData,
-  characterData,
+  characterData1,
+  characterData2,
   mbtiData,
   drinkData,
   smokeData,
@@ -198,12 +199,11 @@ function DetailProfile() {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:8080/users/signup",
-        formData
-      );
+      await axios.post("http://localhost:8080/users/signup", formData);
 
-      console.log(response);
+      window.localStorage.clear();
+      alert("회원가입이 완료되었습니다.");
+      navigator("/");
     } catch (error) {
       console.error(error);
     }
@@ -437,7 +437,7 @@ function DetailProfile() {
               <Select
                 className="character1"
                 placeholder="성격1"
-                options={characterData}
+                options={characterData1}
                 isSearchable={false}
                 onChange={onCharacterHandler1}
                 style={customStyle}
@@ -446,7 +446,7 @@ function DetailProfile() {
               <Select
                 className="character2"
                 placeholder="성격2"
-                options={characterData}
+                options={characterData2}
                 isSearchable={false}
                 onChange={onCharacterHandler2}
                 style={customStyle}
@@ -581,7 +581,7 @@ function DetailProfile() {
               <Select
                 className="character1"
                 placeholder="성격1"
-                options={characterData}
+                options={characterData1}
                 isSearchable={false}
                 onChange={onIdealCharacterHandler1}
                 style={customStyle}
@@ -590,7 +590,7 @@ function DetailProfile() {
               <Select
                 className="character2"
                 placeholder="성격2"
-                options={characterData}
+                options={characterData2}
                 isSearchable={false}
                 onChange={onIdealCharacterHandler2}
                 style={customStyle}

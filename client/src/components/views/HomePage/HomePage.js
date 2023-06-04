@@ -269,7 +269,7 @@ const HomePage = () => {
 
               <GoToBlindDate
                 onClick={() => {
-                  navigator("/select");
+                  navigator("/group");
                 }}
               >
                 미팅

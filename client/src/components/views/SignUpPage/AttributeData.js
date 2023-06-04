@@ -88,12 +88,15 @@ const addressData = [
   { value: "인천", label: "인천" },
 ];
 
-const characterData = [
+const characterData1 = [
   { value: "시크", label: "시크" },
   { value: "다정", label: "다정" },
   { value: "활발", label: "활발" },
   { value: "무던", label: "무던" },
   { value: "세심", label: "세심" },
+];
+
+const characterData2 = [
   { value: "이성적", label: "이성적" },
   { value: "감성적", label: "감성적" },
 ];
@@ -248,7 +251,8 @@ export {
   bodyTypeData,
   departmentData,
   addressData,
-  characterData,
+  characterData1,
+  characterData2,
   mbtiData,
   hobbyData,
   hobbyData2,

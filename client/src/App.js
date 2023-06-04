@@ -37,12 +37,22 @@ function App() {
       <div className="superContainer">
         <Routes>
           <Route path="/" element={<HomePage />}></Route>
-          <Route path="/blindDate" element={<BlindDatePage />}></Route>
           <Route
-            path="/select"
-            element={<MeetingPageSelectContainer />}
+            path="/blindDate"
+            element={
+              <PrivateRoute>
+                <BlindDatePage />
+              </PrivateRoute>
+            }
           ></Route>
-          <Route path="/group" element={<MeetingPage />}></Route>
+          <Route
+            path="/group"
+            element={
+              <PrivateRoute>
+                <MeetingPageSelectContainer />
+              </PrivateRoute>
+            }
+          ></Route>
           <Route path="/myprofile" element={<MyProfile />}></Route>
           <Route path="/detailprofile" element={<DetailProfile />}></Route>
           <Route path="/find" element={<FindPasswordContainer />} />

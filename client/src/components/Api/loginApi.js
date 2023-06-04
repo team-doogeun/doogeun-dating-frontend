@@ -1,3 +1,7 @@
+import { Cookies } from "react-cookie";
+
+const cookies = new Cookies();
+
 const setCookieExpires = (key, value) => {
   let today = new Date();
   today.setMinutes(today.getMinutes() + 60);
@@ -40,6 +44,19 @@ const deleteCookie = (key) => {
   document.cookie = `${key}=; path=/; expires=${today}`;
 };
 
+// jwt test
+const setJWTCookie = (name, value, option) => {
+  return cookies.set(name, value, { ...option });
+};
+
+const getJWTCookie = (name) => {
+  return cookies.get(name);
+};
+
+const removeJWTCookie = (name, option) => {
+  return cookies.remove(name, { ...option });
+};
+
 export {
   setCookieExpires,
   setCookie,
@@ -47,4 +64,7 @@ export {
   getCookie,
   getCookieValue,
   deleteCookie,
+  setJWTCookie,
+  getJWTCookie,
+  removeJWTCookie,
 };
