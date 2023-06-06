@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import MeetingRoomView from "./MeetingPageSelectView";
 import axios from "axios";
-import { getCookieValue } from "../../../Api/loginApi";
+import { getJWTCookie } from "../../../Api/loginApi";
 
 const MeetingPageSelectContainer = () => {
   const [meetings, setMeetings] = useState([]);
+  const [isUserIn, setIsUserIn] = useState(false);
 
-  // 5초마다 리셋
+  // Polling : 주기적인 업데이트 느낌
+  // 5초마다 미팅방 데이터 로드
+  // 근데 데이터가 너무 많아서 fetchMeetings의 실행시간이 5초보다 길면 5초 이후에 실행된다
+  // 추후에 수정가능
   useEffect(() => {
-    const intervalId = setInterval(fetchMeetings, 5000); // 5초마다 데이터 요청
+    const intervalId = setInterval(loadMeetings, 5000); // 5초마다 데이터 요청
 
     return () => {
       clearInterval(intervalId); // 컴포넌트 언마운트 시 폴링 중지
@@ -17,12 +21,12 @@ const MeetingPageSelectContainer = () => {
 
   // userId가 맞으면 그때 데이터 넘어옴
   // 미팅방 목록 생성
-  const fetchMeetings = async () => {
+  const loadMeetings = async () => {
     try {
-      const userId = getCookieValue("userId");
+      const userId = getJWTCookie("userId");
       const response = await axios.get(`group/${userId}`);
-      const data = response.data;
-      setMeetings(data);
+      const meetingData = response.data;
+      setMeetings(meetingData);
     } catch (error) {
       console.error("Meeting 방 정보 가져오기 실패:", error);
     }
@@ -42,26 +46,35 @@ const MeetingPageSelectContainer = () => {
 
   // 나가기 기능
   const registerOut = async (roomId, title, userId) => {
-    await axios
-      .get(`/group/${roomId}/exit`, {
-        title: title,
-        userId: userId,
-      })
-      .then(() => {
-        console.log("방 나가기 성공");
-      })
-      .catch((error) => {
-        console.log("방 나가기 실패" + error);
-      });
+    const userData = await checkRoomData(roomId);
+    const userIn = userData.userId.includes(userId);
+    setIsUserIn(userIn);
+
+    // 유저가 있으면 방 나가기 가능
+    if (isUserIn === true) {
+      await axios
+        .get(`/group/${roomId}/exit`, {
+          title: title,
+          userId: userId,
+        })
+        .then(() => {
+          console.log("방 나가기 성공");
+        })
+        .catch((error) => {
+          console.log("방 나가기 실패" + error);
+        });
+    } else {
+      alert(`지금 ${userId}님은 이 방에 존재하지 않습니다.`);
+    }
   };
 
   // 상세정보 확인에서 방 정보 확인
-  const checkRoomData = async (roomid) => {
-    const userId = getCookieValue("userId");
+  const checkRoomData = async (roomId) => {
+    const userId = getJWTCookie("userId");
     const response = await axios
-      .get(`group/${roomid}/info`, {
+      .get(`group/${roomId}/info`, {
         userId: userId,
-        roomId: roomid,
+        roomId: roomId,
       })
       .then((response) => {
         console.log(response);
@@ -70,72 +83,8 @@ const MeetingPageSelectContainer = () => {
         console.log(err + "미팅방 정보 요청 안됨");
       });
 
-    return response;
+    return response.data;
   };
-
-  // test data
-  const testData = [
-    {
-      id: "1",
-      title: "건전한 만남을 원한다면?",
-      maleNum: "3",
-      femaleNum: "3",
-      capacity: "6",
-      groupBlindCategory: "3:3",
-      groupBlindStatus: "NOT_FULL",
-      groupBlindIntroduction: "안녕하세요~",
-    },
-    {
-      id: "2",
-      title: "공대 2:2 미팅할 사람~",
-      maleNum: "2",
-      femaleNum: "2",
-      capacity: "4",
-      groupBlindCategory: "2:2",
-      groupBlindStatus: "NOT_FULL",
-      groupBlindIntroduction: "안녕하세요~",
-    },
-    {
-      id: "3",
-      title: "재밌게 놀고 친하게 지낼 분들 찾습니다~",
-      maleNum: "4",
-      femaleNum: "4",
-      capacity: "8",
-      groupBlindCategory: "4:4",
-      groupBlindStatus: "NOT_FULL",
-      groupBlindIntroduction: "안녕하세요~",
-    },
-    {
-      id: "4",
-      title: "안녕하세요~2대2로 미팅해요",
-      maleNum: "3",
-      femaleNum: "3",
-      capacity: "6",
-      groupBlindCategory: "3:3",
-      groupBlindStatus: "NOT_FULL",
-      groupBlindIntroduction: "안녕하세요~",
-    },
-    {
-      id: "5",
-      title: "컴퓨터공학부 이승밈입니다.",
-      maleNum: "3",
-      femaleNum: "3",
-      capacity: "6",
-      groupBlindCategory: "3:3",
-      groupBlindStatus: "NOT_FULL",
-      groupBlindIntroduction: "안녕하세요~",
-    },
-    {
-      id: "6",
-      title: "컴퓨터공학부입니다.",
-      maleNum: "3",
-      femaleNum: "3",
-      capacity: "6",
-      groupBlindCategory: "3:3",
-      groupBlindStatus: "NOT_FULL",
-      groupBlindIntroduction: "안녕하세요~",
-    },
-  ];
 
   return (
     <MeetingRoomView

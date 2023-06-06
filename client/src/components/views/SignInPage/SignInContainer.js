@@ -23,13 +23,23 @@ const SignInContainer = () => {
           password,
         })
         .then((res) => {
-          if (res.data.token) {
-            setCookie("jwtToken", `JWT ${res.data.token}`, {
+          // 에러코드 444 : String
+          if (res.data.code === "444") {
+            setLoginError({
+              errorMessage: "이메일 또는 비밀번호를 다시 확인해주세요.",
+            });
+            return;
+          }
+
+          if (res.data.data.token) {
+            setJWTCookie("jwtAccessToken", res.data.data.token, {
               path: "/",
               sameSite: "strict",
             });
-            console.log(res.data.token);
-            console.log(getJWTCookie("jwtToken"));
+            setJWTCookie("userId", res.data.data.subjet);
+            // test -> 나중에 지우기
+            localStorage.setItem("jwtToken", res.data.data.token);
+            localStorage.setItem("userId", res.data.data.subjet);
           }
 
           if (
@@ -39,6 +49,11 @@ const SignInContainer = () => {
             navigator("/");
           else window.location.reload();
           setLoginError({});
+        })
+        .catch((e) => {
+          setLoginError({
+            errorMessage: "이메일 또는 비밀번호를 다시 확인해주세요.",
+          });
         });
     } catch (e) {
       setLoginError({

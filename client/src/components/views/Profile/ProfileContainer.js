@@ -2,12 +2,13 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import ProfileView from "./ProfileView";
 import axios from "axios";
-import { deleteCookie, getCookieValue } from "../../Api/loginApi";
+import { getJWTCookie, clearAllCookies } from "../../Api/loginApi";
 
 const ProfileContainer = ({ profileImageUrl }) => {
   const navigator = useNavigate();
-  const userName = getCookieValue("name");
+  const userName = getJWTCookie("name");
 
+  // 로그아웃 url은?
   const logoutHandler = async () => {
     await axios
       .post(
@@ -15,16 +16,14 @@ const ProfileContainer = ({ profileImageUrl }) => {
         {},
         {
           headers: {
-            sessionId: getCookieValue("sessionId"),
+            Authorization: getJWTCookie("jwtAccessToken"),
           },
         }
       )
       .then((res) => {
-        console.log(res);
-        deleteCookie("sessionId");
-        deleteCookie("userId");
-        deleteCookie("name");
-
+        clearAllCookies();
+        if (res.data.status === "200")
+          console.log("정상적으로 로그아웃하였습니다.");
         window.location.reload();
       })
       .catch((e) => {

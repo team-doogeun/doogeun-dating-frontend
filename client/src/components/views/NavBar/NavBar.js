@@ -5,7 +5,12 @@ import Modal from "../../Modal/LoginModal";
 import SingInContainer from "../SignInPage/SignInContainer";
 import Logo from "../../../Img/Logo.svg";
 import { useNavigate } from "react-router-dom";
-import { checkCookieExistence, getCookieValue } from "../../Api/loginApi";
+import {
+  checkCookieExistence,
+  getCookieValue,
+  checkJWTCookieExistence,
+  getJWTCookie,
+} from "../../Api/loginApi";
 import ProfileContainer from "../Profile/ProfileContainer";
 import profileImage from "../../../Img/BasicProfilePhoto.png";
 
@@ -22,9 +27,9 @@ function NavBar() {
   const ProfileRef = useRef(null);
   const UserButtonRef = useRef(null);
 
-  const checkCookie = () => {
-    const cookieExists = checkCookieExistence();
-    setCookie(cookieExists);
+  const checkJwtTokenExistence = () => {
+    const token = checkJWTCookieExistence();
+    setCookie(token); // true 값으로 업데이트
   };
 
   useEffect(() => {
@@ -40,7 +45,7 @@ function NavBar() {
     }
 
     document.addEventListener("mousedown", handleClickOutside);
-    checkCookie();
+    checkJwtTokenExistence();
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -107,7 +112,8 @@ function NavBar() {
               <ProfileWrapper ref={ProfileRef}>
                 {profile && <ProfileContainer profileImageUrl={profileImage} />}
               </ProfileWrapper>
-              <Name>{getCookieValue("name")}님</Name>
+              {/* <Name>{getCookieValue("name")}님</Name> */}
+              <Name>{getJWTCookie("userId")}님</Name>
             </>
           )}
         </Nav>

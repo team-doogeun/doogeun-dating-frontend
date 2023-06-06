@@ -1,81 +1,50 @@
 import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import GirlImage1 from "../../../Img/girl1.png";
-import GirlImage2 from "../../../Img/girl.png";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // This is required for carousel styling
 import GmarketSansTTFBold from "../../../fonts/GmarketSansTTFBold.ttf";
-import Logo from "../../../Img/Logo.svg";
 
-const BlindDateView = ({ getUserData, buttonLike }) => {
+const BlindDateView = ({ getUserData, buttonLike, getDataAtSpecificTime }) => {
   const [userData, setUserData] = useState(null);
   const [isFlipped, setIsFlipped] = useState(false);
   const [isSecondCardFlipped, setIsSecondCardFlipped] = useState(false);
-  const [userImage1, setUserImage1] = useState([]);
-  const [userImage2, setUserImage2] = useState([]);
+  const [user1Image, setUser1Image] = useState([]);
+  const [user2Image, setUser2Image] = useState([]);
 
-  // const userData = {
-  //   userId: "Seung",
-  //   name: "jhon",
-  //   age: 23,
-  //   bodyType: "슬림",
-  //   height: 170,
-  //   addressType: "용산구",
-  //   departmentType: "공과대학",
-  //   characterType: "다정",
-  //   emotionType: "이성적",
-  //   hobby1: "여행",
-  //   hobby2: "헬스",
-  //   mbtiType: "INTJ",
-  //   userIdSec: "mike123",
-  //   nameSec: "mike",
-  //   ageSec: 27,
-  //   heightSec: 170,
-  //   bodyTypeSec: "슬림",
-  //   addressTypeSec: "용산구",
-  //   departmentTypeSec: "경영대학",
-  //   characterTypeSec: "다정",
-  //   emotionTypeSec: "이성적",
-  //   firstHobbySec: "여행",
-  //   secondHobbySec: "헬스",
-  //   mbtiTypeSec: "INTJ",
-  // };
   useEffect(() => {
-    // userData 세팅
-    const UserDataFetch = async () => {
-      try {
-        const Data = await getUserData();
+    userDataSetting();
+  }, []);
 
-        if (Data) {
-          //setUserData(Data);
-          console.log("유저 데이터 저장 성공");
+  // userData 세팅
+  const userDataSetting = async () => {
+    try {
+      // 일단 처음에 유저 1번 받아오기
+      const Data = await getUserData();
 
-          let userImage1 = [
-            Data.basicFilePath,
-            Data.secondFilePath,
-            Data.thirdFilePath,
-          ];
-          // 기본 사진 있으면 -> 사진 데이터 저장 o
-          if (userImage1[0]) setUserImage1([...userImage1]);
-          else console.log("user1 사진 없음");
+      if (Data) {
+        setUserData(Data);
+        const user1Image = [
+          Data.basicFilePath,
+          Data.secondFilePath,
+          Data.thirdFilePath,
+        ];
+        if (user1Image[0]) setUser1Image([...user1Image]);
 
-          let userImage2 = [
-            Data.basicFilePathSec,
-            Data.secondFilePathSec,
-            Data.thirdFilePathSec,
-          ];
-          if (userImage2[0]) setUserImage2([...userImage2]);
-          else console.log("user2 사진 없음");
-        } else {
-          console.log("유저 데이터가 유효하지 않습니다.");
-        }
-      } catch (error) {
-        console.log("유저 데이터 받기 실패", error);
+        const user2Image = [
+          Data.basicFilePathSec,
+          Data.secondFilePathSec,
+          Data.thirdFilePathSec,
+        ];
+        if (user2Image[0]) setUser2Image([...user2Image]);
+
+        console.log("유저 데이터 저장 성공");
+      } else {
+        console.log("유저 데이터가 유효하지 않습니다. ", Data);
       }
-    };
-
-    UserDataFetch();
-  }, [getUserData]);
+    } catch (error) {
+      console.log("유저 데이터 받기 실패 : ", error);
+    }
+  };
 
   const handleClick = () => {
     setIsFlipped(!isFlipped);
@@ -113,15 +82,13 @@ const BlindDateView = ({ getUserData, buttonLike }) => {
                   showArrows={false}
                   interval={5000}
                 >
-                  {userImage1.map((image, index) => (
+                  {user1Image.map((image, index) => (
                     <div key={index}>
                       <img src={image} alt={`carousel-img-${index}`} />
                     </div>
                   ))}
-                  {/* <img src={GirlImage1} alt={`carousel-img-${GirlImage1}`} /> */}
                 </Carousel>
                 <NameContainer>{`${userData.name}(${userData.age})`}</NameContainer>
-                {/* <AgeContainer>{userData.age}</AgeContainer> */}
                 <TagContainer>
                   <Tag>{userData.addressType}</Tag>
                   <Tag>{userData.departmentType}</Tag>
@@ -166,15 +133,13 @@ const BlindDateView = ({ getUserData, buttonLike }) => {
                   showArrows={false}
                   interval={5000}
                 >
-                  {userImage2.map((image, index) => (
+                  {user2Image.map((image, index) => (
                     <div key={index}>
                       <img src={image} alt={`carousel-img-${index}`} />
                     </div>
                   ))}
-                  {/* <img src={GirlImage2} alt={`carousel-img-${GirlImage2}`} /> */}
                 </Carousel>
                 <NameContainer>{`${userData.nameSec}(${userData.ageSec})`}</NameContainer>
-                {/* <AgeContainer>{userData.age}</AgeContainer> */}
                 <TagContainer>
                   <Tag>{userData.addressTypeSec}</Tag>
                   <Tag>{userData.departmentTypeSec}</Tag>

@@ -44,17 +44,31 @@ const deleteCookie = (key) => {
   document.cookie = `${key}=; path=/; expires=${today}`;
 };
 
-// jwt test
+// jwtToken Test
 const setJWTCookie = (name, value, option) => {
   return cookies.set(name, value, { ...option });
 };
 
 const getJWTCookie = (name) => {
-  return cookies.get(name);
+  if (name === "jwtToken") return cookies.get("jwtToken");
+  if (name === "userId") return cookies.get("userId");
 };
 
 const removeJWTCookie = (name, option) => {
   return cookies.remove(name, { ...option });
+};
+
+const checkJWTCookieExistence = () => {
+  const token = getJWTCookie("jwtToken");
+  if (token) return true;
+  else return false;
+};
+
+const clearAllCookies = () => {
+  const cookies = Cookies.get();
+  for (const cookie in cookies) {
+    Cookies.remove(cookie);
+  }
 };
 
 export {
@@ -67,4 +81,6 @@ export {
   setJWTCookie,
   getJWTCookie,
   removeJWTCookie,
+  checkJWTCookieExistence,
+  clearAllCookies,
 };

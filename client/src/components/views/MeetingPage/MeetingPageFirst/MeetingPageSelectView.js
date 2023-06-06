@@ -3,7 +3,7 @@ import styled from "styled-components";
 import BottomImage from "../../../../Img/Rectangle 2.png";
 import Pagination from "../../../Pagination/Pagination";
 import axios from "axios";
-import { getCookieValue } from "../../../Api/loginApi";
+import { getCookieValue, getJWTCookie } from "../../../Api/loginApi";
 import Modal from "../../../Modal/LoginModal";
 import RoomDataContainer from "../MeetingRoomData/RoomDataContainer";
 
@@ -47,8 +47,7 @@ const MeetingPageSelectView = ({
   );
 
   const handleCreateRoom = async () => {
-    const userId = getCookieValue("userId");
-    const sessionId = getCookieValue("sessionId");
+    const userId = getJWTCookie("userId");
 
     const newRoom = {
       title: roomTitle,
@@ -58,17 +57,17 @@ const MeetingPageSelectView = ({
     };
 
     try {
-      // const response =
-      await axios
+      const response = await axios
         .post(`http://localhost:8080/group/${userId}/new`, newRoom)
         .then((res) => {
           console.log(res.data);
+          console.log(newRoom);
         })
         .catch((err) => {
           console.log(err);
         });
-      // const newMeetingRoom = response.data;
-      // setMeetingRooms([...meetingRooms, newMeetingRoom]);
+      const newMeetingRoom = response.data;
+      setMeetingRooms([...meetingRooms, newMeetingRoom]);
     } catch (error) {
       console.error("Error adding meeting room:", error);
     }
