@@ -61,9 +61,9 @@ function App() {
           <Route
             path="/my-page"
             element={
-              <PrivateRoute>
-                <UserSettingContainer />
-              </PrivateRoute>
+              // <PrivateRoute>
+              <UserSettingContainer />
+              // </PrivateRoute>
             }
           />
         </Routes>

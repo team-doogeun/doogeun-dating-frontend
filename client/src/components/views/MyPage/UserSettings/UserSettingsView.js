@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import MyPageSidemenuContanier from "../MyPageSidemenu/MyPageSidemenuContainer";
 import styled from "styled-components";
-import { getCookieValue } from "../../../Api/loginApi";
+import { getJWTCookie } from "../../../Api/loginApi";
 import profileImage from "../../../../Img/BasicProfilePhoto.png";
 
 const UserSettingView = ({ navigate }) => {
-  const userName = getCookieValue("name");
-  const userId = getCookieValue("userId");
+  const userName = getJWTCookie("name");
+  const userId = getJWTCookie("userId");
 
   return (
     <UserSettingLayout>
@@ -29,8 +29,13 @@ const UserSettingView = ({ navigate }) => {
           </UserinfoBox>
           <UserPassword>비밀번호</UserPassword>
           <UserPasswordBox>
-            <ChangePasswordBox></ChangePasswordBox>
-            <UserPasswordEditBtn>비밀번호 변경</UserPasswordEditBtn>
+            <PasswordForm>
+              <PasswordInput>
+                <ChangePasswordBox placeholder="비밀번호"></ChangePasswordBox>
+                <ChangePasswordBox placeholder="비밀번호 확인"></ChangePasswordBox>
+              </PasswordInput>
+              <UserPasswordEditBtn>비밀번호 변경</UserPasswordEditBtn>
+            </PasswordForm>
           </UserPasswordBox>
         </UserSettingWrapper>
       </UserSettingContainer>
@@ -205,7 +210,7 @@ const UserPasswordBox = styled.div`
   box-sizing: border-box;
   position: relative;
   width: 760px;
-  height: 90px;
+  height: 180px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -216,15 +221,28 @@ const UserPasswordBox = styled.div`
   margin-top: 16px;
 `;
 
-const PasswordForm = styled.form``;
+const PasswordForm = styled.form`
+  width: 760px;
+  height: 180px;
+  display: flex;
+  flex-direction: row;
+`;
+
+const PasswordInput = styled.div`
+  height: 180px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+`;
 
 const ChangePasswordBox = styled.input`
   width: 338px;
   height: 50px;
   border-radius: 5px;
   border: 1px solid #dee2e6;
-  margin-left: 15px;
+  margin-left: 40px;
   padding-left: 15px;
+  margin-top: 25px;
   ::placeholder {
     color: #a5a5a5;
   }
@@ -232,7 +250,7 @@ const ChangePasswordBox = styled.input`
 
 const UserPasswordEditBtn = styled.button`
   position: relative;
-  width: 110px;
+  width: 130px;
   height: 35px;
   font-family: "Noto Sans KR";
   font-style: normal;
@@ -246,6 +264,7 @@ const UserPasswordEditBtn = styled.button`
   border: #2e55e7;
   margin-left: 40px;
   margin-right: 40px;
+  margin-top: 110px;
 
   cursor: pointer;
 `;

@@ -48,24 +48,31 @@ const MeetingPageSelectView = ({
 
   const handleCreateRoom = async () => {
     const userId = getJWTCookie("userId");
+    const authToken = getJWTCookie("jwtAccessToken");
 
     const newRoom = {
       title: roomTitle,
       capacityMale: roomSize,
-      capacityFeMale: roomSize,
+      capacityFemale: roomSize,
       groupBlindIntroduction: roomIntro,
     };
 
+    console.log(newRoom);
+
     try {
       const response = await axios
-        .post(`http://localhost:8080/group/${userId}/new`, newRoom)
+        .post(`http://localhost:8080/group/${userId}/new`, newRoom, {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        })
         .then((res) => {
-          console.log(res.data);
-          console.log(newRoom);
+          return res;
         })
         .catch((err) => {
           console.log(err);
         });
+
       const newMeetingRoom = response.data;
       setMeetingRooms([...meetingRooms, newMeetingRoom]);
     } catch (error) {
@@ -123,12 +130,59 @@ const MeetingPageSelectView = ({
       <MeetingPageSelectWrapper>
         <ContentWrapper>
           <RoomContainer>
+            {meetingRooms.length === 0 ? (
+              <RoomCard />
+            ) : (
+              meetingRooms.map((room) => (
+                <RoomCard key={room.id}>
+                  <RoomCapacity>{`${room.capacityMale}: ${room.capacityFemale}`}</RoomCapacity>
+                  <RoomTitle>{room.title}</RoomTitle>
+                  <CheckAndRegisterBlock>
+                    <CheckRoomData onClick={() => setRoomDataModal(true)}>
+                      상세정보 확인
+                    </CheckRoomData>
+                    {roomDataModal && (
+                      <Modal
+                        CloseModal={() => {
+                          setRoomDataModal(!roomDataModal);
+                        }}
+                      >
+                        {/* roomData 안엔 post쳐서 res 받아온 데이터가 들어가야함 -> 함수 필요*/}
+                        <RoomDataContainer
+                          roomData={checkRoomData(room.id)}
+                        ></RoomDataContainer>
+                      </Modal>
+                    )}
+
+                    <RoomRegisterInOut>
+                      {isUserIn ? (
+                        <RoomRegisterOutBtn
+                          onClick={() => {
+                            registerOut();
+                          }}
+                        >
+                          나가기
+                        </RoomRegisterOutBtn>
+                      ) : (
+                        <RoomRegisterInBtn
+                          onClick={() => {
+                            registerIn();
+                          }}
+                        >
+                          참여
+                        </RoomRegisterInBtn>
+                      )}
+                    </RoomRegisterInOut>
+                  </CheckAndRegisterBlock>
+                </RoomCard>
+              ))
+            )}
             {meetings.length === 0 ? (
               <RoomCard />
             ) : (
               meetings.map((room) => (
                 <RoomCard key={room.id}>
-                  <RoomCapacity>{`${room.capacityMale}: ${room.capacityFeMale}`}</RoomCapacity>
+                  <RoomCapacity>{`${room.capacityMale}: ${room.capacityFemale}`}</RoomCapacity>
                   <RoomTitle>{room.title}</RoomTitle>
                   <CheckAndRegisterBlock>
                     <CheckRoomData onClick={() => setRoomDataModal(true)}>

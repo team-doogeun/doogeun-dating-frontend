@@ -10,25 +10,8 @@ const ProfileContainer = ({ profileImageUrl }) => {
 
   // 로그아웃 url은?
   const logoutHandler = async () => {
-    await axios
-      .post(
-        "http://localhost:8080/users/logout",
-        {},
-        {
-          headers: {
-            Authorization: getJWTCookie("jwtAccessToken"),
-          },
-        }
-      )
-      .then((res) => {
-        clearAllCookies();
-        if (res.data.status === "200")
-          console.log("정상적으로 로그아웃하였습니다.");
-        window.location.reload();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    clearAllCookies();
+    window.location.reload();
   };
 
   return (

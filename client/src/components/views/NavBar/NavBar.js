@@ -5,12 +5,7 @@ import Modal from "../../Modal/LoginModal";
 import SingInContainer from "../SignInPage/SignInContainer";
 import Logo from "../../../Img/Logo.svg";
 import { useNavigate } from "react-router-dom";
-import {
-  checkCookieExistence,
-  getCookieValue,
-  checkJWTCookieExistence,
-  getJWTCookie,
-} from "../../Api/loginApi";
+import { checkJWTCookieExistence, getJWTCookie } from "../../Api/loginApi";
 import ProfileContainer from "../Profile/ProfileContainer";
 import profileImage from "../../../Img/BasicProfilePhoto.png";
 

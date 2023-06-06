@@ -50,8 +50,9 @@ const setJWTCookie = (name, value, option) => {
 };
 
 const getJWTCookie = (name) => {
-  if (name === "jwtToken") return cookies.get("jwtToken");
+  if (name === "jwtAccessToken") return cookies.get("jwtAccessToken");
   if (name === "userId") return cookies.get("userId");
+  if (name === "name") return cookies.get("name");
 };
 
 const removeJWTCookie = (name, option) => {
@@ -59,16 +60,17 @@ const removeJWTCookie = (name, option) => {
 };
 
 const checkJWTCookieExistence = () => {
-  const token = getJWTCookie("jwtToken");
+  const token = getJWTCookie("jwtAccessToken");
   if (token) return true;
   else return false;
 };
 
 const clearAllCookies = () => {
-  const cookies = Cookies.get();
-  for (const cookie in cookies) {
-    Cookies.remove(cookie);
-  }
+  const allCookies = Object.keys(cookies.getAll());
+
+  allCookies.foreach((name) => {
+    cookies.remove(name);
+  });
 };
 
 export {
