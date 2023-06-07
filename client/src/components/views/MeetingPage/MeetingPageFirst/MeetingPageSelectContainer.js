@@ -23,8 +23,9 @@ const MeetingPageSelectContainer = () => {
   // 미팅방 목록 생성
   const loadMeetings = async () => {
     try {
-      const userId = getJWTCookie("userId");
-      const response = await axios.get(`group/${userId}`);
+      const response = await axios.get(`group/info`).then((res) => {
+        return res;
+      });
       const meetingData = response.data;
       setMeetings(meetingData);
     } catch (error) {
@@ -78,6 +79,7 @@ const MeetingPageSelectContainer = () => {
       })
       .then((response) => {
         console.log(response);
+        return response;
       })
       .catch((err) => {
         console.log(err + "미팅방 정보 요청 안됨");

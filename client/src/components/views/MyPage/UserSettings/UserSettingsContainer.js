@@ -3,11 +3,22 @@ import UserSettingsView from "./UserSettingsView";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { getJWTCookie, removeJWTCookie } from "../../../Api/loginApi";
+import { clearAllCookies } from "../../../Api/loginApi";
 
 const passwordContext = new React.createContext();
 
 const UserSettingContainer = () => {
   const navigate = useNavigate();
+  const userId = getJWTCookie("userId");
+
+  const getUserInfo = async () => {
+    await axios
+      .get(`http://localhost:8080/${userId}/update`, userId)
+      .then((res) => {
+        console.log(res);
+        return res;
+      });
+  };
 
   // 비밀번호 변경시 post 쳐주기
   // 그리고 url 수정해줘야함
@@ -23,8 +34,7 @@ const UserSettingContainer = () => {
       })
       .then(() => {
         alert("비밀번호가 성공적으로 변경되었습니다. 다시 로그인해주세요.");
-        removeJWTCookie("jwtAccessToken");
-        removeJWTCookie("userId");
+        clearAllCookies();
         navigate("/");
       })
       .catch((error) => {
@@ -34,7 +44,10 @@ const UserSettingContainer = () => {
   };
 
   return (
-    <UserSettingsView navigate={navigate} changePassword={changePassword} />
+    <UserSettingsView
+      getUserInfo={getUserInfo}
+      changePassword={changePassword}
+    />
   );
 };
 

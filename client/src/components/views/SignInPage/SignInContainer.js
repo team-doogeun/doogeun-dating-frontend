@@ -31,11 +31,11 @@ const SignInContainer = () => {
               path: "/",
               sameSite: "strict",
             });
-            setJWTCookie("userId", res.data.data.subjet);
+            setJWTCookie("userId", res.data.data.subject);
             setJWTCookie("name", res.data.data.name);
             // test -> 나중에 지우기
             localStorage.setItem("jwtToken", res.data.data.token);
-            localStorage.setItem("userId", res.data.data.subjet);
+            localStorage.setItem("userId", res.data.data.subject);
           }
 
           if (

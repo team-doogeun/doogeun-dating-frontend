@@ -66,11 +66,9 @@ const checkJWTCookieExistence = () => {
 };
 
 const clearAllCookies = () => {
-  const allCookies = Object.keys(cookies.getAll());
-
-  allCookies.foreach((name) => {
-    cookies.remove(name);
-  });
+  cookies.remove("name");
+  cookies.remove("userId");
+  cookies.remove("jwtAccessToken");
 };
 
 export {

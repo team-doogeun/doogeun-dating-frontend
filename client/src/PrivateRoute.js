@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { checkCookieExistence } from "./components/Api/loginApi";
+import { checkJWTCookieExistence } from "./components/Api/loginApi";
 import LoginModal from "./components/Modal/LoginModal";
 import SignInContainer from "./components/views/SignInPage/SignInContainer";
 
@@ -15,7 +15,7 @@ const PrivateRoute = ({ children }) => {
     setShowModal(false);
   };
 
-  if (!checkCookieExistence()) {
+  if (!checkJWTCookieExistence()) {
     navigator("/");
     return (
       <LoginModal

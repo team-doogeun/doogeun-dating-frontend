@@ -16,11 +16,14 @@ import {
 import Select from "react-select";
 import ModalComponent from "../SmallComponent/ModalComponent";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const hobbyContext = React.createContext();
 const idealHobbyContext = React.createContext();
 
 function DetailProfile() {
+  const navigator = useNavigate();
+
   const [selectedFiles, setSelectedFiles] = useState({
     basicFilePath: null,
     secondFilePath: null,

@@ -34,13 +34,14 @@ const MeetingPageSelectView = ({
 
   // 페이지네이션
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 2;
+  const itemsPerPage = 5;
   const totalPages = Math.ceil(meetings.length / itemsPerPage);
 
   const handlePageChange = (pageNum) => {
     setCurrentPage(pageNum);
   };
 
+  // 보여줄 페이지 갯수
   const meetingsToShow = meetings.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
@@ -67,6 +68,7 @@ const MeetingPageSelectView = ({
           },
         })
         .then((res) => {
+          console.log("서버에 저장 후 방 데이터 불러오기 성공");
           return res;
         })
         .catch((err) => {
@@ -180,7 +182,7 @@ const MeetingPageSelectView = ({
             {meetings.length === 0 ? (
               <RoomCard />
             ) : (
-              meetings.map((room) => (
+              meetingsToShow.map((room) => (
                 <RoomCard key={room.id}>
                   <RoomCapacity>{`${room.capacityMale}: ${room.capacityFemale}`}</RoomCapacity>
                   <RoomTitle>{room.title}</RoomTitle>

@@ -12,14 +12,14 @@ const RoomDataView = ({ roomData, isHost, hostStart }) => {
         </RoomPersonNum>
         <UserDataWrapper>
           <MaleCol>
-            <div>공과대학(24)</div>
-            <div>사범대학(21)</div>
-            <div>수의과대학(20)</div>
+            <div>{`${roomData.Male1Department}(${roomData.Male1Age})`}</div>
+            <div>{`${roomData.Male2Department}(${roomData.Male2Age})`}</div>
+            <div>{`${roomData.Male3Department}(${roomData.Male3Age})`}</div>
           </MaleCol>
           <FeMaleCol>
-            <div>건축대학(25)</div>
-            <div>컴퓨터공학부(23)</div>
-            <div>부동산과학원(23)</div>
+            <div>{`${roomData.Female1Department}(${roomData.Female1Age})`}</div>
+            <div>{`${roomData.Female2Department}(${roomData.Female2Age})`}</div>
+            <div>{`${roomData.Female3Department}(${roomData.Female3Age})`}</div>
           </FeMaleCol>
         </UserDataWrapper>
         {isHost && (

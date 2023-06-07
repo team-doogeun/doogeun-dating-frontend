@@ -1,12 +1,67 @@
-import React from "react";
+import React, { useState } from "react";
 import MyPageSidemenuContanier from "../MyPageSidemenu/MyPageSidemenuContainer";
 import styled from "styled-components";
 import { getJWTCookie } from "../../../Api/loginApi";
 import profileImage from "../../../../Img/BasicProfilePhoto.png";
 
-const UserSettingView = ({ navigate }) => {
+const UserSettingView = ({ getUserInfo, changePassword }) => {
   const userName = getJWTCookie("name");
   const userId = getJWTCookie("userId");
+  const [isEditInfo, setIsEditInfo] = useState(true);
+
+  const userEdit = async () => {
+    setIsEditInfo(!isEditInfo);
+    const userData = await getUserInfo();
+    setUserInfo(userData);
+  };
+
+  const [userInfo, setUserInfo] = useState({
+    user: {
+      userId: "kiki123",
+      password: "12345",
+      confirmPassword: "12345",
+      name: "kiki",
+      gender: "여",
+      age: 23,
+      email: "kiki1234@konkuk.ac.kr",
+      studentId: "20202224",
+      externalId: "kiki123",
+
+      detailProfile: {
+        height: 157,
+        bodyType: "마름",
+        address: "용산구",
+        department: "공과대학",
+        character1: "시크",
+        character2: "이성적",
+        hobby1: "여행",
+        hobby2: "헬스",
+        mbti: "INTJ",
+        smoke: "종종",
+        drink: "종종",
+        hobby1: "복싱",
+        hobby2: "축구",
+        drink: "종종",
+        smoke: "흡연 안 함",
+        firstPriority: "취미",
+        secondPriority: "체형",
+        thirdPriority: "나이",
+      },
+      idealTypeProfile: {
+        idealAge: "20대 중반",
+        idealHeight: "175이상 175미만",
+        idealBodyType: "슬림",
+        idealDepartment: "경영대학",
+        idealCharacter1: "다정",
+        idealCharacter2: "이성적",
+        idealMbti: "ENFP",
+        idealHobby1: "등산",
+        idealHobby2: "야구",
+        idealDrink: "종종",
+        idealSmoke: "흡연 안 함",
+      },
+    },
+  });
 
   return (
     <UserSettingLayout>
@@ -20,10 +75,25 @@ const UserSettingView = ({ navigate }) => {
               <Userinfo>
                 <UserNicknameWrapper>
                   <UserNickname>{userName}님</UserNickname>
-                  <UserinfoEditBtn>수정</UserinfoEditBtn>
+                  <UserinfoEditBtn
+                    onClick={() => {
+                      userEdit();
+                    }}
+                  >
+                    정보 수정
+                  </UserinfoEditBtn>
                 </UserNicknameWrapper>
-                <UserEmailTitle>아이디</UserEmailTitle>
-                <UserEmail>{userId}</UserEmail>
+                <UserIdTitle>아이디</UserIdTitle>
+                <UserId>{userId}</UserId>
+                {isEditInfo && userInfo && (
+                  <UserOtherInfo>
+                    <UserInfoData>{`성별 : ${userInfo.user.gender}`}</UserInfoData>
+                    <UserInfoData>{`나이 : ${userInfo.user.age}`}</UserInfoData>
+                    <UserInfoData>{`학번 : ${userInfo.user.studentId}`}</UserInfoData>
+                    <UserInfoData>{`카카오Id : ${userInfo.user.externalId}`}</UserInfoData>
+                    <UserInfoData>{`email : ${userInfo.user.email}`}</UserInfoData>
+                  </UserOtherInfo>
+                )}
               </Userinfo>
             </UserinfoWrapper>
           </UserinfoBox>
@@ -34,7 +104,9 @@ const UserSettingView = ({ navigate }) => {
                 <ChangePasswordBox placeholder="비밀번호"></ChangePasswordBox>
                 <ChangePasswordBox placeholder="비밀번호 확인"></ChangePasswordBox>
               </PasswordInput>
-              <UserPasswordEditBtn>비밀번호 변경</UserPasswordEditBtn>
+              <UserPasswordEditBtn onClick={changePassword}>
+                비밀번호 변경
+              </UserPasswordEditBtn>
             </PasswordForm>
           </UserPasswordBox>
         </UserSettingWrapper>
@@ -44,6 +116,17 @@ const UserSettingView = ({ navigate }) => {
 };
 
 export default UserSettingView;
+
+const commonTextStyle = {
+  width: "45px",
+  height: "20px",
+  fontFamily: "Noto Sans KR",
+  fontStyle: "normal",
+  fontWeight: "700",
+  fontSize: "14px",
+  lineHeight: "20px",
+  color: "#5c5c5c",
+};
 
 const UserSettingLayout = styled.div`
   display: flex;
@@ -65,6 +148,7 @@ const UserSettingContainer = styled.div`
 const UserSettingWrapper = styled.div`
   display: flex;
   min-height: 100vh;
+  max-height: 700px;
   width: 800px;
   max-width: 1100px;
   flex-direction: column;
@@ -91,7 +175,8 @@ const UserinfoBox = styled.div`
   box-sizing: border-box;
   position: relative;
   width: 760px;
-  height: 180px;
+  min-height: 250px;
+  max-height: 380px;
   display: flex;
   flex-direction: column;
   background: #ffffff;
@@ -103,7 +188,8 @@ const UserinfoBox = styled.div`
 const UserinfoWrapper = styled.div`
   position: relative;
   width: fit-content;
-  height: fit-content;
+  /* height: fit-content; */
+  max-height: 700px;
   display: flex;
   flex-direction: row;
   padding-top: 36px;
@@ -122,7 +208,8 @@ const ProfilePhoto = styled.img`
 const Userinfo = styled.div`
   position: relative;
   width: 500px;
-  height: 120px;
+  min-height: 120px;
+  max-height: 700px;
   display: flex;
   flex-direction: column;
 `;
@@ -165,7 +252,17 @@ const UserinfoEditBtn = styled.button`
   border: #ff2559;
   cursor: pointer;
 `;
-const UserEmailTitle = styled.div`
+
+const UserOtherInfo = styled.div`
+  width: 500px;
+  height: 300px;
+`;
+
+const UserInfoData = styled.div`
+  ${commonTextStyle}
+`;
+
+const UserIdTitle = styled.div`
   position: relative;
 
   width: 45px;
@@ -180,7 +277,7 @@ const UserEmailTitle = styled.div`
   color: #5c5c5c;
 `;
 
-const UserEmail = styled.div`
+const UserId = styled.div`
   position: relative;
   width: fit-content;
   height: 23px;
