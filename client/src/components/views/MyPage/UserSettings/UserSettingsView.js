@@ -118,7 +118,7 @@ const UserSettingView = ({ getUserInfo, changePassword }) => {
 export default UserSettingView;
 
 const commonTextStyle = {
-  width: "45px",
+  width: "200px",
   height: "20px",
   fontFamily: "Noto Sans KR",
   fontStyle: "normal",
