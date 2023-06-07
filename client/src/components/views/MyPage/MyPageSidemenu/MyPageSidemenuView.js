@@ -1,67 +1,103 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 const MypageSidemenuView = ({
   currentMenu,
   onUserSettingClick,
-  onMyPostsClick,
-  onScrapClick,
+  onMeetingSetting,
+  onBlindDateSetting,
 }) => {
+  const navigate = useNavigate();
+
+  const [meetAccordian, setMeetAccordian] = useState(false);
+  const [blindDateAccordian, setBlindDateAccordian] = useState(false);
+
   const [isUserSettingHovered, setIsUserSettingHovered] = useState(false);
   const [isMyPostsHovered, setIsMyPostsHovered] = useState(false);
   const [isMyScrapHovered, setIsMyScrapHovered] = useState(false);
+
+  const handleMenuClick = (menu) => {
+    setBlindDateAccordian(!menu);
+  };
+
   return (
     <SidemenuContainer>
       <SidemenuTitle>내 정보 관리</SidemenuTitle>
       <SidemenuContensContainer>
         <SidemenuContentWrapper
           backgroundColor={
-            currentMenu === "UserSetting"
-              ? "rgba(255, 37, 89, 0.1)"
-              : "transparent"
+            currentMenu === 'UserSetting'
+              ? 'rgba(255, 37, 89, 0.1)'
+              : 'transparent'
           }
-          onClick={onUserSettingClick}
           onMouseEnter={() => setIsUserSettingHovered(true)}
           onMouseLeave={() => setIsUserSettingHovered(false)}
+          onClick={() => onUserSettingClick()}
         >
           <Sidemenu
-            fontColor={currentMenu === "UserSetting" ? "#ff2559" : "#737373"}
+            fontColor={currentMenu === 'UserSetting' ? '#ff2559' : '#737373'}
           >
             내 정보
           </Sidemenu>
         </SidemenuContentWrapper>
         <SidemenuContentWrapper
           backgroundColor={
-            currentMenu === "MyPost" ? "rgba(255, 37, 89, 0.1)" : "transparent"
+            currentMenu === 'MyPost' ? 'rgba(255, 37, 89, 0.1)' : 'transparent'
           }
-          onClick={onMyPostsClick}
           onMouseEnter={() => setIsMyPostsHovered(true)}
           onMouseLeave={() => setIsMyPostsHovered(false)}
+          onClick={() => setBlindDateAccordian(!blindDateAccordian)}
         >
           <Sidemenu
-            fontColor={currentMenu === "MyPost" ? "#ff2559" : "#737373"}
+            fontColor={currentMenu === 'MyPost' ? '#ff2559' : '#737373'}
           >
             소개팅
           </Sidemenu>
         </SidemenuContentWrapper>
+        {blindDateAccordian && (
+          <AccordianContent>
+            <ListItem onClick={() => onBlindDateSetting()}>
+              내가 두근한 사람
+            </ListItem>
+            <ListItem onClick={() => onBlindDateSetting()}>
+              나를 두근한 사람
+            </ListItem>
+            <ListItem onClick={() => onBlindDateSetting()}>매칭</ListItem>
+          </AccordianContent>
+        )}
         <SidemenuContentWrapper
           backgroundColor={
-            currentMenu === "MyScrap" ? "rgba(255, 37, 89, 0.1)" : "transparent"
+            currentMenu === 'MyScrap' ? 'rgba(255, 37, 89, 0.1)' : 'transparent'
           }
-          onClick={onScrapClick}
           onMouseEnter={() => setIsMyScrapHovered(true)}
           onMouseLeave={() => setIsMyScrapHovered(false)}
+          onClick={() => setMeetAccordian(!meetAccordian)}
         >
           <Sidemenu
-            fontColor={currentMenu === "MyScrap" ? "#ff2559" : "#737373"}
+            fontColor={currentMenu === 'MyScrap' ? '#ff2559' : '#737373'}
           >
             미팅
           </Sidemenu>
         </SidemenuContentWrapper>
+        {meetAccordian && (
+          <AccordianContent>
+            <ListItem onClick={() => onMeetingSetting()}>
+              내가 만든 미팅방
+            </ListItem>
+            <ListItem onClick={() => onMeetingSetting()}>
+              내가 입장한 미팅방
+            </ListItem>
+            <ListItem onClick={() => onMeetingSetting()}>
+              내가 시작한 미팅방
+            </ListItem>
+          </AccordianContent>
+        )}
       </SidemenuContensContainer>
     </SidemenuContainer>
   );
 };
+
 const SidemenuContainer = styled.div`
   box-sizing: border-box;
   position: relative;
@@ -76,7 +112,7 @@ const SidemenuTitle = styled.div`
   position: relative;
   width: 180px;
   height: 46px;
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 700;
   font-size: 28px;
@@ -96,19 +132,19 @@ const SidemenuContensContainer = styled.div`
 const SidemenuContentWrapper = styled.div`
   position: relative;
   width: 250px;
-  height: 50px;
+  height: 46px;
   display: flex;
   align-items: center;
-  flex-direction: row;
+  flex-direction: column;
   background: ${(props) => props.backgroundColor};
   border-radius: 8px;
   padding-left: 12px;
 
   :hover {
     background: ${(props) =>
-      props.backgroundColor === "transparent"
-        ? "rgba(255, 37, 89, 0.1)"
-        : "rgba(255, 37, 89, 0.1)"};
+      props.backgroundColor === 'transparent'
+        ? 'rgba(255, 37, 89, 0.1)'
+        : 'rgba(255, 37, 89, 0.1)'};
   }
 `;
 const Sidemenu = styled.div`
@@ -119,7 +155,7 @@ const Sidemenu = styled.div`
   width: 250px;
   height: 46px;
 
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -132,6 +168,42 @@ const Sidemenu = styled.div`
   cursor: pointer;
   :hover {
     color: #ff2559;
+  }
+`;
+
+const AccordianContent = styled.div`
+  position: relative;
+  width: 250px;
+  max-height: 150px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 8px;
+`;
+
+const ListItem = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: 250px;
+  height: 46px;
+  border-radius: 8px;
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 23px;
+  text-align: center;
+  color: #737373;
+
+  padding-left: 45px;
+  cursor: pointer;
+
+  :hover {
+    color: #ff2559;
+    background-color: rgba(255, 37, 89, 0.1);
   }
 `;
 

@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import MyPageSidemenuContanier from "../MyPageSidemenu/MyPageSidemenuContainer";
-import styled from "styled-components";
-import { getJWTCookie } from "../../../Api/loginApi";
-import profileImage from "../../../../Img/BasicProfilePhoto.png";
+import React, { useState } from 'react';
+import MyPageSidemenuContainer from '../MyPageSidemenu/MyPageSidemenuContainer';
+import styled from 'styled-components';
+import { getJWTCookie } from '../../../Api/loginApi';
+import profileImage from '../../../../Img/BasicProfilePhoto.png';
 
 const UserSettingView = ({ getUserInfo, changePassword }) => {
-  const userName = getJWTCookie("name");
-  const userId = getJWTCookie("userId");
+  const userName = getJWTCookie('name');
+  const userId = getJWTCookie('userId');
   const [isEditInfo, setIsEditInfo] = useState(true);
 
   const userEdit = async () => {
@@ -17,48 +17,48 @@ const UserSettingView = ({ getUserInfo, changePassword }) => {
 
   const [userInfo, setUserInfo] = useState({
     user: {
-      userId: "kiki123",
-      password: "12345",
-      confirmPassword: "12345",
-      name: "kiki",
-      gender: "여",
+      userId: 'kiki123',
+      password: '12345',
+      confirmPassword: '12345',
+      name: 'kiki',
+      gender: '여',
       age: 23,
-      email: "kiki1234@konkuk.ac.kr",
-      studentId: "20202224",
-      externalId: "kiki123",
+      email: 'kiki1234@konkuk.ac.kr',
+      studentId: '20202224',
+      externalId: 'kiki123',
 
       detailProfile: {
         height: 157,
-        bodyType: "마름",
-        address: "용산구",
-        department: "공과대학",
-        character1: "시크",
-        character2: "이성적",
-        hobby1: "여행",
-        hobby2: "헬스",
-        mbti: "INTJ",
-        smoke: "종종",
-        drink: "종종",
-        hobby1: "복싱",
-        hobby2: "축구",
-        drink: "종종",
-        smoke: "흡연 안 함",
-        firstPriority: "취미",
-        secondPriority: "체형",
-        thirdPriority: "나이",
+        bodyType: '마름',
+        address: '용산구',
+        department: '공과대학',
+        character1: '시크',
+        character2: '이성적',
+        hobby1: '여행',
+        hobby2: '헬스',
+        mbti: 'INTJ',
+        smoke: '종종',
+        drink: '종종',
+        hobby1: '복싱',
+        hobby2: '축구',
+        drink: '종종',
+        smoke: '흡연 안 함',
+        firstPriority: '취미',
+        secondPriority: '체형',
+        thirdPriority: '나이',
       },
       idealTypeProfile: {
-        idealAge: "20대 중반",
-        idealHeight: "175이상 175미만",
-        idealBodyType: "슬림",
-        idealDepartment: "경영대학",
-        idealCharacter1: "다정",
-        idealCharacter2: "이성적",
-        idealMbti: "ENFP",
-        idealHobby1: "등산",
-        idealHobby2: "야구",
-        idealDrink: "종종",
-        idealSmoke: "흡연 안 함",
+        idealAge: '20대 중반',
+        idealHeight: '175이상 175미만',
+        idealBodyType: '슬림',
+        idealDepartment: '경영대학',
+        idealCharacter1: '다정',
+        idealCharacter2: '이성적',
+        idealMbti: 'ENFP',
+        idealHobby1: '등산',
+        idealHobby2: '야구',
+        idealDrink: '종종',
+        idealSmoke: '흡연 안 함',
       },
     },
   });
@@ -66,7 +66,7 @@ const UserSettingView = ({ getUserInfo, changePassword }) => {
   return (
     <UserSettingLayout>
       <UserSettingContainer>
-        <MyPageSidemenuContanier currentMenu="UserSetting" />
+        <MyPageSidemenuContainer currentMenu="UserSetting" />
         <UserSettingWrapper>
           <UserinfoTitle>기본 정보</UserinfoTitle>
           <UserinfoBox>
@@ -89,9 +89,9 @@ const UserSettingView = ({ getUserInfo, changePassword }) => {
                   <UserOtherInfo>
                     <UserInfoData>{`성별 : ${userInfo.user.gender}`}</UserInfoData>
                     <UserInfoData>{`나이 : ${userInfo.user.age}`}</UserInfoData>
-                    <UserInfoData>{`학번 : ${userInfo.user.studentId}`}</UserInfoData>
-                    <UserInfoData>{`카카오Id : ${userInfo.user.externalId}`}</UserInfoData>
                     <UserInfoData>{`email : ${userInfo.user.email}`}</UserInfoData>
+                    <UserInfoData>{`학번 : ${userInfo.user.studentId}`}</UserInfoData>
+                    <UserInfoData>{`카카오톡 Id : ${userInfo.user.externalId}`}</UserInfoData>
                   </UserOtherInfo>
                 )}
               </Userinfo>
@@ -118,14 +118,14 @@ const UserSettingView = ({ getUserInfo, changePassword }) => {
 export default UserSettingView;
 
 const commonTextStyle = {
-  width: "200px",
-  height: "20px",
-  fontFamily: "Noto Sans KR",
-  fontStyle: "normal",
-  fontWeight: "700",
-  fontSize: "14px",
-  lineHeight: "20px",
-  color: "#5c5c5c",
+  width: '250px',
+  height: '20px',
+  fontFamily: 'Noto Sans KR',
+  fontStyle: 'normal',
+  fontWeight: '700',
+  fontSize: '14px',
+  lineHeight: '20px',
+  color: '#5c5c5c',
 };
 
 const UserSettingLayout = styled.div`
@@ -160,7 +160,7 @@ const UserinfoTitle = styled.div`
   position: relative;
   width: 110px;
   height: 35px;
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
@@ -227,7 +227,7 @@ const UserNickname = styled.div`
   position: relative;
   width: fit-content;
   height: 30px;
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
@@ -238,9 +238,9 @@ const UserNickname = styled.div`
 
 const UserinfoEditBtn = styled.button`
   position: relative;
-  width: 70px;
+  width: 80px;
   height: 30px;
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
@@ -266,10 +266,10 @@ const UserInfoData = styled.div`
 const UserIdTitle = styled.div`
   position: relative;
 
-  width: 45px;
+  width: 60px;
   height: 20px;
 
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
@@ -282,7 +282,7 @@ const UserId = styled.div`
   position: relative;
   width: fit-content;
   height: 23px;
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -294,7 +294,7 @@ const UserPassword = styled.div`
   position: relative;
   width: 100px;
   height: 35px;
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
@@ -350,7 +350,7 @@ const UserPasswordEditBtn = styled.button`
   position: relative;
   width: 130px;
   height: 35px;
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 700;
   font-size: 14px;

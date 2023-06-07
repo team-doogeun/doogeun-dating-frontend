@@ -1,27 +1,32 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import MypageSidemenuView from "./MyPageSidemenuView";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getJWTCookie } from '../../../Api/loginApi';
+import MypageSidemenuView from './MyPageSidemenuView';
 
-const MypageSidemenuContanier = (props) => {
+const MypageSidemenuContainer = (props) => {
   const navigate = useNavigate();
+  const userId = getJWTCookie('userId');
 
   const onUserSettingClick = () => {
-    navigate("/my-page");
+    navigate('/my-page');
   };
-  const onMyPostsClick = () => {
-    navigate("/mypage/my-posts");
+
+  const onBlindDateSetting = () => {
+    navigate('/my-page/blindDate');
   };
-  const onScrapClick = () => {
-    navigate("/mypage/my-scrap");
+
+  const onMeetingSetting = () => {
+    navigate('/my-page/meeting');
   };
+
   return (
     <MypageSidemenuView
       currentMenu={props.currentMenu}
       onUserSettingClick={onUserSettingClick}
-      onMyPostsClick={onMyPostsClick}
-      onScrapClick={onScrapClick}
+      onMeetingSetting={onMeetingSetting}
+      onBlindDateSetting={onBlindDateSetting}
     />
   );
 };
 
-export default MypageSidemenuContanier;
+export default MypageSidemenuContainer;
