@@ -1,15 +1,15 @@
-import { useState, React, useHistory } from "react";
-import styled from "styled-components";
+import { useState, React, useHistory } from 'react';
+import styled from 'styled-components';
 
-const AccordianMenu = () => {
+const SidemenuAccordian = () => {
   const MENU_LIST = [
     {
-      title: "My 소개팅",
-      list: ["내가 두근한 상대", "나를 두근한 상대", "매칭 성공"],
+      title: 'My 소개팅',
+      list: ['내가 두근한 상대', '나를 두근한 상대', '매칭'],
     },
     {
-      title: "My 미팅",
-      list: ["내가 만든 미팅방", "내가 입장한 미팅방", "시작한 미팅방"],
+      title: 'My 미팅',
+      list: ['내가 만든 미팅방', '내가 입장한 미팅방', '시작한 미팅방'],
     },
   ];
 
@@ -22,7 +22,7 @@ const AccordianMenu = () => {
       </TitleWrapper>
       <Ul>
         {MENU_LIST.map((item, idx) => {
-          const active = idx === activeIndex ? "active" : "";
+          const active = idx === activeIndex ? 'active' : '';
 
           return (
             // 1단 메뉴 부분
@@ -44,11 +44,11 @@ const AccordianMenu = () => {
 
 const ListItem = ({
   title,
+  idx,
   list,
   active,
   activeIndex,
   setActiveIndex,
-  idx,
 }) => {
   const history = useHistory();
   const [clickedIdx, setClickedIdx] = useState();
@@ -58,18 +58,18 @@ const ListItem = ({
   const handleClick = () => {
     setActiveIndex(idx);
     setClickedIdx(null);
-    history.push(`/${title}`);
+    //history.push(`/${title}`);
   };
 
   // 2단 메뉴 클릭 이벤트 처리 함수
   const handleLink = (e, idx) => {
     setClickedIdx(idx);
-    history.push({
-      pathname: `/${title}`,
-      state: {
-        clicked: idx,
-      },
-    });
+    // history.push({
+    //   pathname: `/title`,
+    //   state: {
+    //     clicked: idx,
+    //   },
+    // });
   };
 
   return (
@@ -83,11 +83,11 @@ const ListItem = ({
           </IconWrapper>
           <Menu>{title}</Menu>
         </FirstMenu>
-        <SecondMenu className={idx === activeIndex ? "" : "closed"}>
+        <SecondMenu className={idx === activeIndex ? '' : 'closed'}>
           {list?.map((menu, idx) => (
             <li
               onClick={(e) => handleLink(e, idx)}
-              className={clickedIdx === idx ? "strong" : ""}
+              className={clickedIdx === idx ? 'strong' : ''}
             >
               {menu}
             </li>
@@ -98,29 +98,21 @@ const ListItem = ({
   );
 };
 
-const Nav = styled.nav`
-  cursor: pointer;
-  position: relative;
+const Nav = styled.div`
   width: 150px;
   height: 23px;
 
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
-  line-height: 23px;
-  text-align: center;
-
-  color: #5c5c5c;
-  :hover {
-    color: #2e55e7;
-  }
 `;
+
 const TitleWrapper = styled.div`
   width: 150px;
   height: 23px;
 
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -130,7 +122,7 @@ const Title = styled.div`
   width: 150px;
   height: 23px;
 
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -139,7 +131,7 @@ const Ul = styled.ul`
   width: 150px;
   height: 23px;
 
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -149,7 +141,7 @@ const Li = styled.li`
   width: 150px;
   height: 23px;
 
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -159,7 +151,7 @@ const AccodianWrapper = styled.div`
   width: 150px;
   height: 23px;
 
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -169,7 +161,7 @@ const FirstMenu = styled.div`
   width: 150px;
   height: 23px;
 
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -179,7 +171,7 @@ const Menu = styled.div`
   width: 150px;
   height: 23px;
 
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -189,7 +181,7 @@ const SecondMenu = styled.div`
   width: 150px;
   height: 23px;
 
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -198,7 +190,7 @@ const IconWrapper = styled.div`
   width: 150px;
   height: 23px;
 
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -208,8 +200,10 @@ const RiDashboardLine = styled.div`
   width: 150px;
   height: 23px;
 
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
 `;
+
+export default SidemenuAccordian;
