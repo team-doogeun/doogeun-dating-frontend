@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const RoomDataView = ({ roomData, isHost, hostStart }) => {
+const RoomDataView = ({ roomData, isHost, hostStart, deleteRoom }) => {
   return (
     <>
       <RoomDataWrapper>
@@ -25,6 +25,7 @@ const RoomDataView = ({ roomData, isHost, hostStart }) => {
         {isHost && (
           <BtnContainer>
             <StartBtn onClick={hostStart(roomData.id)}>시작</StartBtn>
+            <EndBtn onClick={deleteRoom(roomData.id)}>미팅방 삭제하기</EndBtn>
           </BtnContainer>
         )}
       </RoomDataWrapper>
@@ -37,6 +38,24 @@ const BtnContainer = styled.div`
 `;
 
 const StartBtn = styled.button`
+  border: 1px solid #ff4572;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  width: 80px;
+  color: white;
+  background: transparent;
+  padding: 0.3rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  background-color: #ff4572;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
+const EndBtn = styled.button`
   border: 1px solid #ff4572;
   border-radius: 6px;
   font-weight: 700;

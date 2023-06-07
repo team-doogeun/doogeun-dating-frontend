@@ -12,7 +12,10 @@ const MeetingPageSelectContainer = () => {
   // 근데 데이터가 너무 많아서 fetchMeetings의 실행시간이 5초보다 길면 5초 이후에 실행된다
   // 추후에 수정가능
   useEffect(() => {
-    const intervalId = setInterval(loadMeetings, 5000); // 5초마다 데이터 요청
+    // 처음엔 한번 데이터 로드
+    loadMeetings();
+
+    const intervalId = setInterval(loadMeetings, 10000); // 10초마다 데이터 요청
 
     return () => {
       clearInterval(intervalId); // 컴포넌트 언마운트 시 폴링 중지
@@ -23,9 +26,11 @@ const MeetingPageSelectContainer = () => {
   // 미팅방 목록 생성
   const loadMeetings = async () => {
     try {
-      const response = await axios.get(`group/info`).then((res) => {
-        return res;
-      });
+      const response = await axios
+        .get(`http://localhost:8080/group`)
+        .then((res) => {
+          return res;
+        });
       const meetingData = response.data;
       setMeetings(meetingData);
     } catch (error) {

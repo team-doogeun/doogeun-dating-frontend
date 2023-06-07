@@ -27,12 +27,25 @@ const RoomDataContainer = ({ roomData }) => {
       });
   };
 
+  const deleteRoom = async (roomId) => {
+    await axios
+      .post(`/group/${roomId}/delete`, {})
+      .then((res) => {
+        console.log("방 삭제함");
+        return res;
+      })
+      .catch((error) => {
+        console.log("방 삭제 실패 " + error);
+      });
+  };
+
   return (
     <>
       <RoomDataView
         roomData={roomData}
         isHost={isHost}
         hostStart={hostStart}
+        deleteRoom={deleteRoom}
       ></RoomDataView>
     </>
   );

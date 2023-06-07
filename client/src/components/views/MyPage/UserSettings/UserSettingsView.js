@@ -83,7 +83,7 @@ const UserSettingView = ({ getUserInfo, changePassword }) => {
                     정보 수정
                   </UserinfoEditBtn>
                 </UserNicknameWrapper>
-                <UserIdTitle>아이디</UserIdTitle>
+                <UserIdTitle>아이디 : </UserIdTitle>
                 <UserId>{userId}</UserId>
                 {isEditInfo && userInfo && (
                   <UserOtherInfo>
@@ -260,6 +260,7 @@ const UserOtherInfo = styled.div`
 
 const UserInfoData = styled.div`
   ${commonTextStyle}
+  margin-top: 8px;
 `;
 
 const UserIdTitle = styled.div`

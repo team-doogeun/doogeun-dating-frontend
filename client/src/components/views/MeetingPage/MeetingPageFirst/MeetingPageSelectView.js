@@ -58,8 +58,6 @@ const MeetingPageSelectView = ({
       groupBlindIntroduction: roomIntro,
     };
 
-    console.log(newRoom);
-
     try {
       const response = await axios
         .post(`http://localhost:8080/group/${userId}/new`, newRoom, {
@@ -76,7 +74,7 @@ const MeetingPageSelectView = ({
         });
 
       const newMeetingRoom = response.data;
-      setMeetingRooms([...meetingRooms, newMeetingRoom]);
+      setMeetingRooms([...meetingRooms, newMeetingRoom].reverse());
     } catch (error) {
       console.error("Error adding meeting room:", error);
     }
@@ -133,7 +131,7 @@ const MeetingPageSelectView = ({
         <ContentWrapper>
           <RoomContainer>
             {meetingRooms.length === 0 ? (
-              <RoomCard />
+              <></>
             ) : (
               meetingRooms.map((room) => (
                 <RoomCard key={room.id}>
