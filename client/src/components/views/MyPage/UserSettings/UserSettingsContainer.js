@@ -13,7 +13,7 @@ const UserSettingContainer = () => {
 
   const getUserInfo = async () => {
     await axios
-      .get(`http://localhost:8080/${userId}/update`, userId)
+      .get(`http://localhost:8080/${userId}/profile`, userId)
       .then((res) => {
         console.log(res);
         return res;

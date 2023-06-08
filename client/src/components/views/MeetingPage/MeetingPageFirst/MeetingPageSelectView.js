@@ -134,7 +134,7 @@ const MeetingPageSelectView = ({
               <></>
             ) : (
               meetingRooms.map((room) => (
-                <RoomCard key={room.id}>
+                <RoomCard key={room.roomId}>
                   <RoomCapacity>{`${room.capacityMale}: ${room.capacityFemale}`}</RoomCapacity>
                   <RoomTitle>{room.title}</RoomTitle>
                   <CheckAndRegisterBlock>

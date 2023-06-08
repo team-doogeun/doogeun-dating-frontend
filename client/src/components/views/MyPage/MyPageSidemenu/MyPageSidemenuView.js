@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 const MypageSidemenuView = ({
   currentMenu,
@@ -27,68 +27,94 @@ const MypageSidemenuView = ({
       <SidemenuContensContainer>
         <SidemenuContentWrapper
           backgroundColor={
-            currentMenu === 'UserSetting'
-              ? 'rgba(255, 37, 89, 0.1)'
-              : 'transparent'
+            currentMenu === "UserSetting"
+              ? "rgba(255, 37, 89, 0.1)"
+              : "transparent"
           }
           onMouseEnter={() => setIsUserSettingHovered(true)}
           onMouseLeave={() => setIsUserSettingHovered(false)}
           onClick={() => onUserSettingClick()}
         >
           <Sidemenu
-            fontColor={currentMenu === 'UserSetting' ? '#ff2559' : '#737373'}
+            fontColor={currentMenu === "UserSetting" ? "#ff2559" : "#737373"}
           >
             내 정보
           </Sidemenu>
         </SidemenuContentWrapper>
         <SidemenuContentWrapper
           backgroundColor={
-            currentMenu === 'MyPost' ? 'rgba(255, 37, 89, 0.1)' : 'transparent'
+            currentMenu === "MyPost" ? "rgba(255, 37, 89, 0.1)" : "transparent"
           }
           onMouseEnter={() => setIsMyPostsHovered(true)}
           onMouseLeave={() => setIsMyPostsHovered(false)}
           onClick={() => setBlindDateAccordian(!blindDateAccordian)}
         >
           <Sidemenu
-            fontColor={currentMenu === 'MyPost' ? '#ff2559' : '#737373'}
+            fontColor={currentMenu === "MyPost" ? "#ff2559" : "#737373"}
           >
             소개팅
           </Sidemenu>
         </SidemenuContentWrapper>
         {blindDateAccordian && (
           <AccordianContent>
-            <ListItem onClick={() => onBlindDateSetting()}>
+            <ListItem
+              onClick={() => {
+                navigate("/my-page/blindDate/toLike");
+              }}
+            >
               내가 두근한 사람
             </ListItem>
-            <ListItem onClick={() => onBlindDateSetting()}>
+            <ListItem
+              onClick={() => {
+                navigate("/my-page/blindDate/fromLike");
+              }}
+            >
               나를 두근한 사람
             </ListItem>
-            <ListItem onClick={() => onBlindDateSetting()}>매칭</ListItem>
+            <ListItem
+              onClick={() => {
+                navigate("/my-page/blindDate/matches");
+              }}
+            >
+              매칭
+            </ListItem>
           </AccordianContent>
         )}
         <SidemenuContentWrapper
           backgroundColor={
-            currentMenu === 'MyScrap' ? 'rgba(255, 37, 89, 0.1)' : 'transparent'
+            currentMenu === "MyScrap" ? "rgba(255, 37, 89, 0.1)" : "transparent"
           }
           onMouseEnter={() => setIsMyScrapHovered(true)}
           onMouseLeave={() => setIsMyScrapHovered(false)}
           onClick={() => setMeetAccordian(!meetAccordian)}
         >
           <Sidemenu
-            fontColor={currentMenu === 'MyScrap' ? '#ff2559' : '#737373'}
+            fontColor={currentMenu === "MyScrap" ? "#ff2559" : "#737373"}
           >
             미팅
           </Sidemenu>
         </SidemenuContentWrapper>
         {meetAccordian && (
           <AccordianContent>
-            <ListItem onClick={() => onMeetingSetting()}>
+            <ListItem
+              onClick={() => {
+                navigate("/my-page/meeting/x");
+              }}
+            >
               내가 만든 미팅방
             </ListItem>
-            <ListItem onClick={() => onMeetingSetting()}>
+            <ListItem
+              onClick={() => {
+                navigate("/my-page/meeting/y");
+              }}
+            >
               내가 입장한 미팅방
             </ListItem>
-            <ListItem onClick={() => onMeetingSetting()}>
+            <ListItem
+              onClick={() => {
+                navigate("/my-page/meeting/z");
+              }}
+            >
               내가 시작한 미팅방
             </ListItem>
           </AccordianContent>
@@ -112,7 +138,7 @@ const SidemenuTitle = styled.div`
   position: relative;
   width: 180px;
   height: 46px;
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
   font-size: 28px;
@@ -142,9 +168,9 @@ const SidemenuContentWrapper = styled.div`
 
   :hover {
     background: ${(props) =>
-      props.backgroundColor === 'transparent'
-        ? 'rgba(255, 37, 89, 0.1)'
-        : 'rgba(255, 37, 89, 0.1)'};
+      props.backgroundColor === "transparent"
+        ? "rgba(255, 37, 89, 0.1)"
+        : "rgba(255, 37, 89, 0.1)"};
   }
 `;
 const Sidemenu = styled.div`
@@ -155,7 +181,7 @@ const Sidemenu = styled.div`
   width: 250px;
   height: 46px;
 
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -190,7 +216,7 @@ const ListItem = styled.div`
   height: 46px;
   border-radius: 8px;
 
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
