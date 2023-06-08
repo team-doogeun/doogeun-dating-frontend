@@ -8,24 +8,32 @@ const RoomDataView = ({ roomData, isHost, hostStart, deleteRoom }) => {
         <RoomTitle>{roomData.title}</RoomTitle>
         <RoomIntro>소갯말 : {roomData.groupBlindIntroduction}</RoomIntro>
         <RoomPersonNum>
-          {`현재인원) 남 ${roomData.maleNum} : 여 ${roomData.femaleNum}`}
+          {`현재인원) 남 ${roomData.presentMale} : 여 ${roomData.presentFemale}`}
         </RoomPersonNum>
         <UserDataWrapper>
-          <MaleCol>
-            <div>{`${roomData.Male1Department}(${roomData.Male1Age})`}</div>
-            <div>{`${roomData.Male2Department}(${roomData.Male2Age})`}</div>
-            <div>{`${roomData.Male3Department}(${roomData.Male3Age})`}</div>
-          </MaleCol>
-          <FeMaleCol>
-            <div>{`${roomData.Female1Department}(${roomData.Female1Age})`}</div>
-            <div>{`${roomData.Female2Department}(${roomData.Female2Age})`}</div>
-            <div>{`${roomData.Female3Department}(${roomData.Female3Age})`}</div>
-          </FeMaleCol>
+          {roomData.members.map((member, index) => {
+            if (member.gender === "Male") {
+              return (
+                <MaleCol key={index}>
+                  <div>{`${member.department} : (${member.age})`}</div>
+                </MaleCol>
+              );
+            } else if (member.gender === "Female") {
+              return (
+                <FemaleCol key={index}>
+                  {`${member.department} : (${member.age})`}
+                </FemaleCol>
+              );
+            }
+            return null; // 다른 성별일 경우 렌더링하지 않음
+          })}
         </UserDataWrapper>
         {isHost && (
           <BtnContainer>
-            <StartBtn onClick={hostStart(roomData.id)}>시작</StartBtn>
-            <EndBtn onClick={deleteRoom(roomData.id)}>미팅방 삭제하기</EndBtn>
+            <StartBtn onClick={hostStart(roomData.roomId)}>시작</StartBtn>
+            <EndBtn onClick={deleteRoom(roomData.roomId)}>
+              미팅방 삭제하기
+            </EndBtn>
           </BtnContainer>
         )}
       </RoomDataWrapper>
@@ -111,7 +119,7 @@ const MaleCol = styled.div`
   gap: 40px;
   padding-right: 20px;
 `;
-const FeMaleCol = styled.div`
+const FemaleCol = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   gap: 40px;
