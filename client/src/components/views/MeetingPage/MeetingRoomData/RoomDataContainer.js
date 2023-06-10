@@ -4,6 +4,8 @@ import axios from "axios";
 import { getJWTCookie } from "../../../Api/loginApi";
 
 const RoomDataContainer = ({ roomData }) => {
+  const authToken = getJWTCookie("jwtAccessToken");
+
   const [isHost, setIsHost] = useState(true);
   const userId = getJWTCookie("userId");
 
@@ -17,7 +19,9 @@ const RoomDataContainer = ({ roomData }) => {
   // userId
   const hostStart = async (roomId) => {
     await axios
-      .post(`/group/${roomId}/achieve`, {})
+      .post(`/group/${roomId}/achieve`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      })
       .then((res) => {
         console.log(`유저들의 카카오톡 아이디 : ${res.userId}`);
         return res;
@@ -29,7 +33,9 @@ const RoomDataContainer = ({ roomData }) => {
 
   const deleteRoom = async (roomId) => {
     await axios
-      .post(`/group/${roomId}/delete`, {})
+      .post(`/group/${roomId}/delete`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      })
       .then((res) => {
         console.log("방 삭제함");
         return res;

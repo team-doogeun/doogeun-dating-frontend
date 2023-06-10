@@ -13,6 +13,7 @@ const MeetingPageSelectView = ({
   registerOut,
   checkRoomData,
 }) => {
+  const userId = getJWTCookie("userId");
   // meetingRoom Control
   const [meetingRooms, setMeetingRooms] = useState([]);
   const [createRoom, setCreateRoom] = useState(false);
@@ -149,7 +150,7 @@ const MeetingPageSelectView = ({
                       >
                         {/* roomData 안엔 post쳐서 res 받아온 데이터가 들어가야함 -> 함수 필요*/}
                         <RoomDataContainer
-                          roomData={checkRoomData(room.id)}
+                          roomData={checkRoomData(room.roomId)}
                         ></RoomDataContainer>
                       </Modal>
                     )}
@@ -158,7 +159,7 @@ const MeetingPageSelectView = ({
                       {isUserIn ? (
                         <RoomRegisterOutBtn
                           onClick={() => {
-                            registerOut();
+                            registerOut(room.roomId, room.title);
                           }}
                         >
                           나가기
@@ -166,7 +167,7 @@ const MeetingPageSelectView = ({
                       ) : (
                         <RoomRegisterInBtn
                           onClick={() => {
-                            registerIn();
+                            registerIn(room.roomId);
                           }}
                         >
                           참여
@@ -181,7 +182,7 @@ const MeetingPageSelectView = ({
               <RoomCard />
             ) : (
               meetingsToShow.map((room) => (
-                <RoomCard key={room.id}>
+                <RoomCard key={room.roomId}>
                   <RoomCapacity>{`${room.capacityMale}: ${room.capacityFemale}`}</RoomCapacity>
                   <RoomTitle>{room.title}</RoomTitle>
                   <CheckAndRegisterBlock>
@@ -196,7 +197,7 @@ const MeetingPageSelectView = ({
                       >
                         {/* roomData 안엔 post쳐서 res 받아온 데이터가 들어가야함 -> 함수 필요*/}
                         <RoomDataContainer
-                          roomData={checkRoomData(room.id)}
+                          roomData={checkRoomData(room.roomId)}
                         ></RoomDataContainer>
                       </Modal>
                     )}
@@ -205,7 +206,7 @@ const MeetingPageSelectView = ({
                       {isUserIn ? (
                         <RoomRegisterOutBtn
                           onClick={() => {
-                            registerOut();
+                            registerOut(room.roomId, room.title);
                           }}
                         >
                           나가기
@@ -213,7 +214,7 @@ const MeetingPageSelectView = ({
                       ) : (
                         <RoomRegisterInBtn
                           onClick={() => {
-                            registerIn();
+                            registerIn(room.roomId);
                           }}
                         >
                           참여

@@ -4,6 +4,8 @@ import axios from "axios";
 import { getJWTCookie } from "../../../Api/loginApi";
 
 const MeetingPageSelectContainer = () => {
+  const authToken = getJWTCookie("jwtAccessToken");
+
   const [meetings, setMeetings] = useState([]);
   const [isUserIn, setIsUserIn] = useState(false);
 
@@ -41,7 +43,9 @@ const MeetingPageSelectContainer = () => {
   // 입장 버튼
   const registerIn = async (roomId) => {
     await axios
-      .post(`/group/${roomId}`)
+      .post(`http://localhost:8080/group/${roomId}`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      })
       .then((res) => {
         console.log(res);
       })
@@ -51,40 +55,49 @@ const MeetingPageSelectContainer = () => {
   };
 
   // 나가기 기능
-  const registerOut = async (roomId, title, userId) => {
+  const registerOut = async (roomId, title) => {
+    const userId = getJWTCookie("userId");
     const userData = await checkRoomData(roomId);
     const userIn = userData.userId.includes(userId);
     setIsUserIn(userIn);
 
-    // 유저가 있으면 방 나가기 가능
-    if (isUserIn === true) {
-      await axios
-        .get(`/group/${roomId}/exit`, {
+    await axios
+      .get(
+        `http://localhost:8080/group/${roomId}/exit`,
+        {
           title: title,
           userId: userId,
-        })
-        .then(() => {
-          console.log("방 나가기 성공");
-        })
-        .catch((error) => {
-          console.log("방 나가기 실패" + error);
-        });
-    } else {
-      alert(`지금 ${userId}님은 이 방에 존재하지 않습니다.`);
-    }
+        },
+        {
+          headers: { Authorization: `Bearer ${authToken}` },
+        }
+      )
+      .then(() => {
+        console.log("방 나가기 성공");
+      })
+      .catch((error) => {
+        console.log("방 나가기 실패" + error);
+      });
   };
 
   // 상세정보 확인에서 방 정보 확인
   const checkRoomData = async (roomId) => {
     const userId = getJWTCookie("userId");
+
     const response = await axios
-      .get(`group/${roomId}/info`, {
-        userId: userId,
-        roomId: roomId,
-      })
+      .get(
+        `http://localhost:8080/group/${roomId}/info`,
+        {
+          userId: userId,
+          roomId: roomId,
+        },
+        {
+          headers: { Authorization: `Bearer ${authToken}` },
+        }
+      )
       .then((response) => {
-        console.log(response);
-        return response;
+        console.log(response.data);
+        return response.data;
       })
       .catch((err) => {
         console.log(err + "미팅방 정보 요청 안됨");
