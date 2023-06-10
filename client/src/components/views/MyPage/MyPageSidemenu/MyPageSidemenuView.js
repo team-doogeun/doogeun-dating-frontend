@@ -43,14 +43,16 @@ const MypageSidemenuView = ({
         </SidemenuContentWrapper>
         <SidemenuContentWrapper
           backgroundColor={
-            currentMenu === "MyPost" ? "rgba(255, 37, 89, 0.1)" : "transparent"
+            currentMenu === "MyBlindDate"
+              ? "rgba(255, 37, 89, 0.1)"
+              : "transparent"
           }
           onMouseEnter={() => setIsMyPostsHovered(true)}
           onMouseLeave={() => setIsMyPostsHovered(false)}
           onClick={() => setBlindDateAccordian(!blindDateAccordian)}
         >
           <Sidemenu
-            fontColor={currentMenu === "MyPost" ? "#ff2559" : "#737373"}
+            fontColor={currentMenu === "MyBlindDate" ? "#ff2559" : "#737373"}
           >
             소개팅
           </Sidemenu>
@@ -82,14 +84,16 @@ const MypageSidemenuView = ({
         )}
         <SidemenuContentWrapper
           backgroundColor={
-            currentMenu === "MyScrap" ? "rgba(255, 37, 89, 0.1)" : "transparent"
+            currentMenu === "MyMeeting"
+              ? "rgba(255, 37, 89, 0.1)"
+              : "transparent"
           }
           onMouseEnter={() => setIsMyScrapHovered(true)}
           onMouseLeave={() => setIsMyScrapHovered(false)}
           onClick={() => setMeetAccordian(!meetAccordian)}
         >
           <Sidemenu
-            fontColor={currentMenu === "MyScrap" ? "#ff2559" : "#737373"}
+            fontColor={currentMenu === "MyMeeting" ? "#ff2559" : "#737373"}
           >
             미팅
           </Sidemenu>
