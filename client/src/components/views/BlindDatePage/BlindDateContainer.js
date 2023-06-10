@@ -7,11 +7,19 @@ const BlindDateContainer = () => {
   // 좋아요 누르기
   const buttonLike = async (targetUserId) => {
     const userId = getJWTCookie("userId");
+    const authToken = getJWTCookie("jwtAccessToken");
+
     await axios
-      .post("http://localhost:8080/blindDate/like", {
-        userId: userId,
-        targetUserId: targetUserId,
-      })
+      .post(
+        "http://localhost:8080/blindDate/like",
+        {
+          userId: userId,
+          targetUserId: targetUserId,
+        },
+        {
+          headers: { Authorization: `Bearer ${authToken}` },
+        }
+      )
       .then(() => {
         console.log(userId + "가 " + targetUserId + "에게 두근을 보냈습니다");
       });
