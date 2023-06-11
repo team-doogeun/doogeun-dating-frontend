@@ -150,9 +150,7 @@ const UserBlindDateMeetingView = () => {
       } else if (detailCategory === 'Matches') {
         const userData = await getBlindDateMatches();
         setResUserData(userData);
-      }
-      // 아래는 미팅파트 / 수정필요함
-      else if (detailCategory === 'my-rooms') {
+      } else if (detailCategory === 'my-rooms') {
         const userData = await getMeetingHost();
         setResUserData(userData);
       } else if (detailCategory === 'entering') {

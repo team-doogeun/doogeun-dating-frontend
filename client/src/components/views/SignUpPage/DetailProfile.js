@@ -165,7 +165,7 @@ function DetailProfile() {
       },
       idealTypeProfile: {
         idealAge: idealAge,
-        idealHeight: idealHeight,
+        idealHeight: Number(idealHeight),
         idealBodyType: idealBodyType,
         idealDepartment: idealDepartment,
         idealCharacter1: idealCharacter1,
