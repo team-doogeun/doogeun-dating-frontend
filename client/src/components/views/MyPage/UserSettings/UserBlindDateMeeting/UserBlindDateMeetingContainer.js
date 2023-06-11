@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import styled from "styled-components";
-import MypageSidemenuContainer from "../../MyPageSidemenu/MyPageSidemenuContainer";
 import { getJWTCookie } from "../../../../Api/loginApi";
 import UserBlindDateMeetingView from "./UserBlindDateMeetingView";
 
@@ -11,6 +8,7 @@ const UserBlindDateMeetingContainer = () => {
   const userId = getJWTCookie("userId");
   const authToken = getJWTCookie("jwtAccessToken");
 
+  // 내가 호감 보낸 사람
   const getBlindDateToLike = async () => {
     const response = await axios
       .get(`http://localhost:8080/mypage/${userId}/blindDate/toLike`, {
@@ -27,6 +25,7 @@ const UserBlindDateMeetingContainer = () => {
     return response;
   };
 
+  // 내게 호감 보낸 사람
   const getBlindDatefromLike = async () => {
     const response = await axios
       .get(`http://localhost:8080/mypage/${userId}/blindDate/fromLike`, {
@@ -42,9 +41,10 @@ const UserBlindDateMeetingContainer = () => {
     return response;
   };
 
+  // 최종매치 유저
   const getBlindDateMatches = async () => {
-    await axios
-      .get(`http://localhost:8080/mypage/${userId}/blindDate/Matches`, {
+    const response = await axios
+      .get(`http://localhost:8080/mypage/${userId}/finalMatches`, {
         headers: { Authorization: `Bearer ${authToken}` },
       })
       .then((res) => {
@@ -53,45 +53,53 @@ const UserBlindDateMeetingContainer = () => {
       .catch((err) => {
         console.log("매칭 유저들 에러 :", err);
       });
+
+    return response;
   };
 
   const getMeetingHost = async () => {
-    await axios
-      .get(`http://localhost:8080/mypage/${userId}/meeting/x`, {
+    const response = await axios
+      .get(`http://localhost:8080/mypage/group/${userId}/my-rooms`, {
         headers: { Authorization: `Bearer ${authToken}` },
       })
       .then((res) => {
-        return res;
+        return res.data;
       })
       .catch((err) => {
         console.log("내가 호감표시한 유저들 에러 :", err);
       });
+
+    return response;
   };
 
   const getMeetingRegister = async () => {
-    await axios
-      .get(`http://localhost:8080/mypage/${userId}/meeting/y`, {
+    const response = await axios
+      .get(`http://localhost:8080/mypage/group/${userId}/entering`, {
         headers: { Authorization: `Bearer ${authToken}` },
       })
       .then((res) => {
-        return res;
+        return res.data;
       })
       .catch((err) => {
         console.log("내게 호감표시한 유저들 에러 :", err);
       });
+
+    return response;
   };
 
   const getMeetingHostStart = async () => {
-    await axios
-      .get(`http://localhost:8080/mypage/${userId}/meeting/z`, {
+    const response = await axios
+      .get(`http://localhost:8080/mypage/group/${userId}/achieve`, {
         headers: { Authorization: `Bearer ${authToken}` },
       })
       .then((res) => {
-        return res;
+        return res.data;
       })
       .catch((err) => {
         console.log("매칭 유저들 에러 :", err);
       });
+
+    return response;
   };
 
   return (

@@ -4,8 +4,6 @@ import axios from "axios";
 import { getJWTCookie } from "../../../Api/loginApi";
 
 const MeetingPageSelectContainer = () => {
-  const authToken = getJWTCookie("jwtAccessToken");
-
   const [meetings, setMeetings] = useState([]);
   const [isUserIn, setIsUserIn] = useState(false);
 
@@ -42,6 +40,7 @@ const MeetingPageSelectContainer = () => {
 
   // 입장 버튼
   const registerIn = async (roomId) => {
+    const authToken = getJWTCookie("jwtAccessToken");
     await axios
       .post(`http://localhost:8080/group/${roomId}`, {
         headers: { Authorization: `Bearer ${authToken}` },
@@ -56,6 +55,7 @@ const MeetingPageSelectContainer = () => {
 
   // 나가기 기능
   const registerOut = async (roomId, title) => {
+    const authToken = getJWTCookie("jwtAccessToken");
     const userId = getJWTCookie("userId");
     const userData = await checkRoomData(roomId);
     const userIn = userData.userId.includes(userId);
@@ -82,28 +82,20 @@ const MeetingPageSelectContainer = () => {
 
   // 상세정보 확인에서 방 정보 확인
   const checkRoomData = async (roomId) => {
-    const userId = getJWTCookie("userId");
+    const authToken = getJWTCookie("jwtAccessToken");
 
     const response = await axios
-      .get(
-        `http://localhost:8080/group/${roomId}/info`,
-        {
-          userId: userId,
-          roomId: roomId,
-        },
-        {
-          headers: { Authorization: `Bearer ${authToken}` },
-        }
-      )
+      .get(`http://localhost:8080/group/${roomId}/info`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      })
       .then((response) => {
-        console.log(response.data);
         return response.data;
       })
       .catch((err) => {
         console.log(err + "미팅방 정보 요청 안됨");
       });
 
-    return response.data;
+    return response;
   };
 
   return (

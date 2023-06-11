@@ -12,6 +12,8 @@ import banner1 from "../../../Img/banner1.png";
 import banner2 from "../../../Img/banner2.png";
 import banner3 from "../../../Img/banner3.png";
 
+import RoomDataView from "../MeetingPage/MeetingRoomData/RoomDataView";
+
 const GlobalStyle = createGlobalStyle`
 
   .carousel .control-dots .dot {
@@ -277,7 +279,6 @@ const HomePage = () => {
             </SectionTwoLeftContainer>
           </SectionTwo>
         </SectionContainer>
-        {/* <SectionThree id="section3" /> */}
         <ScrollToTop>
           <FaArrowCircleUp
             onClick={scrollToTop}

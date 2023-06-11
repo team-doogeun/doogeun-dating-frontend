@@ -5,7 +5,6 @@ import { getJWTCookie } from "../../../Api/loginApi";
 
 const RoomDataContainer = ({ roomData }) => {
   const authToken = getJWTCookie("jwtAccessToken");
-
   const [isHost, setIsHost] = useState(true);
   const userId = getJWTCookie("userId");
 
@@ -19,7 +18,7 @@ const RoomDataContainer = ({ roomData }) => {
   // userId
   const hostStart = async (roomId) => {
     await axios
-      .post(`/group/${roomId}/achieve`, {
+      .post(`http://localhost:8080/group/${roomId}/achieve`, {
         headers: { Authorization: `Bearer ${authToken}` },
       })
       .then((res) => {
@@ -33,7 +32,7 @@ const RoomDataContainer = ({ roomData }) => {
 
   const deleteRoom = async (roomId) => {
     await axios
-      .post(`/group/${roomId}/delete`, {
+      .post(`http://localhost:8080/group/${roomId}/delete`, {
         headers: { Authorization: `Bearer ${authToken}` },
       })
       .then((res) => {

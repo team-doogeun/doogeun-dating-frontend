@@ -49,9 +49,9 @@ function App() {
           <Route
             path="/group"
             element={
-              <PrivateRoute>
-                <MeetingPageSelectContainer />
-              </PrivateRoute>
+              //<PrivateRoute>
+              <MeetingPageSelectContainer />
+              // </PrivateRoute>
             }
           ></Route>
           <Route path="/myprofile" element={<MyProfile />}></Route>
@@ -82,15 +82,15 @@ function App() {
           />
           {/* 미팅방 */}
           <Route
-            path="/my-page/meeting/x"
+            path="/my-page/meeting/my-rooms"
             element={<UserBlindDateMeetingView />}
           />
           <Route
-            path="/my-page/meeting/y"
+            path="/my-page/meeting/entering"
             element={<UserBlindDateMeetingView />}
           />
           <Route
-            path="/my-page/meeting/z"
+            path="/my-page/meeting/achieve"
             element={<UserBlindDateMeetingView />}
           />
         </Routes>

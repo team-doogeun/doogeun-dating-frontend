@@ -102,24 +102,24 @@ const MypageSidemenuView = ({
           <AccordianContent>
             <ListItem
               onClick={() => {
-                navigate("/my-page/meeting/x");
+                navigate("/my-page/meeting/my-rooms");
               }}
             >
               내가 만든 미팅방
             </ListItem>
             <ListItem
               onClick={() => {
-                navigate("/my-page/meeting/y");
+                navigate("/my-page/meeting/entering");
               }}
             >
               내가 입장한 미팅방
             </ListItem>
             <ListItem
               onClick={() => {
-                navigate("/my-page/meeting/z");
+                navigate("/my-page/meeting/achieve");
               }}
             >
-              내가 시작한 미팅방
+              성사된 미팅방
             </ListItem>
           </AccordianContent>
         )}

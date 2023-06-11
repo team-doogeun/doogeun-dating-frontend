@@ -11,27 +11,47 @@ const RoomDataView = ({ roomData, isHost, hostStart, deleteRoom }) => {
           {`현재인원) 남 ${roomData.presentMale} : 여 ${roomData.presentFemale}`}
         </RoomPersonNum>
         <UserDataWrapper>
-          {roomData.members.map((member, index) => {
-            if (member.gender === "Male") {
-              return (
-                <MaleCol key={index}>
-                  <div>{`${member.department} : (${member.age})`}</div>
-                </MaleCol>
-              );
-            } else if (member.gender === "Female") {
-              return (
-                <FemaleCol key={index}>
-                  {`${member.department} : (${member.age})`}
-                </FemaleCol>
-              );
-            }
-            return null; // 다른 성별일 경우 렌더링하지 않음
-          })}
+          <MaleCol>
+            {roomData.members.map((member, index) => {
+              if (member.gender === "남") {
+                return (
+                  <div
+                    key={index}
+                  >{`${member.department} : (${member.age})`}</div>
+                );
+              } else {
+                return <div key={index}>현재 없음</div>;
+              }
+            })}
+          </MaleCol>
+          <FemaleCol>
+            {roomData.members.map((member, index) => {
+              if (member.gender === "여") {
+                return (
+                  <div
+                    key={index}
+                  >{`${member.department} : (${member.age})`}</div>
+                );
+              } else {
+                return <div key={index}>현재 없음</div>;
+              }
+            })}
+          </FemaleCol>
         </UserDataWrapper>
         {isHost && (
           <BtnContainer>
-            <StartBtn onClick={hostStart(roomData.roomId)}>시작</StartBtn>
-            <EndBtn onClick={deleteRoom(roomData.roomId)}>
+            <StartBtn
+              onClick={() => {
+                hostStart(roomData.roomId);
+              }}
+            >
+              시작
+            </StartBtn>
+            <EndBtn
+              onClick={() => {
+                deleteRoom(roomData.roomId);
+              }}
+            >
               미팅방 삭제하기
             </EndBtn>
           </BtnContainer>
@@ -43,6 +63,11 @@ const RoomDataView = ({ roomData, isHost, hostStart, deleteRoom }) => {
 
 const BtnContainer = styled.div`
   margin-top: 40px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StartBtn = styled.button`
@@ -50,7 +75,7 @@ const StartBtn = styled.button`
   border-radius: 6px;
   font-weight: 700;
   font-size: 0.8rem;
-  width: 80px;
+  width: 150px;
   color: white;
   background: transparent;
   padding: 0.3rem 1rem;
@@ -68,13 +93,14 @@ const EndBtn = styled.button`
   border-radius: 6px;
   font-weight: 700;
   font-size: 0.8rem;
-  width: 80px;
+  width: 150px;
   color: white;
   background: transparent;
   padding: 0.3rem 1rem;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   background-color: #ff4572;
+  margin-top: 10px;
 
   &:hover {
     transform: scale(1.05);
@@ -93,8 +119,9 @@ const RoomTitle = styled.h2`
   background-color: #ff4572;
   border: 1px solid #ff4572;
   border-radius: 6px;
-  max-width: 60%;
+  max-width: 70%;
   color: white;
+  max-height: 40px;
 `;
 const RoomIntro = styled.div`
   margin: 0 auto;

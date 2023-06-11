@@ -13,15 +13,25 @@ const MeetingPageSelectView = ({
   registerOut,
   checkRoomData,
 }) => {
-  const userId = getJWTCookie("userId");
   // meetingRoom Control
-  const [meetingRooms, setMeetingRooms] = useState([]);
+  const [meetingRooms, setMeetingRooms] = useState([{ roomId: "123" }]);
   const [createRoom, setCreateRoom] = useState(false);
   const [roomTitle, setRoomTitle] = useState("");
   const [roomIntro, setRoomIntro] = useState("");
   const [roomSize, setRoomSize] = useState(null);
 
-  const [roomDataModal, setRoomDataModal] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [roomData, setRoomData] = useState({});
+
+  const setRoomDataModal = async (isOpen, roomId) => {
+    if (isOpen) {
+      const roomData = await checkRoomData(roomId);
+      setModalIsOpen(true);
+      setRoomData(roomData);
+    } else {
+      setModalIsOpen(false);
+    }
+  };
 
   // title, intro control
   const [titleMsg, setTitleMsg] = useState("");
@@ -139,18 +149,20 @@ const MeetingPageSelectView = ({
                   <RoomCapacity>{`${room.capacityMale}: ${room.capacityFemale}`}</RoomCapacity>
                   <RoomTitle>{room.title}</RoomTitle>
                   <CheckAndRegisterBlock>
-                    <CheckRoomData onClick={() => setRoomDataModal(true)}>
+                    <CheckRoomData
+                      onClick={() => setRoomDataModal(true, room.roomId)}
+                    >
                       상세정보 확인
                     </CheckRoomData>
-                    {roomDataModal && (
+                    {modalIsOpen && (
                       <Modal
                         CloseModal={() => {
-                          setRoomDataModal(!roomDataModal);
+                          setModalIsOpen(!modalIsOpen);
                         }}
                       >
                         {/* roomData 안엔 post쳐서 res 받아온 데이터가 들어가야함 -> 함수 필요*/}
                         <RoomDataContainer
-                          roomData={checkRoomData(room.roomId)}
+                          roomData={roomData}
                         ></RoomDataContainer>
                       </Modal>
                     )}
@@ -186,18 +198,20 @@ const MeetingPageSelectView = ({
                   <RoomCapacity>{`${room.capacityMale}: ${room.capacityFemale}`}</RoomCapacity>
                   <RoomTitle>{room.title}</RoomTitle>
                   <CheckAndRegisterBlock>
-                    <CheckRoomData onClick={() => setRoomDataModal(true)}>
+                    <CheckRoomData
+                      onClick={() => setRoomDataModal(true, room.roomId)}
+                    >
                       상세정보 확인
                     </CheckRoomData>
-                    {roomDataModal && (
+                    {modalIsOpen && (
                       <Modal
                         CloseModal={() => {
-                          setRoomDataModal(!roomDataModal);
+                          setRoomDataModal(!modalIsOpen);
                         }}
                       >
                         {/* roomData 안엔 post쳐서 res 받아온 데이터가 들어가야함 -> 함수 필요*/}
                         <RoomDataContainer
-                          roomData={checkRoomData(room.roomId)}
+                          roomData={roomData}
                         ></RoomDataContainer>
                       </Modal>
                     )}

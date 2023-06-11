@@ -29,14 +29,14 @@ const UserBlindDateMeetingView = ({
       case "matches":
         setComponentToRender(<UserMatches matches={resUserData} />);
         break;
-      case "x":
-        setComponentToRender(<UserHost />);
+      case "my-rooms":
+        setComponentToRender(<UserHost host={resUserData} />);
         break;
-      case "y":
-        setComponentToRender(<UserRegister />);
+      case "entering":
+        setComponentToRender(<UserRegister register={resUserData} />);
         break;
-      case "z":
-        setComponentToRender(<UserHostStart />);
+      case "achieve":
+        setComponentToRender(<UserHostStart hostStart={resUserData} />);
         break;
       default:
         setComponentToRender(<></>);
@@ -64,13 +64,13 @@ const UserBlindDateMeetingView = ({
         setResUserData(userData);
       }
       // 아래는 미팅파트 / 수정필요함
-      else if (detailCategory === "x") {
+      else if (detailCategory === "my-rooms") {
         const userData = await getMeetingHost();
         setResUserData(userData);
-      } else if (detailCategory === "y") {
+      } else if (detailCategory === "entering") {
         const userData = await getMeetingRegister();
         setResUserData(userData);
-      } else if (detailCategory === "z") {
+      } else if (detailCategory === "achieve") {
         const userData = await getMeetingHostStart();
         setResUserData(userData);
       }
@@ -158,7 +158,9 @@ const UserFromLike = ({ fromLike }) => {
             <UserInfoTitle>{`아이디 : ${item.userId}`}</UserInfoTitle>
             <UserInfo>{`나이 : ${item.age}`}</UserInfo>
             <UserInfo>{`대학 : ${item.department}`}</UserInfo>
-            <button onClick={() => buttonLike(item.userId)}>두근 보내기</button>
+            <LikeButton onClick={() => buttonLike(item.userId)}>
+              두근 보내기
+            </LikeButton>
           </UserInfoGrid>
         ))}
       </UserDataWrapper>
@@ -166,20 +168,100 @@ const UserFromLike = ({ fromLike }) => {
   );
 };
 
-const UserMatches = () => {
-  return <UserCommonHeader>매칭 유저</UserCommonHeader>;
+const UserMatches = ({ matches }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [kakaoId, setKakaoId] = useState(null);
+  const userId = getJWTCookie("userId");
+  const authToken = getJWTCookie("jwtAccessToken");
+
+  const getKakaoId = async (targetUserId) => {
+    await axios
+      .get(
+        `http://localhost:8080/mypage/blindDate/finalMatches/getExternalId`,
+        {
+          userId: userId,
+          targetUserId: targetUserId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        const resData = res.data;
+        setKakaoId(resData);
+      })
+      .catch((err) => {
+        console.log("매칭된 유저 못 찾음 : ", err);
+      });
+  };
+
+  return (
+    <>
+      <UserCommonHeader>매칭된 유저</UserCommonHeader>
+      <UserDataWrapper>
+        {matches.map((item, idx) => (
+          <UserInfoGrid key={idx}>
+            <UserInfoTitle>{`아이디 : ${item.userId}`}</UserInfoTitle>
+            <UserInfo>{`나이 : ${item.age}`}</UserInfo>
+            <UserInfo>{`대학 : ${item.department}`}</UserInfo>
+            <TargetUserCheckButton
+              onClick={() => {
+                getKakaoId(item.userId);
+                setModalOpen(!modalOpen);
+              }}
+            >
+              상대 유저 카톡확인
+            </TargetUserCheckButton>
+            {modalOpen && (
+              <>
+                <KakaoIdBox>{`카카오 아이디 : ${kakaoId}`}</KakaoIdBox>
+              </>
+            )}
+          </UserInfoGrid>
+        ))}
+      </UserDataWrapper>
+    </>
+  );
 };
 
-const UserHost = () => {
-  return <UserCommonHeader>내가 만든 미팅방</UserCommonHeader>;
+const UserHost = ({ host }) => {
+  return (
+    <>
+      <UserCommonHeader>내가 만든 미팅방</UserCommonHeader>
+      <UserDataWrapper>
+        {host.map((item, idx) => (
+          <UserInfoGrid key={idx}>
+            <UserInfoTitle>{`방 제목 : ${item.title}`}</UserInfoTitle>
+            <UserInfo>{`${item.capacityMale} ${item.capacityFemale}`}</UserInfo>
+            <UserInfo>{`현재 인원 : 남 ${item.presentMale} 여 ${item.presentFemale}`}</UserInfo>
+          </UserInfoGrid>
+        ))}
+      </UserDataWrapper>
+      ;
+    </>
+  );
 };
 
-const UserRegister = () => {
+const UserRegister = ({ register }) => {
   return <UserCommonHeader>내가 입장한 미팅방 </UserCommonHeader>;
 };
 
-const UserHostStart = () => {
+const UserHostStart = ({ hostStart }) => {
   return <UserCommonHeader>시작한 미팅방</UserCommonHeader>;
+};
+
+const commonTextStyle = {
+  width: "250px",
+  height: "20px",
+  fontFamily: "Noto Sans KR",
+  fontStyle: "normal",
+  fontWeight: "700",
+  fontSize: "14px",
+  lineHeight: "20px",
+  color: "#5c5c5c",
 };
 
 const UserSettingLayout = styled.div`
@@ -280,6 +362,68 @@ const UserDataWrapper = styled.div`
   justify-content: center;
   margin-top: 20px;
   margin-bottom: 40px;
+`;
+
+const LikeButton = styled.button`
+  width: 150px;
+  height: 30px;
+  background-color: #ff4572;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  @keyframes heartbeat {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  &:hover {
+    background-color: #565656;
+    animation: heartbeat 0.5s infinite;
+  }
+`;
+
+const TargetUserCheckButton = styled.button`
+  width: 150px;
+  height: 30px;
+  background-color: #ff4572;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  @keyframes heartbeat {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  &:hover {
+    background-color: #565656;
+    animation: heartbeat 0.5s infinite;
+  }
+`;
+
+const KakaoIdBox = styled.div`
+  ${commonTextStyle}
 `;
 
 export default UserBlindDateMeetingView;
