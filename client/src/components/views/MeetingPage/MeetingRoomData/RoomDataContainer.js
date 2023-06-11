@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
-import RoomDataView from "./RoomDataView";
-import axios from "axios";
-import { getJWTCookie } from "../../../Api/loginApi";
+import React, { useEffect, useState } from 'react';
+import RoomDataView from './RoomDataView';
+import axios from 'axios';
+import { getJWTCookie } from '../../../Api/loginApi';
+import { useNavigate } from 'react-router-dom';
 
 const RoomDataContainer = ({ roomData }) => {
-  const authToken = getJWTCookie("jwtAccessToken");
+  const navigator = useNavigate();
+  const authToken = getJWTCookie('jwtAccessToken');
   const [isHost, setIsHost] = useState(true);
-  const userId = getJWTCookie("userId");
+  const userId = getJWTCookie('userId');
 
   // get으로 호스트 값을 가져올 수 있는 함수 작성 요망
   // 일단 isHost true로 설정
@@ -26,7 +28,7 @@ const RoomDataContainer = ({ roomData }) => {
         return res;
       })
       .catch((error) => {
-        console.log("방 만들기 실패 " + error);
+        console.log('방 만들기 실패 ' + error);
       });
   };
 
@@ -36,11 +38,12 @@ const RoomDataContainer = ({ roomData }) => {
         headers: { Authorization: `Bearer ${authToken}` },
       })
       .then((res) => {
-        console.log("방 삭제함");
+        console.log('방 삭제함');
+        navigator('/group');
         return res;
       })
       .catch((error) => {
-        console.log("방 삭제 실패 " + error);
+        console.log('방 삭제 실패 ' + error);
       });
   };
 

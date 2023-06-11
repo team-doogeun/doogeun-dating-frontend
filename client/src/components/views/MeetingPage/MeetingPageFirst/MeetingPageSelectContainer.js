@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
-import MeetingRoomView from "./MeetingPageSelectView";
-import axios from "axios";
-import { getJWTCookie } from "../../../Api/loginApi";
+import React, { useEffect, useState } from 'react';
+import MeetingRoomView from './MeetingPageSelectView';
+import axios from 'axios';
+import { getJWTCookie } from '../../../Api/loginApi';
+import { useNavigate } from 'react-router-dom';
 
 const MeetingPageSelectContainer = () => {
+  const navigator = useNavigate();
   const [meetings, setMeetings] = useState([]);
   const [isUserIn, setIsUserIn] = useState(false);
 
@@ -34,29 +36,31 @@ const MeetingPageSelectContainer = () => {
       const meetingData = response.data;
       setMeetings(meetingData);
     } catch (error) {
-      console.error("Meeting 방 정보 가져오기 실패:", error);
+      console.error('Meeting 방 정보 가져오기 실패:', error);
     }
   };
 
   // 입장 버튼
   const registerIn = async (roomId) => {
-    const authToken = getJWTCookie("jwtAccessToken");
+    const authToken = getJWTCookie('jwtAccessToken');
+    const userId = getJWTCookie('userId');
     await axios
       .post(`http://localhost:8080/group/${roomId}`, {
         headers: { Authorization: `Bearer ${authToken}` },
       })
       .then((res) => {
         console.log(res);
+        navigator('/group');
       })
       .catch((error) => {
-        console.log("방에 입장하지 못함" + error);
+        console.log('방에 입장하지 못함' + error);
       });
   };
 
   // 나가기 기능
   const registerOut = async (roomId, title) => {
-    const authToken = getJWTCookie("jwtAccessToken");
-    const userId = getJWTCookie("userId");
+    const authToken = getJWTCookie('jwtAccessToken');
+    const userId = getJWTCookie('userId');
     const userData = await checkRoomData(roomId);
     const userIn = userData.userId.includes(userId);
     setIsUserIn(userIn);
@@ -73,16 +77,16 @@ const MeetingPageSelectContainer = () => {
         }
       )
       .then(() => {
-        console.log("방 나가기 성공");
+        console.log('방 나가기 성공');
       })
       .catch((error) => {
-        console.log("방 나가기 실패" + error);
+        console.log('방 나가기 실패' + error);
       });
   };
 
   // 상세정보 확인에서 방 정보 확인
   const checkRoomData = async (roomId) => {
-    const authToken = getJWTCookie("jwtAccessToken");
+    const authToken = getJWTCookie('jwtAccessToken');
 
     const response = await axios
       .get(`http://localhost:8080/group/${roomId}/info`, {
@@ -92,7 +96,7 @@ const MeetingPageSelectContainer = () => {
         return response.data;
       })
       .catch((err) => {
-        console.log(err + "미팅방 정보 요청 안됨");
+        console.log(err + '미팅방 정보 요청 안됨');
       });
 
     return response;
