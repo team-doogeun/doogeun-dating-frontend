@@ -1,31 +1,31 @@
-import React, { useEffect, useState } from "react";
-import Select from "react-select";
-import "./MyProfile.css";
-import { ageData } from "./AttributeData";
-import ModalComponent from "../SmallComponent/ModalComponent";
-import styled from "styled-components";
+import React, { useEffect, useState } from 'react';
+import Select from 'react-select';
+import './MyProfile.css';
+import { ageData } from './AttributeData';
+import ModalComponent from '../SmallComponent/ModalComponent';
+import styled from 'styled-components';
 
 // 회원가입 페이지
 function MyProfile(props) {
   // 회원가입 입력요소
   // ID
-  const [id, setID] = useState("");
-  const [idMsg, setIDMsg] = useState("");
+  const [id, setID] = useState('');
+  const [idMsg, setIDMsg] = useState('');
   const [isID, setIsID] = useState(false);
 
   // PW
-  const [pw, setPW] = useState("");
-  const [pwMsg, setPWMsg] = useState("");
+  const [pw, setPW] = useState('');
+  const [pwMsg, setPWMsg] = useState('');
   const [isPW, setIsPW] = useState(false);
 
   // pwConfirm
-  const [confirmPW, setConfirmPW] = useState("");
-  const [confirmPWMsg, setConfirmPWMsg] = useState("");
+  const [confirmPW, setConfirmPW] = useState('');
+  const [confirmPWMsg, setConfirmPWMsg] = useState('');
   const [isConfirmPW, setIsConfirmPW] = useState(false);
 
   // 이름 설정
-  const [name, setName] = useState("");
-  const [nameMsg, setNameMsg] = useState("");
+  const [name, setName] = useState('');
+  const [nameMsg, setNameMsg] = useState('');
   const [isName, setIsName] = useState(false);
 
   // 성별 : 배열로 관리(필터링 필요)
@@ -38,18 +38,18 @@ function MyProfile(props) {
   const [isAge, setIsAge] = useState(false);
 
   // email(@konkuk.ac.kr 필수입력)
-  const [email, setEmail] = useState("");
-  const [emailMsg, setEmailMsg] = useState("");
+  const [email, setEmail] = useState('');
+  const [emailMsg, setEmailMsg] = useState('');
   const [isEmail, setIsEmail] = useState(false);
 
   // studentID
-  const [studentID, setStudentID] = useState("");
-  const [studentIDMsg, setStudentIDMsg] = useState("");
+  const [studentID, setStudentID] = useState('');
+  const [studentIDMsg, setStudentIDMsg] = useState('');
   const [isStudentID, setIsStudentID] = useState(false);
 
   // kakaoID
-  const [kakaoID, setKakaoID] = useState("");
-  const [kakaoIDMsg, setKakaoMSg] = useState("");
+  const [kakaoID, setKakaoID] = useState('');
+  const [kakaoIDMsg, setKakaoMSg] = useState('');
   const [isKakaoID, setIsKakaoID] = useState(false);
 
   // 유효성 검사
@@ -87,13 +87,13 @@ function MyProfile(props) {
     setID(nowID);
 
     if (nowID.length < 5) {
-      setIDMsg("5글자 이상 입력해주세요.");
+      setIDMsg('5글자 이상 입력해주세요.');
       setIsID(false);
-      localStorage.setItem("id", "");
+      localStorage.setItem('id', '');
     } else {
-      setIDMsg("올바른 형식입니다.");
+      setIDMsg('올바른 형식입니다.');
       setIsID(true);
-      localStorage.setItem("id", nowID);
+      localStorage.setItem('id', nowID);
     }
   };
 
@@ -104,13 +104,13 @@ function MyProfile(props) {
     setPW(nowPW);
 
     if (pwRegex.test(nowPW)) {
-      setPWMsg("안전한 비밀번호에요.");
+      setPWMsg('안전한 비밀번호에요.');
       setIsPW(true);
-      localStorage.setItem("pw", nowPW);
+      localStorage.setItem('pw', nowPW);
     } else {
-      setPWMsg("숫자+영문자+특수문자 조합으로 8자리 이상!");
+      setPWMsg('숫자+영문자+특수문자 조합으로 8자리 이상!');
       setIsPW(false);
-      localStorage.setItem("pw", "");
+      localStorage.setItem('pw', '');
     }
   };
 
@@ -119,13 +119,13 @@ function MyProfile(props) {
     setConfirmPW(nowPWConfirm);
 
     if (pw === nowPWConfirm) {
-      setConfirmPWMsg("똑같은 비밀번호입니다.");
+      setConfirmPWMsg('똑같은 비밀번호입니다.');
       setIsConfirmPW(true);
-      localStorage.setItem("confirmPW", nowPWConfirm);
+      localStorage.setItem('confirmPW', nowPWConfirm);
     } else {
-      setConfirmPWMsg("비밀번호가 다릅니다!");
+      setConfirmPWMsg('비밀번호가 다릅니다!');
       setIsConfirmPW(false);
-      localStorage.setItem("confirmPW", "");
+      localStorage.setItem('confirmPW', '');
     }
   };
 
@@ -134,12 +134,12 @@ function MyProfile(props) {
     const intervalId = setInterval(() => {
       if (pw === confirmPW) {
         setIsConfirmPW(true);
-        setConfirmPWMsg("똑같은 비밀번호입니다.");
-        localStorage.setItem("confirmPW", confirmPW);
+        setConfirmPWMsg('똑같은 비밀번호입니다.');
+        localStorage.setItem('confirmPW', confirmPW);
       } else {
         setIsConfirmPW(false);
-        setConfirmPWMsg("비밀번호가 다릅니다!");
-        localStorage.setItem("confirmPW", "");
+        setConfirmPWMsg('비밀번호가 다릅니다!');
+        localStorage.setItem('confirmPW', '');
       }
     }, 500); // 0.5초마다 실행
 
@@ -152,13 +152,13 @@ function MyProfile(props) {
     setName(nowName);
 
     if (nowName.length < 2 || nowName.length > 10) {
-      setNameMsg("2글자 이상 10글자 미만으로 입력해주세요.");
+      setNameMsg('2글자 이상 10글자 미만으로 입력해주세요.');
       setIsName(false);
-      localStorage.setItem("name", "");
+      localStorage.setItem('name', '');
     } else {
-      setNameMsg("올바른 형식입니다.");
+      setNameMsg('올바른 형식입니다.');
       setIsName(true);
-      localStorage.setItem("name", nowName);
+      localStorage.setItem('name', nowName);
     }
   };
 
@@ -166,7 +166,7 @@ function MyProfile(props) {
     const nowGender = e.currentTarget.value;
     setGender(nowGender);
     setIsGender(true);
-    localStorage.setItem("gender", nowGender);
+    localStorage.setItem('gender', nowGender);
   };
 
   const onEmailHandler = (e) => {
@@ -176,13 +176,13 @@ function MyProfile(props) {
     setEmail(nowEmail);
 
     if (!emailRegex.test(nowEmail)) {
-      setEmailMsg("이메일 형식이 틀렸어요! 다시 확인해주세요.");
+      setEmailMsg('이메일 형식이 틀렸어요! 다시 확인해주세요.');
       setIsEmail(false);
-      localStorage.setItem("email", "");
+      localStorage.setItem('email', '');
     } else {
-      setEmailMsg("올바른 이메일 형식이에요:)");
+      setEmailMsg('올바른 이메일 형식이에요:)');
       setIsEmail(true);
-      localStorage.setItem("email", nowEmail);
+      localStorage.setItem('email', nowEmail);
     }
   };
 
@@ -193,36 +193,36 @@ function MyProfile(props) {
     const isNum = nowStudentID.substr(nowStudentID.length - 1, 1);
 
     if (nowStudentID.length !== 9) {
-      setStudentIDMsg("학번은 9자리입니다!");
+      setStudentIDMsg('학번은 9자리입니다!');
       setIsStudentID(false);
-      localStorage.setItem("studentID", "");
+      localStorage.setItem('studentID', '');
     } else {
       setStudentIDMsg(`${shortID}학번이시네요 반갑습니다!`);
       setIsStudentID(true);
-      localStorage.setItem("studentID", nowStudentID);
+      localStorage.setItem('studentID', nowStudentID);
     }
 
     if (isNaN(isNum)) {
-      setStudentIDMsg("숫자만 입력해주세요.");
+      setStudentIDMsg('숫자만 입력해주세요.');
       setIsStudentID(false);
-      localStorage.setItem("studentID", "");
+      localStorage.setItem('studentID', '');
     }
   };
 
   const onKakaoIDHandler = (e) => {
     const nowKakaoID = e.currentTarget.value;
     setKakaoID(nowKakaoID);
-    setKakaoMSg("매칭시 교환되는 아이디입니다.\n신중하게 입력해주세요.");
+    setKakaoMSg('매칭시 교환되는 아이디입니다.\n신중하게 입력해주세요.');
     setIsKakaoID(true);
-    localStorage.setItem("kakaoID", nowKakaoID);
+    localStorage.setItem('kakaoID', nowKakaoID);
   };
 
   const customStyle = {
     menu: (provided) => ({ ...provided, zIndex: 9999 }),
     control: (provided, state) => ({
       ...provided,
-      width: "338px", // 원하는 너비 값으로 변경
-      height: "50px", // 원하는 높이 값으로 변경
+      width: '338px', // 원하는 너비 값으로 변경
+      height: '50px', // 원하는 높이 값으로 변경
     }),
   };
 
@@ -238,7 +238,7 @@ function MyProfile(props) {
             type="text"
           ></Input>
           {id.length > 0 && (
-            <div className={`message ${isID ? "success" : "error"}`}>
+            <div className={`message ${isID ? 'success' : 'error'}`}>
               {idMsg}
             </div>
           )}
@@ -250,7 +250,7 @@ function MyProfile(props) {
             type="password"
           ></Input>
           {pw.length > 0 && (
-            <div className={`message ${isPW ? "success" : "error"}`}>
+            <div className={`message ${isPW ? 'success' : 'error'}`}>
               {pwMsg}
             </div>
           )}
@@ -263,7 +263,7 @@ function MyProfile(props) {
             id="confirmPW"
           ></Input>
           {confirmPW.length > 0 && (
-            <div className={`message ${isConfirmPW ? "success" : "error"}`}>
+            <div className={`message ${isConfirmPW ? 'success' : 'error'}`}>
               {confirmPWMsg}
             </div>
           )}
@@ -275,7 +275,7 @@ function MyProfile(props) {
             type="text"
           ></Input>
           {name.length > 0 && (
-            <div className={`message ${isName ? "success" : "error"}`}>
+            <div className={`message ${isName ? 'success' : 'error'}`}>
               {nameMsg}
             </div>
           )}
@@ -285,8 +285,8 @@ function MyProfile(props) {
                 type="checkbox"
                 className="btn-check checked"
                 id="btn-check-outlined"
-                value="남자"
-                checked={gender === "남자"}
+                value="남"
+                checked={gender === '남'}
                 onClick={onGenderHandler}
                 readOnly
               />
@@ -294,15 +294,15 @@ function MyProfile(props) {
                 className="btn btn-outline-primary"
                 htmlFor="btn-check-outlined"
               >
-                남자
+                남
               </label>
               <div className="marginBetween"></div>
               <input
                 type="checkbox"
                 className="btn-check checked"
                 id="danger-outlined"
-                value="여자"
-                checked={gender === "여자"}
+                value="여"
+                checked={gender === '여'}
                 onClick={onGenderHandler}
                 readOnly
               />
@@ -310,7 +310,7 @@ function MyProfile(props) {
                 className="btn btn-outline-danger"
                 htmlFor="danger-outlined"
               >
-                여자
+                여
               </label>
             </div>
 
@@ -320,10 +320,10 @@ function MyProfile(props) {
               onChange={(age) => {
                 setAge(age.value);
                 setIsAge(true);
-                localStorage.setItem("age", age.value);
+                localStorage.setItem('age', age.value);
               }}
               options={ageData}
-              placeholder={"나이"}
+              placeholder={'나이'}
             />
           </GenderAndAge>
           <Input
@@ -333,7 +333,7 @@ function MyProfile(props) {
             value={email}
           ></Input>
           {email.length > 0 && (
-            <div className={`message ${isEmail ? "success" : "error"}`}>
+            <div className={`message ${isEmail ? 'success' : 'error'}`}>
               {emailMsg}
             </div>
           )}
@@ -345,7 +345,7 @@ function MyProfile(props) {
             type="text"
           ></Input>
           {studentID.length > 0 && (
-            <div className={`message ${isStudentID ? "success" : "error"}`}>
+            <div className={`message ${isStudentID ? 'success' : 'error'}`}>
               {studentIDMsg}
             </div>
           )}

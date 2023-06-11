@@ -1,41 +1,129 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import styled from "styled-components";
-import MypageSidemenuContainer from "../../MyPageSidemenu/MyPageSidemenuContainer";
-import { getJWTCookie } from "../../../../Api/loginApi";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import styled from 'styled-components';
+import MypageSidemenuContainer from '../../MyPageSidemenu/MyPageSidemenuContainer';
+import { getJWTCookie } from '../../../../Api/loginApi';
 
-const UserBlindDateMeetingView = ({
-  getBlindDateToLike,
-  getBlindDatefromLike,
-  getBlindDateMatches,
-  getMeetingHost,
-  getMeetingRegister,
-  getMeetingHostStart,
-}) => {
+const UserBlindDateMeetingView = () => {
   const [resUserData, setResUserData] = useState([]);
   const [componentToRender, setComponentToRender] = useState(null);
+  const [blindDateORMeet, setBlindDateORMeet] = useState('meeting');
 
-  const [blindDateORMeet, setBlindDateORMeet] = useState("meeting");
+  const userId = getJWTCookie('userId');
+  const authToken = getJWTCookie('jwtAccessToken');
+
+  // 내가 호감 보낸 사람
+  const getBlindDateToLike = async () => {
+    const response = await axios
+      .get(`http://localhost:8080/mypage/${userId}/blindDate/toLike`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      })
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.log('내가 호감표시한 유저들 에러 :', err);
+      });
+
+    return response;
+  };
+
+  // 내게 호감 보낸 사람
+  const getBlindDatefromLike = async () => {
+    const response = await axios
+      .get(`http://localhost:8080/mypage/${userId}/blindDate/fromLike`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      })
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.log('내게 호감표시한 유저들 에러 :', err);
+      });
+
+    return response;
+  };
+
+  // 최종매치 유저
+  const getBlindDateMatches = async () => {
+    const response = await axios
+      .get(`http://localhost:8080/mypage/${userId}/finalMatches`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      })
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        console.log('매칭 유저들 에러 :', err);
+      });
+
+    return response;
+  };
+
+  const getMeetingHost = async () => {
+    const response = await axios
+      .get(`http://localhost:8080/mypage/group/${userId}/my-rooms`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      })
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.log('내가 호감표시한 유저들 에러 :', err);
+      });
+
+    return response;
+  };
+
+  const getMeetingRegister = async () => {
+    const response = await axios
+      .get(`http://localhost:8080/mypage/group/${userId}/entering`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      })
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.log('내게 호감표시한 유저들 에러 :', err);
+      });
+
+    return response;
+  };
+
+  const getMeetingHostStart = async () => {
+    const response = await axios
+      .get(`http://localhost:8080/mypage/group/${userId}/achieve`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      })
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.log('매칭 유저들 에러 :', err);
+      });
+
+    return response;
+  };
 
   const blindDateCategory = (resUserData, detailCategory) => {
     switch (detailCategory) {
-      case "toLike":
+      case 'toLike':
         setComponentToRender(<UserToLike toLike={resUserData} />);
         break;
-      case "fromLike":
+      case 'fromLike':
         setComponentToRender(<UserFromLike fromLike={resUserData} />);
         break;
-      case "matches":
+      case 'matches':
         setComponentToRender(<UserMatches matches={resUserData} />);
         break;
-      case "my-rooms":
+      case 'my-rooms':
         setComponentToRender(<UserHost host={resUserData} />);
         break;
-      case "entering":
+      case 'entering':
         setComponentToRender(<UserRegister register={resUserData} />);
         break;
-      case "achieve":
+      case 'achieve':
         setComponentToRender(<UserHostStart hostStart={resUserData} />);
         break;
       default:
@@ -47,30 +135,30 @@ const UserBlindDateMeetingView = ({
   useEffect(() => {
     const fetchData = async () => {
       const currentUrl = window.location.href;
-      const splitUrl = currentUrl.split("/");
+      const splitUrl = currentUrl.split('/');
       const category = splitUrl[splitUrl.length - 2];
       const detailCategory = splitUrl.pop();
 
       setBlindDateORMeet(category);
 
-      if (detailCategory === "toLike") {
+      if (detailCategory === 'toLike') {
         const userData = await getBlindDateToLike();
         setResUserData(userData);
-      } else if (detailCategory === "fromLike") {
+      } else if (detailCategory === 'fromLike') {
         const userData = await getBlindDatefromLike();
         setResUserData(userData);
-      } else if (detailCategory === "Matches") {
+      } else if (detailCategory === 'Matches') {
         const userData = await getBlindDateMatches();
         setResUserData(userData);
       }
       // 아래는 미팅파트 / 수정필요함
-      else if (detailCategory === "my-rooms") {
+      else if (detailCategory === 'my-rooms') {
         const userData = await getMeetingHost();
         setResUserData(userData);
-      } else if (detailCategory === "entering") {
+      } else if (detailCategory === 'entering') {
         const userData = await getMeetingRegister();
         setResUserData(userData);
-      } else if (detailCategory === "achieve") {
+      } else if (detailCategory === 'achieve') {
         const userData = await getMeetingHostStart();
         setResUserData(userData);
       }
@@ -85,7 +173,7 @@ const UserBlindDateMeetingView = ({
     <>
       <UserSettingLayout>
         <UserSettingContainer>
-          {blindDateORMeet && blindDateORMeet === "blindDate" ? (
+          {blindDateORMeet && blindDateORMeet === 'blindDate' ? (
             <>
               <MypageSidemenuContainer currentMenu="MyBlindDate" />
               <UserSettingWrapper>
@@ -126,8 +214,8 @@ const UserToLike = ({ toLike }) => {
 };
 
 const UserFromLike = ({ fromLike }) => {
-  const userId = getJWTCookie("userId");
-  const authToken = getJWTCookie("jwtAccessToken");
+  const userId = getJWTCookie('userId');
+  const authToken = getJWTCookie('jwtAccessToken');
 
   const buttonLike = async (targetUserId) => {
     await axios
@@ -146,7 +234,7 @@ const UserFromLike = ({ fromLike }) => {
         return res;
       })
       .catch((err) => {
-        console.log("내게 호감표시한 유저들 에러 :", err);
+        console.log('내게 호감표시한 유저들 에러 :', err);
       });
   };
   return (
@@ -171,8 +259,8 @@ const UserFromLike = ({ fromLike }) => {
 const UserMatches = ({ matches }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [kakaoId, setKakaoId] = useState(null);
-  const userId = getJWTCookie("userId");
-  const authToken = getJWTCookie("jwtAccessToken");
+  const userId = getJWTCookie('userId');
+  const authToken = getJWTCookie('jwtAccessToken');
 
   const getKakaoId = async (targetUserId) => {
     await axios
@@ -194,7 +282,7 @@ const UserMatches = ({ matches }) => {
         setKakaoId(resData);
       })
       .catch((err) => {
-        console.log("매칭된 유저 못 찾음 : ", err);
+        console.log('매칭된 유저 못 찾음 : ', err);
       });
   };
 
@@ -254,14 +342,14 @@ const UserHostStart = ({ hostStart }) => {
 };
 
 const commonTextStyle = {
-  width: "250px",
-  height: "20px",
-  fontFamily: "Noto Sans KR",
-  fontStyle: "normal",
-  fontWeight: "700",
-  fontSize: "14px",
-  lineHeight: "20px",
-  color: "#5c5c5c",
+  width: '250px',
+  height: '20px',
+  fontFamily: 'Noto Sans KR',
+  fontStyle: 'normal',
+  fontWeight: '700',
+  fontSize: '14px',
+  lineHeight: '20px',
+  color: '#5c5c5c',
 };
 
 const UserSettingLayout = styled.div`
@@ -296,7 +384,7 @@ const UserInfoTitle = styled.div`
   position: relative;
   width: 110px;
   height: 35px;
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
@@ -341,7 +429,7 @@ const UserCommonHeader = styled.div`
   position: relative;
   width: 760px;
   height: 35px;
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
