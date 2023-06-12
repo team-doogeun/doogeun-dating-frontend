@@ -63,7 +63,7 @@ function NavBar() {
   return (
     <HeaderWrapper scrollPosition={scrollPosition}>
       <HeaderContainer>
-        <LogoImage src={Logo} alt="logo" onClick={() => navigator("/")} />
+        <LogoImage onClick={() => navigator("/")} />
         <Nav>
           {loading === false && !cookie ? (
             <>

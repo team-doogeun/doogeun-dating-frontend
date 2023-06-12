@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import profileImage from '../../../Img/BasicProfilePhoto.png';
+import React from "react";
+import styled from "styled-components";
+import profileImage from "../../../Img/BasicProfilePhoto.png";
 
 const ProfileView = ({ logoutHandler, userName, navigator }) => {
   return (
@@ -12,21 +12,28 @@ const ProfileView = ({ logoutHandler, userName, navigator }) => {
             <ProfilePhoto
               src={profileImage}
               type="button"
-              onClick={() => navigator('/my-page')}
+              onClick={() => navigator("/my-page")}
               alt="ProfilePhoto"
-              style={{ borderRadius: '4px' }}
+              style={{ borderRadius: "4px" }}
             />
           </ProfilePhotoWrapper>
           <UserNicknameWrapper
             type="button"
-            onClick={() => navigator('/my-page')}
+            onClick={() => navigator("/my-page")}
           >
             {userName}님
           </UserNicknameWrapper>
         </UserInfo>
         <ProfileMenuWrapper>
-          <ProfileMenu>내 소개팅</ProfileMenu>
-          <ProfileMenu type="button">내 미팅</ProfileMenu>
+          <ProfileMenu onClick={() => navigator("/my-page/blindDate/toLike")}>
+            내 소개팅
+          </ProfileMenu>
+          <ProfileMenu
+            type="button"
+            onClick={() => navigator("/my-page/meeting/my-rooms")}
+          >
+            내 미팅
+          </ProfileMenu>
           <ProfileMenu type="button" onClick={logoutHandler}>
             로그아웃
           </ProfileMenu>
@@ -112,7 +119,7 @@ const UserNicknameWrapper = styled.div`
   width: 161px;
   height: 26px;
 
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
@@ -147,7 +154,7 @@ const ProfileMenu = styled.div`
   width: 150px;
   height: 23px;
 
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 400;
   font-size: 16px;

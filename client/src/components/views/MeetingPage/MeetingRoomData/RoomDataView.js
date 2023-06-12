@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { getJWTCookie } from "../../../Api/loginApi";
 import axios from "axios";
 
-const RoomDataView = ({ roomDatas, hostStart, deleteRoom }) => {
+const RoomDataView = ({ roomData, hostStart, deleteRoom }) => {
   // 유저가 참여해 있는지 확인
   const [isUserIn, setIsUserIn] = useState(false);
 
@@ -15,11 +15,11 @@ const RoomDataView = ({ roomDatas, hostStart, deleteRoom }) => {
     hostInCheck();
   }, []);
 
-  const roomData = [
-    {
-      title: "ddd",
-    },
-  ];
+  // const roomData = [
+  //   {
+  //     title: "ddd",
+  //   },
+  // ];
 
   // 해당 유저가 방에 있는지 체크
   const userInCheck = async () => {
@@ -106,7 +106,6 @@ const RoomDataView = ({ roomDatas, hostStart, deleteRoom }) => {
           </FemaleCol>
         </UserDataWrapper>
         <BtnContainer>
-          {/* {isUserIn === true && isHostIn === true ? ( */}
           {true ? (
             <>
               <StartBtn

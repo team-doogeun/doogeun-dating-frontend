@@ -21,28 +21,30 @@
 .DetailProfileInputs {
   width: 100%;
   height: inherit;
-  justify-content: space-between;
-}
-
-.DetailProfilePart {
-  max-width: 338px;
-}
-
-.IdealProfilePart {
-  max-width: 338px;
 }
 
 .InputParts {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   width: 80%;
   margin: 0 auto;
+}
+
+.DetailProfilePart {
+  max-width: 338px;
+  margin-right: 60px;
+}
+
+.IdealProfilePart {
+  max-width: 338px;
+  margin-left: 60px;
 }
 
 .title,
 .height,
 .bodyType,
+.age,
 .address,
 .department,
 .character1,
@@ -50,7 +52,8 @@
 .mbti,
 .drink,
 .smoke,
-.priority {
+.firstPriority,
+.imgFile {
   margin-top: 30px;
 }
 
@@ -85,46 +88,45 @@
   text-align: center;
 }
 
-.footerButton {
-  width: 132px;
-  height: 50px;
-  color: #ffffff;
-  border-radius: 0.33rem;
-  background-color: palevioletred;
-  border: none;
-  font-weight: bold;
-  letter-spacing: 4px;
-  cursor: pointer;
-}
-
-.imgAlign {
+/* pageButton */
+.PageButton {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin: 0 15px;
 }
 
-.uploadImage {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+.PageButtonForm > button {
   justify-content: center;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  padding: 16px;
-  width: 250px;
-  height: 250px;
-  margin: 0 20px;
-  margin-top: 45px;
+  margin: 20px auto;
 }
 
-.uploadImage input {
+/* imgFile */
+.imgFile {
   display: none;
+  /* 기존 input 요소를 숨깁니다 */
 }
 
-.uploadedFile {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+.custom-file-upload {
+  width: 220px;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  background-color: #ff426f; /* 버튼 색 */
+  border: none;
+  color: white; /* 텍스트 색 */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.custom-file-upload:hover {
+  background-color: #ff426f; /* 마우스 오버시 버튼 색 */
+  color: white; /* 마우스 오버시 텍스트 색 */
+  transform: scale(1.05);
 }

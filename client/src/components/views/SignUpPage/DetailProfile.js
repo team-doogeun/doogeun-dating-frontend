@@ -1,6 +1,6 @@
-import axios from 'axios';
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import './DetailProfile.css';
+import axios from "axios";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import "./DetailProfile.css";
 import {
   ageRangeData,
   bodyTypeData,
@@ -12,11 +12,11 @@ import {
   drinkData,
   smokeData,
   priorityData,
-} from './AttributeData';
-import Select from 'react-select';
-import ModalComponent from '../SmallComponent/ModalComponent';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+} from "./AttributeData";
+import Select from "react-select";
+import ModalComponent from "../SmallComponent/ModalComponent";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const hobbyContext = React.createContext();
 const idealHobbyContext = React.createContext();
@@ -32,9 +32,9 @@ function DetailProfile() {
   const [isFileSelected, setIsFileSelected] = useState(false);
 
   // 상태관리 변수
-  const [height, setHeight] = useState('');
+  const [height, setHeight] = useState("");
   const [isHeight, setIsHeight] = useState(false);
-  const [heightMsg, setHeightMsg] = useState('');
+  const [heightMsg, setHeightMsg] = useState("");
 
   const [bodyType, setBodyType] = useState(null);
   const [isBodyType, setIsBodyType] = useState(null);
@@ -70,8 +70,8 @@ function DetailProfile() {
   const [idealAge, setIdealAge] = useState(null);
   const [isIdealAge, setIsIdealAge] = useState(false);
 
-  const [idealHeight, setIdealHeight] = useState('');
-  const [idealHeightMsg, setIdealHeightMsg] = useState('');
+  const [idealHeight, setIdealHeight] = useState("");
+  const [idealHeightMsg, setIdealHeightMsg] = useState("");
   const [isIdealHeight, setIsIdealHeight] = useState(false);
 
   const [idealBodyType, setIdealBodyType] = useState(null);
@@ -101,7 +101,7 @@ function DetailProfile() {
   const errorCatchHobbyData = (dataName, num) => {
     try {
       const hobbyData = JSON.parse(localStorage.getItem(`${dataName}`));
-      let hobby = '';
+      let hobby = "";
 
       if (num === 0) hobby = hobbyData[0];
       if (num === 1) hobby = hobbyData[1];
@@ -110,7 +110,7 @@ function DetailProfile() {
     } catch (error) {
       // 예외 발생 시 처리할 코드 작성
       console.error(
-        'An error occurred while retrieving detail hobby data:',
+        "An error occurred while retrieving detail hobby data:",
         error
       );
       return error;
@@ -120,7 +120,7 @@ function DetailProfile() {
   const errorCatchPriority = (dataName, num) => {
     try {
       const priorityData = JSON.parse(localStorage.getItem(`${dataName}`));
-      let prioirty = '';
+      let prioirty = "";
 
       if (num === 0) prioirty = priorityData[0];
       if (num === 1) prioirty = priorityData[1];
@@ -129,7 +129,7 @@ function DetailProfile() {
       return prioirty;
     } catch (error) {
       // 예외 발생 시 처리할 코드 작성
-      console.error('An error occurred while retrieving priority data:', error);
+      console.error("An error occurred while retrieving priority data:", error);
       return error;
     }
   };
@@ -138,30 +138,30 @@ function DetailProfile() {
     event.preventDefault();
 
     const user = {
-      userId: localStorage.getItem('id'),
-      password: localStorage.getItem('pw'),
-      confirmPassword: localStorage.getItem('confirmPW'),
-      name: localStorage.getItem('name'),
-      gender: localStorage.getItem('gender'),
-      age: Number(localStorage.getItem('age')),
-      email: localStorage.getItem('email'),
-      studentId: localStorage.getItem('studentID'),
-      externalId: localStorage.getItem('kakaoID'),
+      userId: localStorage.getItem("id"),
+      password: localStorage.getItem("pw"),
+      confirmPassword: localStorage.getItem("confirmPW"),
+      name: localStorage.getItem("name"),
+      gender: localStorage.getItem("gender"),
+      age: Number(localStorage.getItem("age")),
+      email: localStorage.getItem("email"),
+      studentId: localStorage.getItem("studentID"),
+      externalId: localStorage.getItem("kakaoID"),
       detailProfile: {
-        height: Number(localStorage.getItem('height')),
-        bodyType: localStorage.getItem('bodyType'),
-        address: localStorage.getItem('address'),
-        department: localStorage.getItem('department'),
-        character1: localStorage.getItem('character1'),
-        character2: localStorage.getItem('character2'),
-        mbti: localStorage.getItem('mbti'),
-        hobby1: errorCatchHobbyData('detailHobbyData', 0),
-        hobby2: errorCatchHobbyData('detailHobbyData', 1),
-        drink: localStorage.getItem('drink'),
-        smoke: localStorage.getItem('smoke'),
-        firstPriority: errorCatchPriority('priority', 0),
-        secondPriority: errorCatchPriority('priority', 1),
-        thirdPriority: errorCatchPriority('priority', 2),
+        height: Number(localStorage.getItem("height")),
+        bodyType: localStorage.getItem("bodyType"),
+        address: localStorage.getItem("address"),
+        department: localStorage.getItem("department"),
+        character1: localStorage.getItem("character1"),
+        character2: localStorage.getItem("character2"),
+        mbti: localStorage.getItem("mbti"),
+        hobby1: errorCatchHobbyData("detailHobbyData", 0),
+        hobby2: errorCatchHobbyData("detailHobbyData", 1),
+        drink: localStorage.getItem("drink"),
+        smoke: localStorage.getItem("smoke"),
+        firstPriority: errorCatchPriority("priority", 0),
+        secondPriority: errorCatchPriority("priority", 1),
+        thirdPriority: errorCatchPriority("priority", 2),
       },
       idealTypeProfile: {
         idealAge: idealAge,
@@ -171,8 +171,8 @@ function DetailProfile() {
         idealCharacter1: idealCharacter1,
         idealCharacter2: idealCharacter2,
         idealMbti: idealMBTI,
-        idealHobby1: errorCatchHobbyData('idealHobbyData', 0),
-        idealHobby2: errorCatchHobbyData('idealHobbyData', 1),
+        idealHobby1: errorCatchHobbyData("idealHobbyData", 0),
+        idealHobby2: errorCatchHobbyData("idealHobbyData", 1),
         idealDrink: idealDrink,
         idealSmoke: idealSmoke,
       },
@@ -181,8 +181,8 @@ function DetailProfile() {
     // formData.append("user", JSON.stringify(user));
 
     const formData = new FormData();
-    const blob = new Blob([JSON.stringify(user)], { type: 'application/json' });
-    formData.append('user', blob);
+    const blob = new Blob([JSON.stringify(user)], { type: "application/json" });
+    formData.append("user", blob);
 
     Object.keys(selectedFiles).forEach((fileId) => {
       if (selectedFiles[fileId]) {
@@ -191,22 +191,22 @@ function DetailProfile() {
     });
 
     if (!isFileSelected) {
-      alert('파일을 추가하세요!');
+      alert("파일을 추가하세요!");
       return;
     }
 
     console.log(selectedFiles);
     // console.log(formData.user);
     for (let pair of formData.entries()) {
-      console.log(pair[0] + ', ' + pair[1]);
+      console.log(pair[0] + ", " + pair[1]);
     }
 
     try {
-      await axios.post('http://localhost:8080/users/signup', formData);
+      await axios.post("http://localhost:8080/users/signup", formData);
 
       window.localStorage.clear();
-      alert('회원가입이 완료되었습니다.');
-      navigator('/');
+      alert("회원가입이 완료되었습니다.");
+      navigator("/");
     } catch (error) {
       console.error(error);
     }
@@ -218,13 +218,13 @@ function DetailProfile() {
     setHeight(nowHeight);
 
     if (100 <= nowHeight && nowHeight <= 250) {
-      setHeightMsg('올바른 형식입니다.');
+      setHeightMsg("올바른 형식입니다.");
       setIsHeight(true);
-      localStorage.setItem('height', nowHeight);
+      localStorage.setItem("height", nowHeight);
     } else {
-      setHeightMsg('키는 100cm 이상 250cm 이하로 입력바랍니다.');
+      setHeightMsg("키는 100cm 이상 250cm 이하로 입력바랍니다.");
       setIsHeight(false);
-      localStorage.setItem('height', '');
+      localStorage.setItem("height", "");
     }
   };
 
@@ -232,56 +232,56 @@ function DetailProfile() {
     const nowBodyType = e.value;
     setBodyType(nowBodyType);
     setIsBodyType(true);
-    localStorage.setItem('bodyType', nowBodyType);
+    localStorage.setItem("bodyType", nowBodyType);
   };
 
   const onAddressHandler = (e) => {
     const nowAddress = e.value;
     setAddress(nowAddress);
     setIsAddress(true);
-    localStorage.setItem('address', nowAddress);
+    localStorage.setItem("address", nowAddress);
   };
 
   const onDepartMentHandler = (e) => {
     const nowDepartment = e.value;
     setDepartment(nowDepartment);
     setIsDepartment(true);
-    localStorage.setItem('department', nowDepartment);
+    localStorage.setItem("department", nowDepartment);
   };
 
   const onCharacterHandler1 = (e) => {
     const nowCharacter = e.value;
     setCharacter(e.value);
     setIsCharacter1(true);
-    localStorage.setItem('character1', nowCharacter);
+    localStorage.setItem("character1", nowCharacter);
   };
 
   const onCharacterHandler2 = (e) => {
     const nowCharacter = e.value;
     setCharacter(e.value);
     setIsCharacter2(true);
-    localStorage.setItem('character2', nowCharacter);
+    localStorage.setItem("character2", nowCharacter);
   };
 
   const onMBTIHandler = (e) => {
     const nowMBTI = e.value;
     setMBTI(nowMBTI);
     setIsMBTI(true);
-    localStorage.setItem('mbti', nowMBTI);
+    localStorage.setItem("mbti", nowMBTI);
   };
 
   const onDrinkHandler = (e) => {
     const nowDrink = e.value;
     setDrink(nowDrink);
     setIsDrink(true);
-    localStorage.setItem('drink', nowDrink);
+    localStorage.setItem("drink", nowDrink);
   };
 
   const onSmokeHandler = (e) => {
     const nowSmoke = e.value;
     setSmoke(nowSmoke);
     setIsSmoke(true);
-    localStorage.setItem('smoke', nowSmoke);
+    localStorage.setItem("smoke", nowSmoke);
   };
 
   // 우선순위 결정
@@ -298,7 +298,7 @@ function DetailProfile() {
     const nowAge = e.value;
     setIdealAge(nowAge);
     setIsIdealAge(true);
-    localStorage.setItem('idealAge', nowAge);
+    localStorage.setItem("idealAge", nowAge);
   };
 
   const onIdealHeightHandler = (e) => {
@@ -306,13 +306,13 @@ function DetailProfile() {
     setIdealHeight(nowIdealHeight);
 
     if (100 <= nowIdealHeight && nowIdealHeight <= 250) {
-      setIdealHeightMsg('올바른 형식입니다.');
+      setIdealHeightMsg("올바른 형식입니다.");
       setIsIdealHeight(true);
-      localStorage.setItem('idealHeight', nowIdealHeight);
+      localStorage.setItem("idealHeight", nowIdealHeight);
     } else {
-      setIdealHeightMsg('키는 100cm 이상 250cm 이하로 입력바랍니다.');
+      setIdealHeightMsg("키는 100cm 이상 250cm 이하로 입력바랍니다.");
       setIsIdealHeight(false);
-      localStorage.setItem('idealHeight', '');
+      localStorage.setItem("idealHeight", "");
     }
   };
 
@@ -320,56 +320,56 @@ function DetailProfile() {
     const nowBodyType = e.value;
     setIdealBodyType(nowBodyType);
     setIsIdealBodyType(true);
-    localStorage.setItem('idealBodyType', nowBodyType);
+    localStorage.setItem("idealBodyType", nowBodyType);
   };
 
   const onIdealDepartmentHandler = (e) => {
     const nowDepartment = e.value;
     setIdealDepartment(nowDepartment);
     setIsIdealDepartment(true);
-    localStorage.setItem('idealDepartment', nowDepartment);
+    localStorage.setItem("idealDepartment", nowDepartment);
   };
 
   const onIdealCharacterHandler1 = (e) => {
     const nowCharacter = e.value;
     setIdealCharacter1(nowCharacter);
     setIsIdealCharacter1(true);
-    localStorage.setItem('idealCharacter1', nowCharacter);
+    localStorage.setItem("idealCharacter1", nowCharacter);
   };
 
   const onIdealCharacterHandler2 = (e) => {
     const nowCharacter = e.value;
     setIdealCharacter2(nowCharacter);
     setIsIdealCharacter2(true);
-    localStorage.setItem('idealCharacter2', nowCharacter);
+    localStorage.setItem("idealCharacter2", nowCharacter);
   };
 
   const onIdealMBTIHandler = (e) => {
     const nowMBTI = e.value;
     setIdealMBTI(nowMBTI);
     setIsIdealMBTI(true);
-    localStorage.setItem('idealMBTI', nowMBTI);
+    localStorage.setItem("idealMBTI", nowMBTI);
   };
 
   const onIdealDrinkHandler = (e) => {
     const nowDrink = e.value;
     setIdealDrink(nowDrink);
     setIsIdealDrink(true);
-    localStorage.setItem('idealDrink', nowDrink);
+    localStorage.setItem("idealDrink", nowDrink);
   };
 
   const onIdealSmokeHandler = (e) => {
     const nowSmoke = e.value;
     setIdealSmoke(nowSmoke);
     setIsIdealSmoke(true);
-    localStorage.setItem('idealSmoke', nowSmoke);
+    localStorage.setItem("idealSmoke", nowSmoke);
   };
 
   // 우선순위 로컬스토리지 저장 : state 상태 동기화
   // value값만 문자열로 저장시켜주기
   useEffect(() => {
     const priorityValues = selectedOptions.map((option) => option.value);
-    localStorage.setItem('priority', JSON.stringify(priorityValues));
+    localStorage.setItem("priority", JSON.stringify(priorityValues));
   }, [selectedOptions]);
 
   const handleFileChange = (fileId) => (event) => {
@@ -383,8 +383,8 @@ function DetailProfile() {
   const customStyle = {
     control: (provided, state) => ({
       ...provided,
-      width: '338px', // 원하는 너비 값으로 변경
-      height: '38px', // 원하는 높이 값으로 변경
+      width: "338px", // 원하는 너비 값으로 변경
+      height: "38px", // 원하는 높이 값으로 변경
     }),
   };
 
@@ -405,7 +405,7 @@ function DetailProfile() {
                 style={customStyle}
               ></Input>
               {height.length > 0 && (
-                <div className={`message ${isHeight ? 'success' : 'error'}`}>
+                <div className={`message ${isHeight ? "success" : "error"}`}>
                   {heightMsg}
                 </div>
               )}
@@ -460,7 +460,7 @@ function DetailProfile() {
                 placeholder="mbti"
                 options={mbtiData}
                 noOptionsMessage={() => {
-                  return '없는데용:)';
+                  return "없는데용:)";
                 }}
                 onChange={onMBTIHandler}
                 style={customStyle}
@@ -510,28 +510,65 @@ function DetailProfile() {
               {priority.length > 0 && (
                 <div
                   style={{
-                    marginTop: '10px',
-                    fontSize: '16px',
-                    fontFamily: 'priority',
+                    marginTop: "10px",
+                    fontSize: "16px",
+                    fontFamily: "priority",
                   }}
                 >
                   <div>
-                    우선순위는 최대 <span style={{ color: 'red' }}>3개</span>
-                    까지만 반영이 됩니다.{' '}
+                    우선순위는 최대 <span style={{ color: "red" }}>3개</span>
+                    까지만 반영이 됩니다.{" "}
                   </div>
-                  <div style={{ marginTop: '5px' }}>
+                  <div style={{ marginTop: "5px" }}>
                     {priority.map((option, index) => (
                       <div>{`${index + 1}. ${option}`}</div>
                     ))}
                   </div>
                 </div>
               )}
-              <input type="file" onChange={handleFileChange('basicFilePath')} />
-              <input
-                type="file"
-                onChange={handleFileChange('secondFilePath')}
-              />
-              <input type="file" onChange={handleFileChange('thirdFilePath')} />
+              <UploadImage>
+                <label htmlFor="file-upload1" className="custom-file-upload">
+                  기본 사진 업로드(필수) 1
+                </label>
+                <input
+                  className="imgFile"
+                  id="file-upload1"
+                  type="file"
+                  onChange={handleFileChange("basicFilePath")}
+                />
+                <p>
+                  {selectedFiles.basicFilePath &&
+                    `Selected file: ${selectedFiles.basicFilePath.name}`}
+                </p>
+
+                <label htmlFor="file-upload2" className="custom-file-upload">
+                  사진 업로드 2
+                </label>
+                <input
+                  className="imgFile"
+                  id="file-upload2"
+                  type="file"
+                  onChange={handleFileChange("secondFilePath")}
+                />
+                <p>
+                  {selectedFiles.secondFilePath &&
+                    `Selected file: ${selectedFiles.secondFilePath.name}`}
+                </p>
+
+                <label htmlFor="file-upload3" className="custom-file-upload">
+                  사진 업로드 3
+                </label>
+                <input
+                  className="imgFile"
+                  id="file-upload3"
+                  type="file"
+                  onChange={handleFileChange("thirdFilePath")}
+                />
+                <p>
+                  {selectedFiles.thirdFilePath &&
+                    `Selected file: ${selectedFiles.thirdFilePath.name}`}
+                </p>
+              </UploadImage>
             </div>
 
             <div className="IdealProfilePart">
@@ -556,7 +593,7 @@ function DetailProfile() {
               ></Input>
               {idealHeight.length > 0 && (
                 <div
-                  className={`message ${isIdealHeight ? 'success' : 'error'}`}
+                  className={`message ${isIdealHeight ? "success" : "error"}`}
                 >
                   {idealHeightMsg}
                 </div>
@@ -604,7 +641,7 @@ function DetailProfile() {
                 placeholder="mbti"
                 options={mbtiData}
                 noOptionsMessage={() => {
-                  return '없는데용:)';
+                  return "없는데용:)";
                 }}
                 onChange={onIdealMBTIHandler}
                 style={customStyle}
@@ -641,8 +678,8 @@ function DetailProfile() {
             </div>
           </div>
 
-          <div className="DetailProfilePage" id="DetailProfile">
-            <div className="DetailProfileForm">
+          <div className="PageButton" id="DetailProfile">
+            <div className="PageButtonForm">
               <button
                 className="btn-hover pink nextButton submitButton"
                 type="submit"
@@ -667,6 +704,12 @@ const Input = styled.input`
   ::placeholder {
     color: #a5a5a5;
   }
+`;
+
+const UploadImage = styled.div`
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
 `;
 
 export { DetailProfile as default, hobbyContext, idealHobbyContext };

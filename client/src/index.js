@@ -19,7 +19,6 @@ const queryClient = new QueryClient();
 
 root.render(
   <QueryClientProvider client={queryClient}>
-    <ReactQueryDevtools initialIsOpen={false} />
     <BrowserRouter>
       <NavBar />
       <App />

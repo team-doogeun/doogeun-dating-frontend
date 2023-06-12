@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
@@ -137,46 +137,47 @@ const UserBlindDateMeetingView = () => {
     }
   };
 
+  const fetchData = () => {
+    const currentUrl = window.location.href;
+    const splitUrl = currentUrl.split("/");
+    const category = splitUrl[splitUrl.length - 2];
+    const detailCategory = splitUrl.pop();
+
+    setBlindDateORMeet(category);
+
+    if (detailCategory === "toLike") {
+      const userData = getBlindDateToLike();
+      setResUserData(userData);
+    } else if (detailCategory === "fromLike") {
+      const userData = getBlindDatefromLike();
+      setResUserData(userData);
+    } else if (detailCategory === "Matches") {
+      const userData = getBlindDateMatches();
+      setResUserData(userData);
+    } else if (detailCategory === "my-rooms") {
+      const userData = getMeetingHost();
+      setResUserData(userData);
+    } else if (detailCategory === "entering") {
+      const userData = getMeetingRegister();
+      setResUserData(userData);
+    } else if (detailCategory === "achieve") {
+      const userData = getMeetingHostStart();
+      setResUserData(userData);
+    }
+
+    blindDateCategory(resUserData, detailCategory);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const currentUrl = window.location.href;
-      const splitUrl = currentUrl.split("/");
-      const category = splitUrl[splitUrl.length - 2];
-      const detailCategory = splitUrl.pop();
-
-      setBlindDateORMeet(category);
-
-      if (detailCategory === "toLike") {
-        const userData = await getBlindDateToLike();
-        setResUserData(userData);
-      } else if (detailCategory === "fromLike") {
-        const userData = await getBlindDatefromLike();
-        setResUserData(userData);
-      } else if (detailCategory === "Matches") {
-        const userData = await getBlindDateMatches();
-        setResUserData(userData);
-      } else if (detailCategory === "my-rooms") {
-        const userData = await getMeetingHost();
-        setResUserData(userData);
-      } else if (detailCategory === "entering") {
-        const userData = await getMeetingRegister();
-        setResUserData(userData);
-      } else if (detailCategory === "achieve") {
-        const userData = await getMeetingHostStart();
-        setResUserData(userData);
-      }
-
-      blindDateCategory(resUserData, detailCategory);
-    };
-
+    setComponentToRender(<></>);
     fetchData();
+  }, []);
 
-    const interval = setInterval(fetchData, 5000); // 5초에 한 번씩 fetchData 실행
-
-    return () => {
-      clearInterval(interval); // 컴포넌트 언마운트 시 interval 정리
-    };
-  }, [location]);
+  // url이 변경되도 감지
+  useEffect(() => {
+    setComponentToRender(<></>);
+    fetchData();
+  }, [location.pathname]);
 
   return (
     <>
@@ -204,24 +205,6 @@ const UserBlindDateMeetingView = () => {
     </>
   );
 };
-
-const testData = [
-  {
-    userId: "tommt",
-    age: 23,
-    department: "경영대",
-  },
-  {
-    userId: "tommt",
-    age: 23,
-    department: "경영대",
-  },
-  {
-    userId: "tommt",
-    age: 23,
-    department: "경영대",
-  },
-];
 
 const UserToLike = ({ toLike }) => {
   return (
@@ -505,6 +488,8 @@ const UserHostStart = ({ hostStart }) => {
       setModalIsOpen(false);
     }
   };
+
+  const getKakaoId = async () => {};
   return (
     <RoomCardWrapper>
       <UserCommonHeader>성사된 미팅방</UserCommonHeader>
@@ -525,12 +510,36 @@ const UserHostStart = ({ hostStart }) => {
                 <RoomDataContainer roomData={roomData}></RoomDataContainer>
               </Modal>
             )}
+
+            <RoomRegisterInOut>
+              <GetKakaoIdButton onClick={getKakaoId()}>
+                카카오톡 아이디 받아오기
+              </GetKakaoIdButton>
+            </RoomRegisterInOut>
           </CheckAndRegisterBlock>
         </RoomCard>
       ))}
     </RoomCardWrapper>
   );
 };
+
+const GetKakaoIdButton = styled.button`
+  width: 180px;
+  border: 1px solid #ff4572;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: white;
+  background: transparent;
+  padding: 0.3rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  background-color: #ff4572;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
 
 const RoomCardWrapper = styled.div`
   display: flex;
@@ -785,8 +794,6 @@ const TargetUserCheckButton = styled.button`
   font-size: 14px;
   width: 160px;
 `;
-
-const KakaoIdWrapper = styled.div``;
 
 const KakaoIdBox = styled.div`
   font-family: "Noto Sans KR";
