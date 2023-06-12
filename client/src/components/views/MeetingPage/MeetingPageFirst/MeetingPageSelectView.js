@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import BottomImage from "../../../../Img/Rectangle 2.png";
-import Pagination from "../../../Pagination/Pagination";
-import axios from "axios";
-import { getCookieValue, getJWTCookie } from "../../../Api/loginApi";
-import Modal from "../../../Modal/LoginModal";
-import RoomDataContainer from "../MeetingRoomData/RoomDataContainer";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import BottomImage from '../../../../Img/Rectangle 2.png';
+import Pagination from '../../../Pagination/Pagination';
+import axios from 'axios';
+import { getCookieValue, getJWTCookie } from '../../../Api/loginApi';
+import Modal from '../../../Modal/LoginModal';
+import RoomDataContainer from '../MeetingRoomData/RoomDataContainer';
 
 const MeetingPageSelectView = ({
   meetings,
@@ -16,17 +16,17 @@ const MeetingPageSelectView = ({
   // meetingRoom Control
   const [meetingRooms, setMeetingRooms] = useState([]);
   const [createRoom, setCreateRoom] = useState(false);
-  const [roomTitle, setRoomTitle] = useState("");
-  const [roomIntro, setRoomIntro] = useState("");
+  const [roomTitle, setRoomTitle] = useState('');
+  const [roomIntro, setRoomIntro] = useState('');
   const [roomSize, setRoomSize] = useState(null);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [roomData, setRoomData] = useState({});
 
   // title, intro control
-  const [titleMsg, setTitleMsg] = useState("");
+  const [titleMsg, setTitleMsg] = useState('');
   const [isTitle, setIsTitle] = useState(false);
-  const [introMsg, setIntroMsg] = useState("");
+  const [introMsg, setIntroMsg] = useState('');
   const [isIntro, setIsIntro] = useState(false);
 
   // 페이지네이션
@@ -55,8 +55,8 @@ const MeetingPageSelectView = ({
   );
 
   const handleCreateRoom = async () => {
-    const userId = getJWTCookie("userId");
-    const authToken = getJWTCookie("jwtAccessToken");
+    const userId = getJWTCookie('userId');
+    const authToken = getJWTCookie('jwtAccessToken');
 
     const newRoom = {
       title: roomTitle,
@@ -73,7 +73,7 @@ const MeetingPageSelectView = ({
           },
         })
         .then((res) => {
-          console.log("서버에 저장 후 방 데이터 불러오기 성공");
+          console.log('서버에 저장 후 방 데이터 불러오기 성공');
           return res;
         })
         .catch((err) => {
@@ -83,7 +83,7 @@ const MeetingPageSelectView = ({
       const newMeetingRoom = response.data;
       setMeetingRooms([...meetingRooms, newMeetingRoom].reverse());
     } catch (error) {
-      console.error("Error adding meeting room:", error);
+      console.error('Error adding meeting room:', error);
     }
 
     console.log(meetingRooms);
@@ -96,15 +96,15 @@ const MeetingPageSelectView = ({
     setRoomTitle(nowTitle);
 
     if (nowTitle.length > 20) {
-      setTitleMsg("20글자 이내로 입력해주세요.");
+      setTitleMsg('20글자 이내로 입력해주세요.');
       setIsTitle(false);
     } else {
-      setTitleMsg("올바른 형식입니다.");
+      setTitleMsg('올바른 형식입니다.');
       setIsTitle(true);
     }
 
     if (nowTitle.length === 0) {
-      setTitleMsg("");
+      setTitleMsg('');
       setIsTitle(false);
     }
   };
@@ -115,35 +115,41 @@ const MeetingPageSelectView = ({
     setRoomIntro(nowIntro);
 
     if (nowIntro.length && nowIntro.length > 50) {
-      setIntroMsg("50글자 이내로 입력해주세요.");
+      setIntroMsg('50글자 이내로 입력해주세요.');
       setIsIntro(false);
     } else {
-      setIntroMsg("올바른 형식입니다.");
+      setIntroMsg('올바른 형식입니다.');
       setIsIntro(true);
     }
 
     if (nowIntro.length === 0) {
-      setIntroMsg("");
+      setIntroMsg('');
       setIsIntro(false);
     }
   };
 
-  //   두근두근 미팅 (살짝 큰 )
-
-  // 직접 방을 개설할 수도 있고
-  // 다른 미팅방에 참여할 수도 있어요
-
-  // 방 인원이 다 차고 호스트가 미팅을 시작하면
-  // 카카오톡 아이디가 공유됩니다.
-
-  // 호스트는 카카오톡에서 다른 유저를 초대해서 만남을 주선해 주세요
-
-  // 소개글
   return (
     <>
       <Banner>
         <img src={BottomImage} />
-        <h1></h1>
+        <BannerWrapper>
+          <BannerTitle>두근두근 미팅</BannerTitle>
+          <BannerText>
+            <p>
+              직접 방을 개설할 수도 있고
+              <br />
+              다른 미팅방에 참여할 수도 있어요
+              <br />
+              <br />
+              방 인원이 다 차고 호스트가 미팅을 시작하면
+              <br />
+              카카오톡 아이디가 공유됩니다
+              <br />
+              <br />
+              호스트는 카카오톡에서 다른 유저를 초대해서 만남을 주선해 주세요
+            </p>
+          </BannerText>
+        </BannerWrapper>
       </Banner>
       <MeetingPageSelectWrapper>
         <ContentWrapper>
@@ -175,7 +181,7 @@ const MeetingPageSelectView = ({
                     )}
 
                     <RoomRegisterInOut>
-                      {room.groupBlindStatus === "DONE" ? (
+                      {room.groupBlindStatus === 'DONE' ? (
                         <AlreadyStartBtn disabled={true}>
                           진행중인 미팅방
                         </AlreadyStartBtn>
@@ -219,7 +225,7 @@ const MeetingPageSelectView = ({
                       </Modal>
                     )}
                     <RoomRegisterInOut>
-                      {room.groupBlindStatus === "DONE" ? (
+                      {room.groupBlindStatus === 'DONE' ? (
                         <AlreadyStartBtn disabled={true}>
                           진행중인 미팅방
                         </AlreadyStartBtn>
@@ -517,8 +523,8 @@ const RoomSizeButton = styled.button`
   font-weight: 700;
   font-size: 1rem;
   cursor: pointer;
-  background-color: ${(props) => (props.selected ? "#ff2559" : "white")};
-  color: ${(props) => (props.selected ? "#fff" : "#252525")};
+  background-color: ${(props) => (props.selected ? '#ff2559' : 'white')};
+  color: ${(props) => (props.selected ? '#fff' : '#252525')};
 `;
 
 const StyledInput = styled.input`
@@ -556,6 +562,7 @@ const CheckRoomData = styled.button`
 
 const Banner = styled.div`
   display: flex;
+  position: relative;
   height: 300px;
   h1 {
     position: absolute;
@@ -563,6 +570,31 @@ const Banner = styled.div`
   img {
     width: 100%;
   }
+`;
+
+const BannerWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const BannerTitle = styled.h1`
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  font-family: GmarketSansTTFBold, sans-serif, Arial;
+`;
+
+const BannerText = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  font-family: GmarketSansTTFBold, sans-serif, Arial;
 `;
 
 export default MeetingPageSelectView;
