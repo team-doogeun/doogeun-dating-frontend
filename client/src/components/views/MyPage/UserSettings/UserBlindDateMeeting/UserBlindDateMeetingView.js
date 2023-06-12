@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import MypageSidemenuContainer from "../../MyPageSidemenu/MyPageSidemenuContainer";
@@ -14,6 +14,8 @@ const UserBlindDateMeetingView = () => {
 
   const userId = getJWTCookie("userId");
   const authToken = getJWTCookie("jwtAccessToken");
+
+  const location = useLocation();
 
   // 내가 호감 보낸 사람
   const getBlindDateToLike = async () => {
@@ -168,7 +170,13 @@ const UserBlindDateMeetingView = () => {
     };
 
     fetchData();
-  }, [window.location.href]);
+
+    const interval = setInterval(fetchData, 5000); // 5초에 한 번씩 fetchData 실행
+
+    return () => {
+      clearInterval(interval); // 컴포넌트 언마운트 시 interval 정리
+    };
+  }, [location]);
 
   return (
     <>
