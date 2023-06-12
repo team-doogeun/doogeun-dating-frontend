@@ -137,7 +137,7 @@ const UserBlindDateMeetingView = () => {
     }
   };
 
-  const fetchData = () => {
+  const fetchData = async () => {
     const currentUrl = window.location.href;
     const splitUrl = currentUrl.split("/");
     const category = splitUrl[splitUrl.length - 2];
@@ -146,22 +146,22 @@ const UserBlindDateMeetingView = () => {
     setBlindDateORMeet(category);
 
     if (detailCategory === "toLike") {
-      const userData = getBlindDateToLike();
+      const userData = await getBlindDateToLike();
       setResUserData(userData);
     } else if (detailCategory === "fromLike") {
-      const userData = getBlindDatefromLike();
+      const userData = await getBlindDatefromLike();
       setResUserData(userData);
     } else if (detailCategory === "Matches") {
-      const userData = getBlindDateMatches();
+      const userData = await getBlindDateMatches();
       setResUserData(userData);
     } else if (detailCategory === "my-rooms") {
-      const userData = getMeetingHost();
+      const userData = await getMeetingHost();
       setResUserData(userData);
     } else if (detailCategory === "entering") {
-      const userData = getMeetingRegister();
+      const userData = await getMeetingRegister();
       setResUserData(userData);
     } else if (detailCategory === "achieve") {
-      const userData = getMeetingHostStart();
+      const userData = await getMeetingHostStart();
       setResUserData(userData);
     }
 

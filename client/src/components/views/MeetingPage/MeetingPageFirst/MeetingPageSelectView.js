@@ -128,11 +128,22 @@ const MeetingPageSelectView = ({
     }
   };
 
+  //   두근두근 미팅 (살짝 큰 )
+
+  // 직접 방을 개설할 수도 있고
+  // 다른 미팅방에 참여할 수도 있어요
+
+  // 방 인원이 다 차고 호스트가 미팅을 시작하면
+  // 카카오톡 아이디가 공유됩니다.
+
+  // 호스트는 카카오톡에서 다른 유저를 초대해서 만남을 주선해 주세요
+
   // 소개글
   return (
     <>
       <Banner>
         <img src={BottomImage} />
+        <h1></h1>
       </Banner>
       <MeetingPageSelectWrapper>
         <ContentWrapper>
