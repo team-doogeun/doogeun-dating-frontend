@@ -70,28 +70,52 @@ function App() {
           {/* 소개팅방 */}
           <Route
             path="/my-page/blindDate/toLike"
-            element={<UserBlindDateMeetingView />}
+            element={
+              // <PrivateRoute>
+              <UserBlindDateMeetingView />
+              //  </PrivateRoute>
+            }
           />
           <Route
             path="/my-page/blindDate/fromLike"
-            element={<UserBlindDateMeetingView />}
+            element={
+              //<PrivateRoute>
+              <UserBlindDateMeetingView />
+              //</PrivateRoute>
+            }
           />
           <Route
             path="/my-page/blindDate/matches"
-            element={<UserBlindDateMeetingView />}
+            element={
+              // <PrivateRoute>
+              <UserBlindDateMeetingView />
+              // </PrivateRoute>
+            }
           />
           {/* 미팅방 */}
           <Route
             path="/my-page/meeting/my-rooms"
-            element={<UserBlindDateMeetingView />}
+            element={
+              // <PrivateRoute>
+              <UserBlindDateMeetingView />
+              // </PrivateRoute>
+            }
           />
           <Route
             path="/my-page/meeting/entering"
-            element={<UserBlindDateMeetingView />}
+            element={
+              //  <PrivateRoute>
+              <UserBlindDateMeetingView />
+              //  </PrivateRoute>
+            }
           />
           <Route
             path="/my-page/meeting/achieve"
-            element={<UserBlindDateMeetingView />}
+            element={
+              // <PrivateRoute>
+              <UserBlindDateMeetingView />
+              //  </PrivateRoute>
+            }
           />
         </Routes>
       </div>

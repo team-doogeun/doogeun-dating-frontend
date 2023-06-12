@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import styled from 'styled-components';
-import MypageSidemenuContainer from '../../MyPageSidemenu/MyPageSidemenuContainer';
-import { getJWTCookie } from '../../../../Api/loginApi';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import styled from "styled-components";
+import MypageSidemenuContainer from "../../MyPageSidemenu/MyPageSidemenuContainer";
+import { getJWTCookie } from "../../../../Api/loginApi";
+import Modal from "../../../../Modal/LoginModal";
+import RoomDataContainer from "../../../MeetingPage/MeetingRoomData/RoomDataContainer";
 
 const UserBlindDateMeetingView = () => {
   const [resUserData, setResUserData] = useState([]);
   const [componentToRender, setComponentToRender] = useState(null);
-  const [blindDateORMeet, setBlindDateORMeet] = useState('meeting');
+  const [blindDateORMeet, setBlindDateORMeet] = useState(null);
 
-  const userId = getJWTCookie('userId');
-  const authToken = getJWTCookie('jwtAccessToken');
+  const userId = getJWTCookie("userId");
+  const authToken = getJWTCookie("jwtAccessToken");
 
   // 내가 호감 보낸 사람
   const getBlindDateToLike = async () => {
@@ -23,7 +25,7 @@ const UserBlindDateMeetingView = () => {
         return res.data;
       })
       .catch((err) => {
-        console.log('내가 호감표시한 유저들 에러 :', err);
+        console.log("내가 호감표시한 유저들 에러 :", err);
       });
 
     return response;
@@ -39,7 +41,7 @@ const UserBlindDateMeetingView = () => {
         return res.data;
       })
       .catch((err) => {
-        console.log('내게 호감표시한 유저들 에러 :', err);
+        console.log("내게 호감표시한 유저들 에러 :", err);
       });
 
     return response;
@@ -52,10 +54,10 @@ const UserBlindDateMeetingView = () => {
         headers: { Authorization: `Bearer ${authToken}` },
       })
       .then((res) => {
-        return res;
+        return res.data;
       })
       .catch((err) => {
-        console.log('매칭 유저들 에러 :', err);
+        console.log("매칭 유저들 에러 :", err);
       });
 
     return response;
@@ -67,10 +69,11 @@ const UserBlindDateMeetingView = () => {
         headers: { Authorization: `Bearer ${authToken}` },
       })
       .then((res) => {
+        console.log(res.data);
         return res.data;
       })
       .catch((err) => {
-        console.log('내가 호감표시한 유저들 에러 :', err);
+        console.log("내가 호감표시한 유저들 에러 :", err);
       });
 
     return response;
@@ -85,7 +88,7 @@ const UserBlindDateMeetingView = () => {
         return res.data;
       })
       .catch((err) => {
-        console.log('내게 호감표시한 유저들 에러 :', err);
+        console.log("내게 호감표시한 유저들 에러 :", err);
       });
 
     return response;
@@ -100,7 +103,7 @@ const UserBlindDateMeetingView = () => {
         return res.data;
       })
       .catch((err) => {
-        console.log('매칭 유저들 에러 :', err);
+        console.log("매칭 유저들 에러 :", err);
       });
 
     return response;
@@ -108,22 +111,22 @@ const UserBlindDateMeetingView = () => {
 
   const blindDateCategory = (resUserData, detailCategory) => {
     switch (detailCategory) {
-      case 'toLike':
+      case "toLike":
         setComponentToRender(<UserToLike toLike={resUserData} />);
         break;
-      case 'fromLike':
+      case "fromLike":
         setComponentToRender(<UserFromLike fromLike={resUserData} />);
         break;
-      case 'matches':
+      case "matches":
         setComponentToRender(<UserMatches matches={resUserData} />);
         break;
-      case 'my-rooms':
+      case "my-rooms":
         setComponentToRender(<UserHost host={resUserData} />);
         break;
-      case 'entering':
+      case "entering":
         setComponentToRender(<UserRegister register={resUserData} />);
         break;
-      case 'achieve':
+      case "achieve":
         setComponentToRender(<UserHostStart hostStart={resUserData} />);
         break;
       default:
@@ -135,28 +138,28 @@ const UserBlindDateMeetingView = () => {
   useEffect(() => {
     const fetchData = async () => {
       const currentUrl = window.location.href;
-      const splitUrl = currentUrl.split('/');
+      const splitUrl = currentUrl.split("/");
       const category = splitUrl[splitUrl.length - 2];
       const detailCategory = splitUrl.pop();
 
       setBlindDateORMeet(category);
 
-      if (detailCategory === 'toLike') {
+      if (detailCategory === "toLike") {
         const userData = await getBlindDateToLike();
         setResUserData(userData);
-      } else if (detailCategory === 'fromLike') {
+      } else if (detailCategory === "fromLike") {
         const userData = await getBlindDatefromLike();
         setResUserData(userData);
-      } else if (detailCategory === 'Matches') {
+      } else if (detailCategory === "Matches") {
         const userData = await getBlindDateMatches();
         setResUserData(userData);
-      } else if (detailCategory === 'my-rooms') {
+      } else if (detailCategory === "my-rooms") {
         const userData = await getMeetingHost();
         setResUserData(userData);
-      } else if (detailCategory === 'entering') {
+      } else if (detailCategory === "entering") {
         const userData = await getMeetingRegister();
         setResUserData(userData);
-      } else if (detailCategory === 'achieve') {
+      } else if (detailCategory === "achieve") {
         const userData = await getMeetingHostStart();
         setResUserData(userData);
       }
@@ -165,13 +168,13 @@ const UserBlindDateMeetingView = () => {
     };
 
     fetchData();
-  }, []);
+  }, [window.location.href]);
 
   return (
     <>
       <UserSettingLayout>
         <UserSettingContainer>
-          {blindDateORMeet && blindDateORMeet === 'blindDate' ? (
+          {blindDateORMeet && blindDateORMeet === "blindDate" ? (
             <>
               <MypageSidemenuContainer currentMenu="MyBlindDate" />
               <UserSettingWrapper>
@@ -194,6 +197,24 @@ const UserBlindDateMeetingView = () => {
   );
 };
 
+const testData = [
+  {
+    userId: "tommt",
+    age: 23,
+    department: "경영대",
+  },
+  {
+    userId: "tommt",
+    age: 23,
+    department: "경영대",
+  },
+  {
+    userId: "tommt",
+    age: 23,
+    department: "경영대",
+  },
+];
+
 const UserToLike = ({ toLike }) => {
   return (
     <>
@@ -201,7 +222,7 @@ const UserToLike = ({ toLike }) => {
       <UserDataWrapper>
         {toLike.map((item, idx) => (
           <UserInfoGrid key={idx}>
-            <UserInfoTitle>{`아이디 : ${item.userId}`}</UserInfoTitle>
+            <UserInfoDetailTitle>{`아이디 : ${item.userId}`}</UserInfoDetailTitle>
             <UserInfo>{`나이 : ${item.age}`}</UserInfo>
             <UserInfo>{`대학 : ${item.department}`}</UserInfo>
           </UserInfoGrid>
@@ -212,8 +233,8 @@ const UserToLike = ({ toLike }) => {
 };
 
 const UserFromLike = ({ fromLike }) => {
-  const userId = getJWTCookie('userId');
-  const authToken = getJWTCookie('jwtAccessToken');
+  const userId = getJWTCookie("userId");
+  const authToken = getJWTCookie("jwtAccessToken");
 
   const buttonLike = async (targetUserId) => {
     await axios
@@ -232,7 +253,7 @@ const UserFromLike = ({ fromLike }) => {
         return res;
       })
       .catch((err) => {
-        console.log('내게 호감표시한 유저들 에러 :', err);
+        console.log("내게 호감표시한 유저들 에러 :", err);
       });
   };
   return (
@@ -241,12 +262,14 @@ const UserFromLike = ({ fromLike }) => {
       <UserDataWrapper>
         {fromLike.map((item, idx) => (
           <UserInfoGrid key={idx}>
-            <UserInfoTitle>{`아이디 : ${item.userId}`}</UserInfoTitle>
+            <UserInfoDetailTitle>{`아이디 : ${item.userId}`}</UserInfoDetailTitle>
             <UserInfo>{`나이 : ${item.age}`}</UserInfo>
             <UserInfo>{`대학 : ${item.department}`}</UserInfo>
-            <LikeButton onClick={() => buttonLike(item.userId)}>
-              두근 보내기
-            </LikeButton>
+            <ButtonBox>
+              <LikeButton onClick={() => buttonLike(item.userId)}>
+                두근 보내기
+              </LikeButton>
+            </ButtonBox>
           </UserInfoGrid>
         ))}
       </UserDataWrapper>
@@ -255,10 +278,11 @@ const UserFromLike = ({ fromLike }) => {
 };
 
 const UserMatches = ({ matches }) => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [kakaoId, setKakaoId] = useState(null);
-  const userId = getJWTCookie('userId');
-  const authToken = getJWTCookie('jwtAccessToken');
+  const [modalOpen, setModalOpen] = useState({});
+  const [kakaoId, setKakaoId] = useState(["123"]);
+
+  const userId = getJWTCookie("userId");
+  const authToken = getJWTCookie("jwtAccessToken");
 
   const getKakaoId = async (targetUserId) => {
     await axios
@@ -277,11 +301,21 @@ const UserMatches = ({ matches }) => {
       .then((res) => {
         console.log(res.data);
         const resData = res.data;
-        setKakaoId(resData);
+        setKakaoId((prevKakaoId) => ({
+          ...prevKakaoId,
+          [targetUserId]: resData,
+        }));
       })
       .catch((err) => {
-        console.log('매칭된 유저 못 찾음 : ', err);
+        console.log("매칭된 유저 찾는데 에러가 생김 : ", err);
       });
+  };
+
+  const toggleModal = (targetUserId) => {
+    setModalOpen((prevModalOpen) => ({
+      ...prevModalOpen,
+      [targetUserId]: !prevModalOpen[targetUserId],
+    }));
   };
 
   return (
@@ -290,21 +324,25 @@ const UserMatches = ({ matches }) => {
       <UserDataWrapper>
         {matches.map((item, idx) => (
           <UserInfoGrid key={idx}>
-            <UserInfoTitle>{`아이디 : ${item.userId}`}</UserInfoTitle>
+            <UserInfoDetailTitle>{`아이디 : ${item.userId}`}</UserInfoDetailTitle>
             <UserInfo>{`나이 : ${item.age}`}</UserInfo>
             <UserInfo>{`대학 : ${item.department}`}</UserInfo>
-            <TargetUserCheckButton
-              onClick={() => {
-                getKakaoId(item.userId);
-                setModalOpen(!modalOpen);
-              }}
-            >
-              상대 유저 카톡확인
-            </TargetUserCheckButton>
-            {modalOpen && (
-              <>
-                <KakaoIdBox>{`카카오 아이디 : ${kakaoId}`}</KakaoIdBox>
-              </>
+            <ButtonBox>
+              <TargetUserCheckButton
+                onClick={() => {
+                  getKakaoId(item.userId);
+                  toggleModal(item.userId);
+                }}
+              >
+                상대 유저 카톡확인
+              </TargetUserCheckButton>
+            </ButtonBox>
+            {modalOpen[item.userId] && (
+              <ButtonBox>
+                <KakaoIdBox>{`카카오 아이디 : ${
+                  kakaoId[item.userId]
+                }`}</KakaoIdBox>
+              </ButtonBox>
             )}
           </UserInfoGrid>
         ))}
@@ -314,40 +352,262 @@ const UserMatches = ({ matches }) => {
 };
 
 const UserHost = ({ host }) => {
+  // modal open
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [roomData, setRoomData] = useState({});
+
+  const checkRoomData = async (roomId) => {
+    const authToken = getJWTCookie("jwtAccessToken");
+
+    const response = await axios
+      .get(`http://localhost:8080/group/${roomId}/info`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      })
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.log(err + "미팅방 정보 요청 안됨");
+      });
+
+    return response;
+  };
+
+  const setRoomDataModal = async (isOpen, roomId) => {
+    if (isOpen) {
+      const roomData = await checkRoomData(roomId);
+      setModalIsOpen(true);
+      setRoomData(roomData);
+    } else {
+      setModalIsOpen(false);
+    }
+  };
+
   return (
-    <>
-      <UserCommonHeader>내가 만든 미팅방</UserCommonHeader>
-      <UserDataWrapper>
-        {host.map((item, idx) => (
-          <UserInfoGrid key={idx}>
-            <UserInfoTitle>{`방 제목 : ${item.title}`}</UserInfoTitle>
-            <UserInfo>{`${item.capacityMale} ${item.capacityFemale}`}</UserInfo>
-            <UserInfo>{`현재 인원 : 남 ${item.presentMale} 여 ${item.presentFemale}`}</UserInfo>
-          </UserInfoGrid>
-        ))}
-      </UserDataWrapper>
-      ;
-    </>
+    <RoomCardWrapper>
+      <UserCommonHeader>내가 만든 미팅방 </UserCommonHeader>
+      {host.map((room) => (
+        <RoomCard key={room.roomId}>
+          <RoomCapacity>{`${room.capacityMale}: ${room.capacityFemale}`}</RoomCapacity>
+          <RoomTitle>{room.title}</RoomTitle>
+          <CheckAndRegisterBlock>
+            <CheckRoomData onClick={() => setRoomDataModal(true, room.roomId)}>
+              상세정보 확인
+            </CheckRoomData>
+            {modalIsOpen && (
+              <Modal
+                CloseModal={() => {
+                  setRoomDataModal(false); // 수정: modalIsOpen 상태를 false로 변경
+                }}
+              >
+                <RoomDataContainer roomData={roomData}></RoomDataContainer>
+              </Modal>
+            )}
+          </CheckAndRegisterBlock>
+        </RoomCard>
+      ))}
+    </RoomCardWrapper>
   );
 };
 
 const UserRegister = ({ register }) => {
-  return <UserCommonHeader>내가 입장한 미팅방 </UserCommonHeader>;
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [roomData, setRoomData] = useState({});
+
+  const checkRoomData = async (roomId) => {
+    const authToken = getJWTCookie("jwtAccessToken");
+
+    const response = await axios
+      .get(`http://localhost:8080/group/${roomId}/info`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      })
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.log(err + "미팅방 정보 요청 안됨");
+      });
+
+    return response;
+  };
+
+  const setRoomDataModal = async (isOpen, roomId) => {
+    if (isOpen) {
+      const roomData = await checkRoomData(roomId);
+      setModalIsOpen(true);
+      setRoomData(roomData);
+    } else {
+      setModalIsOpen(false);
+    }
+  };
+  return (
+    <RoomCardWrapper>
+      <UserCommonHeader>내가 입장한 미팅방 </UserCommonHeader>
+      {register.map((room) => (
+        <RoomCard key={room.roomId}>
+          <RoomCapacity>{`${room.capacityMale}: ${room.capacityFemale}`}</RoomCapacity>
+          <RoomTitle>{room.title}</RoomTitle>
+          <CheckAndRegisterBlock>
+            <CheckRoomData onClick={() => setRoomDataModal(true, room.roomId)}>
+              상세정보 확인
+            </CheckRoomData>
+            {modalIsOpen && (
+              <Modal
+                CloseModal={() => {
+                  setRoomDataModal(false); // 수정: modalIsOpen 상태를 false로 변경
+                }}
+              >
+                <RoomDataContainer roomData={roomData}></RoomDataContainer>
+              </Modal>
+            )}
+          </CheckAndRegisterBlock>
+        </RoomCard>
+      ))}
+    </RoomCardWrapper>
+  );
 };
 
 const UserHostStart = ({ hostStart }) => {
-  return <UserCommonHeader>시작한 미팅방</UserCommonHeader>;
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [roomData, setRoomData] = useState({});
+
+  const checkRoomData = async (roomId) => {
+    const authToken = getJWTCookie("jwtAccessToken");
+
+    const response = await axios
+      .get(`http://localhost:8080/group/${roomId}/info`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      })
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.log(err + "미팅방 정보 요청 안됨");
+      });
+
+    return response;
+  };
+
+  const setRoomDataModal = async (isOpen, roomId) => {
+    if (isOpen) {
+      const roomData = await checkRoomData(roomId);
+      setModalIsOpen(true);
+      setRoomData(roomData);
+    } else {
+      setModalIsOpen(false);
+    }
+  };
+  return (
+    <RoomCardWrapper>
+      <UserCommonHeader>성사된 미팅방</UserCommonHeader>
+      {hostStart.map((room) => (
+        <RoomCard key={room.roomId}>
+          <RoomCapacity>{`${room.capacityMale}: ${room.capacityFemale}`}</RoomCapacity>
+          <RoomTitle>{room.title}</RoomTitle>
+          <CheckAndRegisterBlock>
+            <CheckRoomData onClick={() => setRoomDataModal(true, room.roomId)}>
+              상세정보 확인
+            </CheckRoomData>
+            {modalIsOpen && (
+              <Modal
+                CloseModal={() => {
+                  setRoomDataModal(false); // 수정: modalIsOpen 상태를 false로 변경
+                }}
+              >
+                <RoomDataContainer roomData={roomData}></RoomDataContainer>
+              </Modal>
+            )}
+          </CheckAndRegisterBlock>
+        </RoomCard>
+      ))}
+    </RoomCardWrapper>
+  );
 };
 
+const RoomCardWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  gap: 30px;
+`;
+
+const RoomCard = styled.div`
+  width: 550px;
+  height: 130px;
+  border: 1px solid #d5d5d5;
+  border-radius: 15px;
+  background-color: #fff;
+  font-family: GmarketSansTTFBold, sans-serif, Arial;
+  h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+`;
+
+const RoomCapacity = styled.div`
+  color: #ff4572;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  background-color: white;
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 12px;
+  width: 60px;
+  text-align: left;
+`;
+
+const RoomTitle = styled.h2`
+  font-family: GmarketSansTTFBold, sans-serif, Arial;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: left;
+  width: 100%;
+  margin-left: 20px;
+  max-height: 40px;
+`;
+
+const CheckAndRegisterBlock = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 15px;
+  padding-top: 5px;
+`;
+
+const CheckRoomData = styled.button`
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  background-color: white;
+  color: gray;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+    color: #ff4572;
+  }
+`;
+
+const RoomRegisterInOut = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-right: 15px;
+`;
+
 const commonTextStyle = {
-  width: '250px',
-  height: '20px',
-  fontFamily: 'Noto Sans KR',
-  fontStyle: 'normal',
-  fontWeight: '700',
-  fontSize: '14px',
-  lineHeight: '20px',
-  color: '#5c5c5c',
+  width: "250px",
+  height: "20px",
+  fontFamily: "Noto Sans KR",
+  fontStyle: "normal",
+  fontWeight: "700",
+  fontSize: "14px",
+  lineHeight: "20px",
+  color: "#5c5c5c",
 };
 
 const UserSettingLayout = styled.div`
@@ -378,19 +638,30 @@ const UserSettingWrapper = styled.div`
   margin-top: 80px;
 `;
 
-const UserInfoTitle = styled.div`
+const Title = `
   position: relative;
-  width: 110px;
+  width: 180px;
   height: 35px;
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
-  font-size: 24px;
+  
   line-height: 35px;
-
-  text-align: center;
-
   color: #000000;
+`;
+
+const UserInfoTitle = styled.div`
+  ${Title}
+  text-align: center;
+  font-size: 24px;
+  font-family: GmarketSansTTFBold, sans-serif, Arial;
+`;
+
+const UserInfoDetailTitle = styled.div`
+  ${Title}
+  padding-left: 20px;
+  margin-top: 14px;
+  font-size: 16px;
 `;
 
 const UserInfoBox = styled.div`
@@ -408,10 +679,10 @@ const UserInfoBox = styled.div`
 `;
 
 const UserInfoGrid = styled.div`
-  width: 180px;
+  width: 200px;
   min-height: 150px;
-  max-height: 150px;
-  font-size: 24px;
+  max-height: 350px;
+  font-size: 16px;
   justify-content: center;
   margin: 0 auto;
   border: 2px solid #d9d9d9;
@@ -421,13 +692,20 @@ const UserInfoGrid = styled.div`
 const UserInfo = styled.div`
   padding-left: 20px;
   font-size: 16px;
+
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 40px;
+  color: #737373;
 `;
 
 const UserCommonHeader = styled.div`
   position: relative;
   width: 760px;
   height: 35px;
-  font-family: 'Noto Sans KR';
+  font-family: GmarketSansTTFBold, sans-serif, Arial;
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
@@ -440,7 +718,7 @@ const UserCommonHeader = styled.div`
 
 const UserDataWrapper = styled.div`
   width: 760px;
-  min-height: 200px;
+  min-height: 150px;
   max-height: 600px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -450,9 +728,15 @@ const UserDataWrapper = styled.div`
   margin-bottom: 40px;
 `;
 
-const LikeButton = styled.button`
-  width: 150px;
-  height: 30px;
+const ButtonBox = styled.div`
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  display: flex;
+`;
+
+const CheckButton = `
+  height: 40px;
   background-color: #ff4572;
   color: white;
   padding: 10px 20px;
@@ -461,6 +745,10 @@ const LikeButton = styled.button`
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  justify-content: center;
+  margin: 0 auto;
+  margin-bottom: 15px;
+
   @keyframes heartbeat {
     0% {
       transform: scale(1);
@@ -477,39 +765,29 @@ const LikeButton = styled.button`
     background-color: #565656;
     animation: heartbeat 0.5s infinite;
   }
+`;
+
+const LikeButton = styled.button`
+  ${CheckButton}
+  width: 160px;
 `;
 
 const TargetUserCheckButton = styled.button`
-  width: 150px;
-  height: 30px;
-  background-color: #ff4572;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-  @keyframes heartbeat {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.1);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-
-  &:hover {
-    background-color: #565656;
-    animation: heartbeat 0.5s infinite;
-  }
+  ${CheckButton}
+  font-size: 14px;
+  width: 160px;
 `;
 
+const KakaoIdWrapper = styled.div``;
+
 const KakaoIdBox = styled.div`
-  ${commonTextStyle}
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  margin-bottom: 15px;
+  color: #737373;
 `;
 
 export default UserBlindDateMeetingView;

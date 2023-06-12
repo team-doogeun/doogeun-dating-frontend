@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import BottomImage from "../../../../Img/Rectangle 2.png";
 import Pagination from "../../../Pagination/Pagination";
@@ -10,11 +10,11 @@ import RoomDataContainer from "../MeetingRoomData/RoomDataContainer";
 const MeetingPageSelectView = ({
   meetings,
   registerIn,
-  registerOut,
   checkRoomData,
+  alreadyStart,
 }) => {
   // meetingRoom Control
-  const [meetingRooms, setMeetingRooms] = useState([{ roomId: "123" }]);
+  const [meetingRooms, setMeetingRooms] = useState([]);
   const [createRoom, setCreateRoom] = useState(false);
   const [roomTitle, setRoomTitle] = useState("");
   const [roomIntro, setRoomIntro] = useState("");
@@ -22,6 +22,17 @@ const MeetingPageSelectView = ({
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [roomData, setRoomData] = useState({});
+
+  // title, intro control
+  const [titleMsg, setTitleMsg] = useState("");
+  const [isTitle, setIsTitle] = useState(false);
+  const [introMsg, setIntroMsg] = useState("");
+  const [isIntro, setIsIntro] = useState(false);
+
+  // 페이지네이션
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+  const totalPages = Math.ceil(meetings.length / itemsPerPage);
 
   const setRoomDataModal = async (isOpen, roomId) => {
     if (isOpen) {
@@ -32,21 +43,6 @@ const MeetingPageSelectView = ({
       setModalIsOpen(false);
     }
   };
-
-  // title, intro control
-  const [titleMsg, setTitleMsg] = useState("");
-  const [isTitle, setIsTitle] = useState(false);
-  const [introMsg, setIntroMsg] = useState("");
-  const [isIntro, setIsIntro] = useState(false);
-
-  // 유저가 참여해 있는지 확인
-  // 이거 서버에 요청해서 알아야됨...
-  const [isUserIn, setIsUserIn] = useState(false);
-
-  // 페이지네이션
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
-  const totalPages = Math.ceil(meetings.length / itemsPerPage);
 
   const handlePageChange = (pageNum) => {
     setCurrentPage(pageNum);
@@ -168,14 +164,10 @@ const MeetingPageSelectView = ({
                     )}
 
                     <RoomRegisterInOut>
-                      {isUserIn ? (
-                        <RoomRegisterOutBtn
-                          onClick={() => {
-                            registerOut(room.roomId, room.title);
-                          }}
-                        >
-                          나가기
-                        </RoomRegisterOutBtn>
+                      {room.groupBlindStatus === "DONE" ? (
+                        <AlreadyStartBtn disabled={true}>
+                          진행중인 미팅방
+                        </AlreadyStartBtn>
                       ) : (
                         <RoomRegisterInBtn
                           onClick={() => {
@@ -215,16 +207,11 @@ const MeetingPageSelectView = ({
                         ></RoomDataContainer>
                       </Modal>
                     )}
-
                     <RoomRegisterInOut>
-                      {isUserIn ? (
-                        <RoomRegisterOutBtn
-                          onClick={() => {
-                            registerOut(room.roomId, room.title);
-                          }}
-                        >
-                          나가기
-                        </RoomRegisterOutBtn>
+                      {room.groupBlindStatus === "DONE" ? (
+                        <AlreadyStartBtn disabled={true}>
+                          진행중인 미팅방
+                        </AlreadyStartBtn>
                       ) : (
                         <RoomRegisterInBtn
                           onClick={() => {
@@ -375,12 +362,11 @@ const RoomRegisterInOut = styled.div`
   margin-right: 15px;
 `;
 
-const RoomRegisterInBtn = styled.button`
+const RegisterAlreadyButton = `
   border: 1px solid #ff4572;
   border-radius: 6px;
   font-weight: 700;
   font-size: 0.8rem;
-  width: 65px;
   color: white;
   background: transparent;
   padding: 0.3rem 1rem;
@@ -393,21 +379,14 @@ const RoomRegisterInBtn = styled.button`
   }
 `;
 
-const RoomRegisterOutBtn = styled.button`
-  border: none;
-  border-radius: 0.3rem;
-  font-weight: 700;
-  color: #777777;
-  background: transparent;
-  font-size: 1rem;
-  padding: 0.3rem 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
+const RoomRegisterInBtn = styled.button`
+  ${RegisterAlreadyButton}
+  width: 65px;
+`;
 
-  &:hover {
-    transform: scale(1.05);
-    color: #ff4572;
-  }
+const AlreadyStartBtn = styled.button`
+  ${RegisterAlreadyButton}
+  width: 150px;
 `;
 
 const RoomCapacity = styled.div`
@@ -432,9 +411,6 @@ const RoomContainer = styled.div`
 `;
 
 const RoomCard = styled.div`
-  //display: flex;
-  //justify-content: center;
-  //align-items: flex-start;
   width: 650px;
   height: 130px;
   border: 1px solid #d5d5d5;

@@ -1,49 +1,49 @@
-import React, { useEffect, useState } from 'react';
-import RoomDataView from './RoomDataView';
-import axios from 'axios';
-import { getJWTCookie } from '../../../Api/loginApi';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import RoomDataView from "./RoomDataView";
+import axios from "axios";
+import { getJWTCookie } from "../../../Api/loginApi";
+import { useNavigate } from "react-router-dom";
 
 const RoomDataContainer = ({ roomData }) => {
   const navigator = useNavigate();
-  const authToken = getJWTCookie('jwtAccessToken');
-  const [isHost, setIsHost] = useState(true);
-  const userId = getJWTCookie('userId');
-
-  // get으로 호스트 값을 가져올 수 있는 함수 작성 요망
-  // 일단 isHost true로 설정
-  useEffect(() => {
-    if (roomData.hostId === userId) setIsHost(true);
-    else setIsHost(false);
-  }, []);
+  const authToken = getJWTCookie("jwtAccessToken");
 
   // userId
   const hostStart = async (roomId) => {
     await axios
-      .post(`http://localhost:8080/group/${roomId}/achieve`, {
-        headers: { Authorization: `Bearer ${authToken}` },
-      })
+      .post(
+        `http://localhost:8080/group/${roomId}/achieve`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${authToken}` },
+        }
+      )
       .then((res) => {
-        console.log(`유저들의 카카오톡 아이디 : ${res.userId}`);
-        return res;
+        alert("호스트가 미팅 시작하였습니다. 마이페이지 : ");
+        window.location.reload();
       })
       .catch((error) => {
-        console.log('방 만들기 실패 ' + error);
+        console.log("방 시작하기 실패 " + error);
       });
   };
 
   const deleteRoom = async (roomId) => {
     await axios
-      .post(`http://localhost:8080/group/${roomId}/delete`, {
-        headers: { Authorization: `Bearer ${authToken}` },
-      })
+      .post(
+        `http://localhost:8080/group/${roomId}/delete`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${authToken}` },
+        }
+      )
       .then((res) => {
-        console.log('방 삭제함');
-        navigator('/group');
-        return res;
+        console.log("방 삭제함");
+        alert("호스트가 방 삭제하였습니다.");
+        window.location.reload();
+        return res.data;
       })
       .catch((error) => {
-        console.log('방 삭제 실패 ' + error);
+        console.log("방 삭제 실패 " + error);
       });
   };
 
@@ -51,7 +51,6 @@ const RoomDataContainer = ({ roomData }) => {
     <>
       <RoomDataView
         roomData={roomData}
-        isHost={isHost}
         hostStart={hostStart}
         deleteRoom={deleteRoom}
       ></RoomDataView>

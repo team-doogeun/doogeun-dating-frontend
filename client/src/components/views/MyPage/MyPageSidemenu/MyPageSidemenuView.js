@@ -142,7 +142,7 @@ const SidemenuTitle = styled.div`
   position: relative;
   width: 180px;
   height: 46px;
-  font-family: "Noto Sans KR";
+  font-family: GmarketSansTTFBold, sans-serif, Arial;
   font-style: normal;
   font-weight: 700;
   font-size: 28px;
@@ -185,7 +185,7 @@ const Sidemenu = styled.div`
   width: 250px;
   height: 46px;
 
-  font-family: "Noto Sans KR";
+  font-family: GmarketSansTTFBold, sans-serif, Arial;
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -220,7 +220,7 @@ const ListItem = styled.div`
   height: 46px;
   border-radius: 8px;
 
-  font-family: "Noto Sans KR";
+  font-family: GmarketSansTTFBold, sans-serif, Arial;
   font-style: normal;
   font-weight: 700;
   font-size: 16px;

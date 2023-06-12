@@ -1,7 +1,78 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { getJWTCookie } from "../../../Api/loginApi";
+import axios from "axios";
 
-const RoomDataView = ({ roomData, isHost, hostStart, deleteRoom }) => {
+const RoomDataView = ({ roomDatas, hostStart, deleteRoom }) => {
+  // 유저가 참여해 있는지 확인
+  const [isUserIn, setIsUserIn] = useState(false);
+
+  // 호스트가 있는지 확인
+  const [isHostIn, setIsHostIn] = useState(false);
+
+  useEffect(() => {
+    userInCheck();
+    hostInCheck();
+  }, []);
+
+  const roomData = [
+    {
+      title: "ddd",
+    },
+  ];
+
+  // 해당 유저가 방에 있는지 체크
+  const userInCheck = async () => {
+    const userId = getJWTCookie("userId");
+
+    const response = await roomData.members.find(
+      (member) => member.userId === userId
+    );
+
+    if (response === undefined) {
+      setIsUserIn(false);
+      return;
+    }
+    if (response) {
+      setIsUserIn(true);
+      return;
+    }
+  };
+
+  const hostInCheck = async () => {
+    const userId = getJWTCookie("userId");
+
+    if (roomData.hostId === userId) {
+      setIsHostIn(true);
+      return;
+    } else {
+      setIsHostIn(false);
+      return;
+    }
+  };
+
+  // 나가기 기능
+  const registerOut = async (roomId) => {
+    const authToken = getJWTCookie("jwtAccessToken");
+
+    await axios
+      .post(
+        `http://localhost:8080/group/${roomId}/exit`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${authToken}` },
+        }
+      )
+      .then(() => {
+        console.log("미팅방 나가기 성공");
+        alert("미팅방 나가기 성공");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log("미팅방 나가기 실패" + error);
+      });
+  };
+
   return (
     <>
       <RoomDataWrapper>
@@ -19,8 +90,6 @@ const RoomDataView = ({ roomData, isHost, hostStart, deleteRoom }) => {
                     key={index}
                   >{`${member.department} : (${member.age})`}</div>
                 );
-              } else {
-                return <div key={index}>현재 없음</div>;
               }
             })}
           </MaleCol>
@@ -32,63 +101,47 @@ const RoomDataView = ({ roomData, isHost, hostStart, deleteRoom }) => {
                     key={index}
                   >{`${member.department} : (${member.age})`}</div>
                 );
-              } else {
-                return <div key={index}>현재 없음</div>;
               }
             })}
           </FemaleCol>
         </UserDataWrapper>
-        {isHost && (
-          <BtnContainer>
-            <StartBtn
+        <BtnContainer>
+          {/* {isUserIn === true && isHostIn === true ? ( */}
+          {true ? (
+            <>
+              <StartBtn
+                onClick={() => {
+                  hostStart(roomData.roomId);
+                }}
+              >
+                시작
+              </StartBtn>
+              <EndBtn
+                onClick={() => {
+                  deleteRoom(roomData.roomId);
+                }}
+              >
+                미팅방 삭제하기
+              </EndBtn>
+            </>
+          ) : isUserIn === true ? (
+            <RoomRegisterOutBtn
               onClick={() => {
-                hostStart(roomData.roomId);
+                registerOut(roomData.roomId);
               }}
             >
-              시작
-            </StartBtn>
-            <EndBtn
-              onClick={() => {
-                deleteRoom(roomData.roomId);
-              }}
-            >
-              미팅방 삭제하기
-            </EndBtn>
-          </BtnContainer>
-        )}
+              나가기
+            </RoomRegisterOutBtn>
+          ) : (
+            <></>
+          )}
+        </BtnContainer>
       </RoomDataWrapper>
     </>
   );
 };
 
-const BtnContainer = styled.div`
-  margin-top: 40px;
-  width: 400px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const StartBtn = styled.button`
-  border: 1px solid #ff4572;
-  border-radius: 6px;
-  font-weight: 700;
-  font-size: 0.8rem;
-  width: 150px;
-  color: white;
-  background: transparent;
-  padding: 0.3rem 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  background-color: #ff4572;
-
-  &:hover {
-    transform: scale(1.05);
-  }
-`;
-
-const EndBtn = styled.button`
+const styledButton = `
   border: 1px solid #ff4572;
   border-radius: 6px;
   font-weight: 700;
@@ -105,6 +158,26 @@ const EndBtn = styled.button`
   &:hover {
     transform: scale(1.05);
   }
+`;
+
+const BtnContainer = styled.div`
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const StartBtn = styled.button`
+  ${styledButton}
+`;
+
+const EndBtn = styled.button`
+  ${styledButton}
+`;
+
+const RoomRegisterOutBtn = styled.button`
+  ${styledButton}
 `;
 
 const RoomDataWrapper = styled.div`
@@ -143,13 +216,16 @@ const UserDataWrapper = styled.div`
 const MaleCol = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  gap: 40px;
+  gap: 30px;
   padding-right: 20px;
+  width: 150px;
 `;
+
 const FemaleCol = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  gap: 40px;
+  gap: 30px;
+  width: 150px;
   padding-left: 20px;
 `;
 
